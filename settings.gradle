@@ -1,0 +1,6 @@
+rootProject.name = 'AllChive'
+include 'Api'
+include 'Core'
+include 'Domain'
+include 'Infrastructure'
+
