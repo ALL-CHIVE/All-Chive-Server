@@ -4,11 +4,9 @@ import allchive.server.core.dto.ErrorReason;
 import allchive.server.core.error.BaseErrorException;
 import allchive.server.core.error.ErrorResponse;
 import allchive.server.core.error.GlobalErrorCode;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.lang.Nullable;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,7 +32,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             Exception ex,
             @Nullable Object body,
             HttpHeaders headers,
-            HttpStatusCode statusCode,
+            HttpStatus statusCode,
             WebRequest request) {
         log.error("HandleInternalException", ex);
         final HttpStatus status = (HttpStatus) statusCode;
@@ -48,7 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
-            HttpStatusCode status,
+            HttpStatus status,
             WebRequest request) {
         final HttpStatus httpStatus = (HttpStatus) status;
         final List<FieldError> errors = ex.getBindingResult().getFieldErrors();
@@ -73,7 +72,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex,
             HttpHeaders headers,
-            HttpStatusCode status,
+            HttpStatus status,
             WebRequest request) {
         log.error("HttpMessageNotReadableException", ex);
         final GlobalErrorCode globalErrorCode = GlobalErrorCode.HTTP_MESSAGE_NOT_READABLE;
