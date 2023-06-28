@@ -1,9 +1,10 @@
 package allchive.server.domain.domains.user.domain.enums;
 
-import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
 
 @Embeddable
 @Getter

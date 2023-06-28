@@ -1,10 +1,11 @@
 package allchive.server.domain.domains.content.domain;
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Getter
 @Table(name = "tbl_tag")
