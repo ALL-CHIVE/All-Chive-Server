@@ -6,4 +6,4 @@ server:
 spring:
   profiles:
     include:
-      -api
+      - api
