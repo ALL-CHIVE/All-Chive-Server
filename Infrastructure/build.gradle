@@ -3,8 +3,6 @@ jar { enabled = true }
 
 dependencies {
     api('com.slack.api:slack-api-client:1.28.0')
-    api 'io.github.openfeign:feign-httpclient:12.2'
-    api 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     api project(':Core')

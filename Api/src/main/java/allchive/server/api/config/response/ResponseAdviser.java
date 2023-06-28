@@ -1,7 +1,5 @@
 package allchive.server.api.config.response;
 
-import jakarta.annotation.Nullable;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import javax.servlet.http.HttpServletResponse;
+
 import static allchive.server.core.consts.AllchiveConst.SwaggerPatterns;
 
 @Slf4j
@@ -27,7 +27,7 @@ public class ResponseAdviser implements ResponseBodyAdvice<Object> {
         return true;
     }
 
-    @Nullable
+    @Override
     public Object beforeBodyWrite(
             Object body,
             MethodParameter returnType,
