@@ -54,9 +54,9 @@ jobs:
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          password: ${{ secrets.EC2_PASSWORD }}
+          host: ${{ secrets.EC2_DEV_HOST }}
+          username: ${{ secrets.EC2_DEV_USERNAME }}
+          password: ${{ secrets.EC2_DEV_PASSWORD }}
           port: ${{ secrets.EC2_SSH_PORT }}
           timeout: 60s
           script: |
