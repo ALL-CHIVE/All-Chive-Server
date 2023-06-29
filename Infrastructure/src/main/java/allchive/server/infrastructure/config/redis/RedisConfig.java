@@ -14,7 +14,8 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @EnableRedisRepositories(
         basePackages = "allchive.server",
-        enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
+        enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP,
+        keyspaceNotificationsConfigParameter = "")
 @Configuration
 public class RedisConfig {
 
