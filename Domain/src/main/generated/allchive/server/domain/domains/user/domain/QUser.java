@@ -2,17 +2,13 @@ package allchive.server.domain.domains.user.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.dsl.PathInits;
+import javax.annotation.processing.Generated;
 
-
-/**
- * QUser is a Querydsl query type for User
- */
+/** QUser is a Querydsl query type for User */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QUser extends EntityPathBase<User> {
 
@@ -22,16 +18,18 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final allchive.server.domain.common.model.QBaseTimeEntity _super = new allchive.server.domain.common.model.QBaseTimeEntity(this);
+    public final allchive.server.domain.common.model.QBaseTimeEntity _super =
+            new allchive.server.domain.common.model.QBaseTimeEntity(this);
 
-    //inherited
+    // inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final StringPath Email = createString("Email");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> lastLoginAt = createDateTime("lastLoginAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> lastLoginAt =
+            createDateTime("lastLoginAt", java.time.LocalDateTime.class);
 
     public final StringPath nickname = createString("nickname");
 
@@ -39,10 +37,12 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath profileImgUrl = createString("profileImgUrl");
 
-    //inherited
+    // inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public final EnumPath<allchive.server.domain.domains.user.domain.enums.UserState> userState = createEnum("userState", allchive.server.domain.domains.user.domain.enums.UserState.class);
+    public final EnumPath<allchive.server.domain.domains.user.domain.enums.UserState> userState =
+            createEnum(
+                    "userState", allchive.server.domain.domains.user.domain.enums.UserState.class);
 
     public QUser(String variable) {
         this(User.class, forVariable(variable), INITS);
@@ -62,8 +62,10 @@ public class QUser extends EntityPathBase<User> {
 
     public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.oauthInfo = inits.isInitialized("oauthInfo") ? new allchive.server.domain.domains.user.domain.enums.QOauthInfo(forProperty("oauthInfo")) : null;
+        this.oauthInfo =
+                inits.isInitialized("oauthInfo")
+                        ? new allchive.server.domain.domains.user.domain.enums.QOauthInfo(
+                                forProperty("oauthInfo"))
+                        : null;
     }
-
 }
-

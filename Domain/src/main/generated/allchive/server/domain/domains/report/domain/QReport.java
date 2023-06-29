@@ -2,16 +2,12 @@ package allchive.server.domain.domains.report.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.*;
+import javax.annotation.processing.Generated;
 
-
-/**
- * QReport is a Querydsl query type for Report
- */
+/** QReport is a Querydsl query type for Report */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QReport extends EntityPathBase<Report> {
 
@@ -19,14 +15,15 @@ public class QReport extends EntityPathBase<Report> {
 
     public static final QReport report = new QReport("report");
 
-    public final allchive.server.domain.common.model.QBaseTimeEntity _super = new allchive.server.domain.common.model.QBaseTimeEntity(this);
+    public final allchive.server.domain.common.model.QBaseTimeEntity _super =
+            new allchive.server.domain.common.model.QBaseTimeEntity(this);
 
-    //inherited
+    // inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    //inherited
+    // inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QReport(String variable) {
@@ -40,6 +37,4 @@ public class QReport extends EntityPathBase<Report> {
     public QReport(PathMetadata metadata) {
         super(Report.class, metadata);
     }
-
 }
-

@@ -2,16 +2,12 @@ package allchive.server.domain.domains.user.domain.enums;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.*;
+import javax.annotation.processing.Generated;
 
-
-/**
- * QFormInfo is a Querydsl query type for FormInfo
- */
+/** QFormInfo is a Querydsl query type for FormInfo */
 @Generated("com.querydsl.codegen.DefaultEmbeddableSerializer")
 public class QFormInfo extends BeanPath<FormInfo> {
 
@@ -36,6 +32,4 @@ public class QFormInfo extends BeanPath<FormInfo> {
     public QFormInfo(PathMetadata metadata) {
         super(FormInfo.class, metadata);
     }
-
 }
-

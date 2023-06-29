@@ -2,16 +2,12 @@ package allchive.server.domain.domains.user.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
-import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.*;
+import javax.annotation.processing.Generated;
 
-
-/**
- * QScrap is a Querydsl query type for Scrap
- */
+/** QScrap is a Querydsl query type for Scrap */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QScrap extends EntityPathBase<Scrap> {
 
@@ -19,14 +15,15 @@ public class QScrap extends EntityPathBase<Scrap> {
 
     public static final QScrap scrap = new QScrap("scrap");
 
-    public final allchive.server.domain.common.model.QBaseTimeEntity _super = new allchive.server.domain.common.model.QBaseTimeEntity(this);
+    public final allchive.server.domain.common.model.QBaseTimeEntity _super =
+            new allchive.server.domain.common.model.QBaseTimeEntity(this);
 
-    //inherited
+    // inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    //inherited
+    // inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QScrap(String variable) {
@@ -40,6 +37,4 @@ public class QScrap extends EntityPathBase<Scrap> {
     public QScrap(PathMetadata metadata) {
         super(Scrap.class, metadata);
     }
-
 }
-
