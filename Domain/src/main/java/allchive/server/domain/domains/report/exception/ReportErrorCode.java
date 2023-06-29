@@ -1,5 +1,6 @@
 package allchive.server.domain.domains.report.exception;
 
+
 import allchive.server.core.dto.ErrorReason;
 import allchive.server.core.error.BaseErrorCode;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,5 @@ public enum ReportErrorCode implements BaseErrorCode {
     @Override
     public ErrorReason getErrorReason() {
         return ErrorReason.of(status.value(), code, reason);
-
     }
 }

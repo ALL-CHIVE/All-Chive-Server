@@ -1,14 +1,13 @@
 package allchive.server.domain.domains.user.domain.enums;
 
 
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Getter
 @Embeddable
@@ -27,9 +26,6 @@ public class OauthInfo {
     }
 
     public OauthInfo withDrawOauthInfo() {
-        return OauthInfo.builder()
-                .oid(oid)
-                .provider(provider)
-                .build();
+        return OauthInfo.builder().oid(oid).provider(provider).build();
     }
 }

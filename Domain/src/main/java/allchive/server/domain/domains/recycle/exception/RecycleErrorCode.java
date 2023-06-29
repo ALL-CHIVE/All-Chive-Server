@@ -1,5 +1,6 @@
 package allchive.server.domain.domains.recycle.exception;
 
+
 import allchive.server.core.dto.ErrorReason;
 import allchive.server.core.error.BaseErrorCode;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,5 @@ public enum RecycleErrorCode implements BaseErrorCode {
     @Override
     public ErrorReason getErrorReason() {
         return ErrorReason.of(status.value(), code, reason);
-
     }
 }
