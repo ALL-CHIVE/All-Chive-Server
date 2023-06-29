@@ -37,7 +37,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}:latest
 
       - name: Get Public IP
-        id: ip
+        id: publicip
         run: |
           response=$(curl -s canhazip.com)
           echo "ip='$response'" >> "$GITHUB_OUTPUT"
@@ -51,7 +51,7 @@ jobs:
 
       - name: Add GitHub IP to AWS
         run: |
-          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_DEV_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.ip.outputs.ipv4 }}/32
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_DEV_SG_ID }} --protocol tcp --port 22 --cidr ${{ steps.publicip.outputs.ip  }}/32
 
       - name: Deploy
         uses: appleboy/ssh-action@master
