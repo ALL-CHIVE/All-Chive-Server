@@ -1,5 +1,8 @@
 package allchive.server.api.config.response;
 
+import static allchive.server.core.consts.AllchiveConst.SwaggerPatterns;
+
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
@@ -12,10 +15,6 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.springframework.web.util.ContentCachingRequestWrapper;
-
-import javax.servlet.http.HttpServletResponse;
-
-import static allchive.server.core.consts.AllchiveConst.SwaggerPatterns;
 
 @Slf4j
 @RestControllerAdvice

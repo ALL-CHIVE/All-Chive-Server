@@ -1,11 +1,11 @@
 package allchive.server.domain.domains.category.domain;
 
+
 import allchive.server.domain.common.model.BaseTimeEntity;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Getter
 @Table(name = "tbl_category")
