@@ -22,7 +22,7 @@ public class OauthController {
     private final OauthSigninUseCase oauthSigninUseCase;
     private final SpringEnvironmentHelper springEnvironmentHelper;
 
-    @Operation(summary = "oauth 링크발급 (클라)", description = "oauth 링크를 받아볼수 있습니다.")
+    @Operation(summary = "oauth 링크발급", description = "oauth 링크를 받아볼수 있습니다.")
     @GetMapping("/link/{provider}")
     public OauthLoginLinkResponse getKakaoOauthLink(
             @PathVariable("provider") OauthProvider provider,
@@ -35,14 +35,14 @@ public class OauthController {
         return oauthLinkUseCase.getKaKaoOauthLink(provider, referer);
     }
 
-    @Operation(summary = "oauth 링크발급 (server)", description = "oauth 링크를 받아볼수 있습니다.")
+    @Operation(summary = "개발용 oauth 링크발급", deprecated = true)
     @GetMapping("/link/{provider}/test")
     public OauthLoginLinkResponse getKakaoOauthLinkTest(
             @PathVariable("provider") OauthProvider provider) {
         return oauthLinkUseCase.getKaKaoOauthLinkTest(provider);
     }
 
-    @Operation(summary = "로그인 / 회원가입, referer,host 입력 안하셔도 됩니다!")
+    @Operation(summary = "로그인 / 회원가입", description = "referer, host 입력 안하셔도 됩니다!")
     @GetMapping("/signin/{provider}")
     public SignInResponse getCredential(
             @PathVariable("provider") OauthProvider provider,
@@ -56,7 +56,7 @@ public class OauthController {
         return oauthSigninUseCase.execute(provider, code, referer);
     }
 
-    @Operation(summary = "로그인 / 회원가입, referer,host 입력 안하셔도 됩니다!")
+    @Operation(summary = "개발용 로그인 / 회원가입", deprecated = true)
     @GetMapping("/signin/{provider}/test")
     public SignInResponse getCredential(
             @PathVariable("provider") OauthProvider provider, @RequestParam("code") String code) {
