@@ -28,7 +28,7 @@ public class KakaoOauthHelper {
                 + String.format(
                         KAKAO_OAUTH_QUERY_STRING,
                         kakaoOauthProperties.getClientId(),
-                        referer + "kakao/callback");
+                        referer + "oauth/callback");
     }
 
     public String getKaKaoOauthLinkTest() {
@@ -44,7 +44,7 @@ public class KakaoOauthHelper {
         // TODO : 프론트 콜백 URL 알아내면 바꾸기
         return kakaoOauthClient.kakaoAuth(
                 kakaoOauthProperties.getClientId(),
-                referer + "/kakao/callback",
+                referer + "oauth/callback",
                 code,
                 kakaoOauthProperties.getClientSecret());
     }
