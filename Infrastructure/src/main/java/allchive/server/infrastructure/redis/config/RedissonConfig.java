@@ -1,4 +1,4 @@
-package allchive.server.infrastructure.config.redis;
+package allchive.server.infrastructure.redis.config;
 
 
 import org.redisson.Redisson;

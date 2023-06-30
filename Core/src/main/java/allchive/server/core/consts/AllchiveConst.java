@@ -21,6 +21,10 @@ public class AllchiveConst {
     public static final int NOT_FOUND = 404;
     public static final int INTERNAL_SERVER = 500;
 
+    public static final String KAKAO_OAUTH_QUERY_STRING =
+            "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
+
+
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
     };

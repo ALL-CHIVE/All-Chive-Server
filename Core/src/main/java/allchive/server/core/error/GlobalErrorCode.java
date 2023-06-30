@@ -9,14 +9,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum GlobalErrorCode implements BaseErrorCode {
-    /* example */
+    /** example **/
     EXAMPLE_ERROR(BAD_REQUEST, "GLOBAL_400_0", "에러 예시 입니다."),
 
-    /* global error */
+    /** Server 오류 **/
     HTTP_MESSAGE_NOT_READABLE(BAD_REQUEST, "GLOBAL_400_1", "잘못된 형식의 값을 입력했습니다."),
     _INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "GLOBAL_500_1", "서버 오류. 관리자에게 문의 부탁드립니다."),
+    INVALID_OAUTH_PROVIDER(INTERNAL_SERVER, "GLOBAL_500_2", "지원하지 않는 OAuth Provider 입니다."),
 
-    /*토큰 에러*/
+    /** 토큰 에러 **/
     // TODO : 에러 코드 정렬
     INVALID_TOKEN(UNAUTHORIZED, "AUTH_401_2", "올바르지 않은 토큰입니다."),
     INVALID_ACCESS_TOKEN_ERROR(UNAUTHORIZED, "AUTH_401_4", "알맞은 accessToken 을 넣어주세요."),
@@ -29,6 +30,13 @@ public enum GlobalErrorCode implements BaseErrorCode {
     UNSUPPORTED_TOKEN(UNAUTHORIZED, "AUTH_401_7", "지원하지 않는 토큰입니다"),
     INVALID_SIGNATURE(UNAUTHORIZED, "AUTH_401_8", "잘못된 JWT 서명입니다"),
     NO_TOKEN(UNAUTHORIZED, "AUTH_401_1", "토큰이 존재하지 않습니다"),
+
+    /** Feign Client 오류 */
+    OTHER_SERVER_BAD_REQUEST(BAD_REQUEST, "FEIGN_400_1", "Other server bad request"),
+    OTHER_SERVER_UNAUTHORIZED(BAD_REQUEST, "FEIGN_400_2", "Other server unauthorized"),
+    OTHER_SERVER_FORBIDDEN(BAD_REQUEST, "FEIGN_400_3", "Other server forbidden"),
+    OTHER_SERVER_EXPIRED_TOKEN(BAD_REQUEST, "FEIGN_400_4", "Other server expired token"),
+    OTHER_SERVER_NOT_FOUND(BAD_REQUEST, "FEIGN_400_5", "Other server not found error"),
     ;
 
     private int status;
