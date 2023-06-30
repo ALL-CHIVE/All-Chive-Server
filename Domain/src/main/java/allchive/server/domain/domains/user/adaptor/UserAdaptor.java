@@ -22,4 +22,8 @@ public class UserAdaptor {
                 .findByOauthInfo(oauthInfo)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
+
+    public void save(User user) {
+        userRepository.save(user);
+    }
 }

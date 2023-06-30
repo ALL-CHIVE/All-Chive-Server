@@ -5,6 +5,7 @@ import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
+import allchive.server.domain.domains.user.exception.exceptions.AlreadySignUpUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,23 +18,26 @@ public class UserDomainService {
         return userAdaptor.exist(oauthInfo);
     }
 
-    //    @Transactional
-    //    public User registerUser(Profile profile, OauthInfo oauthInfo, Boolean marketingAgree) {
-    //        validUserCanRegister(oauthInfo);
-    //        User newUser =
-    //                User.builder()
-    //                        .profile(profile)
-    //                        .marketingAgree(marketingAgree)
-    //                        .oauthInfo(oauthInfo)
-    //                        .build();
-    //        userRepository.save(newUser);
-    //        return newUser;
-    //    }
+    @Transactional
+    public User registerUser(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
+        validUserCanRegister(oauthInfo);
+        final User newUser = User.of(nickname, profileImgUrl, oauthInfo);
+        userAdaptor.save(newUser);
+        return newUser;
+    }
 
     @Transactional
     public User loginUser(OauthInfo oauthInfo) {
         User user = userAdaptor.queryUserByOauthInfo(oauthInfo);
         user.login();
         return user;
+    }
+
+    public Boolean checkUserCanRegister(OauthInfo oauthInfo) {
+        return !userAdaptor.exist(oauthInfo);
+    }
+
+    public void validUserCanRegister(OauthInfo oauthInfo) {
+        if (!checkUserCanRegister(oauthInfo)) throw AlreadySignUpUserException.EXCEPTION;
     }
 }

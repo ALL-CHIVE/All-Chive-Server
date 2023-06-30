@@ -8,33 +8,40 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class SignInResponse {
+public class OauthSignInResponse {
     @Schema(description = "로그인 가능 여부")
     private boolean canLogin;
+
+    @Schema(description = "idToken, 로그인 되었을 경우 null")
+    private String idToken;
 
     @JsonUnwrapped private TokenVo tokenVo;
 
     @Builder
-    private SignInResponse(boolean canLogin, TokenVo tokenVo) {
+    private OauthSignInResponse(boolean canLogin, String idToken, TokenVo tokenVo) {
         this.canLogin = canLogin;
+        this.idToken = idToken;
         this.tokenVo = tokenVo;
     }
 
-    public static SignInResponse of(
+    public static OauthSignInResponse of(
             boolean canLogin,
+            String idToken,
             String accessToken,
             Long accessTokenAge,
             String refreshToken,
             Long refreshTokenAge) {
-        return SignInResponse.builder()
+        return OauthSignInResponse.builder()
                 .canLogin(canLogin)
+                .idToken(idToken)
                 .tokenVo(TokenVo.of(accessToken, accessTokenAge, refreshToken, refreshTokenAge))
                 .build();
     }
 
-    public static SignInResponse cannotLogin() {
-        return SignInResponse.builder()
+    public static OauthSignInResponse cannotLogin(String idToken) {
+        return OauthSignInResponse.builder()
                 .canLogin(false)
+                .idToken(idToken)
                 .tokenVo(TokenVo.of(null, null, null, null))
                 .build();
     }

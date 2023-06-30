@@ -1,17 +1,19 @@
 package allchive.server.api.auth.model.dto.request;
 
 
-import javax.validation.constraints.NotEmpty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 public class RegisterRequest {
-    @NotEmpty private String email;
-    private String phoneNumber;
-    private String profileImage;
-    @NotEmpty private String name;
+    @Schema(defaultValue = "www.s3....", description = "프로필 이미지 url")
+    @NotBlank(message = "프로필 이미지 url을 입력하세요")
+    private String profileImgUrl;
 
-    private Boolean marketingAgree = Boolean.FALSE;
+    @Schema(defaultValue = "닉네임", description = "닉네임")
+    @NotBlank(message = "닉네임을 입력하세요")
+    private String nickname;
 }

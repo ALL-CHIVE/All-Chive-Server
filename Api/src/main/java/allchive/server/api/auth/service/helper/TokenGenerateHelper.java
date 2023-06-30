@@ -1,7 +1,7 @@
 package allchive.server.api.auth.service.helper;
 
 
-import allchive.server.api.auth.model.dto.response.SignInResponse;
+import allchive.server.api.auth.model.dto.response.OauthSignInResponse;
 import allchive.server.core.annotation.Helper;
 import allchive.server.core.jwt.JwtTokenProvider;
 import allchive.server.domain.domains.user.adaptor.RefreshTokenAdaptor;
@@ -20,7 +20,7 @@ public class TokenGenerateHelper {
     private final RefreshTokenAdaptor refreshTokenAdaptor;
 
     @Transactional
-    public SignInResponse execute(User user) {
+    public OauthSignInResponse execute(User user) {
         String newAccessToken =
                 jwtTokenProvider.generateAccessToken(user.getId(), UserRole.USER.getValue());
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
@@ -33,8 +33,9 @@ public class TokenGenerateHelper {
                         .build();
         refreshTokenAdaptor.save(newRefreshTokenEntityEntity);
 
-        return SignInResponse.of(
+        return OauthSignInResponse.of(
                 true,
+                null,
                 newAccessToken,
                 jwtTokenProvider.getAccessTokenTTLSecond(),
                 newRefreshToken,

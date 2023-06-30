@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,6 +24,7 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     @NotNull private String nickname;
+
     private String profileImgUrl;
 
     @Embedded private OauthInfo oauthInfo;
@@ -36,6 +38,22 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
+
+    @Builder
+    private User(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
+        this.nickname = nickname;
+        this.profileImgUrl = profileImgUrl;
+        this.oauthInfo = oauthInfo;
+        this.lastLoginAt = LocalDateTime.now();
+    }
+
+    public static User of(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
+        return User.builder()
+                .nickname(nickname)
+                .profileImgUrl(profileImgUrl)
+                .oauthInfo(oauthInfo)
+                .build();
+    }
 
     public void login() {
         if (!UserState.NORMAL.equals(this.userState)) {
