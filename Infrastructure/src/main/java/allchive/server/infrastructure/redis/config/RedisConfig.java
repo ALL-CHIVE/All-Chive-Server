@@ -1,4 +1,4 @@
-package allchive.server.infrastructure.config.redis;
+package allchive.server.infrastructure.redis.config;
 
 
 import java.time.Duration;
@@ -32,8 +32,8 @@ public class RedisConfig {
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration(host, port);
 
-//        if (redisPassword != null && !redisPassword.isBlank())
-//            redisConfig.setPassword(redisPassword);
+        //        if (redisPassword != null && !redisPassword.isBlank())
+        //            redisConfig.setPassword(redisPassword);
 
         LettuceClientConfiguration clientConfig =
                 LettuceClientConfiguration.builder()

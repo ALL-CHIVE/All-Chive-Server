@@ -1,6 +1,7 @@
 package allchive.server.api.example;
 
 
+import allchive.server.core.error.exception.ExampleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +33,10 @@ public class ExampleController {
     @DeleteMapping(value = "/responseDelete")
     public int responseDelete() {
         return 1;
+    }
+
+    @GetMapping(value = "/responseError")
+    public int responseError() {
+        throw ExampleException.EXCEPTION;
     }
 }

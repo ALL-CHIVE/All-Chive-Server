@@ -1,6 +1,9 @@
 package allchive.server.domain.domains.user.domain.enums;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,5 +12,13 @@ import lombok.Getter;
 public enum OauthProvider {
     KAKAO("KAKAO");
 
-    private String value;
+    @JsonValue private String value;
+
+    @JsonCreator
+    public static OauthProvider parsing(String inputValue) {
+        return Stream.of(OauthProvider.values())
+                .filter(category -> category.getValue().equals(inputValue))
+                .findFirst()
+                .orElse(null);
+    }
 }
