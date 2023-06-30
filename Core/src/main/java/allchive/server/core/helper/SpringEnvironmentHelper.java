@@ -1,5 +1,7 @@
 package allchive.server.core.helper;
 
+import static allchive.server.core.consts.AllchiveConst.DEV;
+import static allchive.server.core.consts.AllchiveConst.PROD;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +14,6 @@ import org.springframework.stereotype.Component;
 public class SpringEnvironmentHelper {
 
     private final Environment environment;
-
-    private final String PROD = "prod";
-    private final String DEV = "dev";
 
     public Boolean isProdProfile() {
         String[] activeProfiles = environment.getActiveProfiles();

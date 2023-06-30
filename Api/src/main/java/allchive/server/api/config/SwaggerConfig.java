@@ -26,12 +26,12 @@ public class SwaggerConfig {
     private Info swaggerInfo() {
         License license = new License();
         license.setUrl("https://github.com/Central-MakeUs");
-        license.setName("Dachive");
+        license.setName("Allchive");
 
         return new Info()
                 .version("v0.0.1")
-                .title("\"Dachive 서버 API문서\"")
-                .description("Dachive 서버의 API 문서 입니다.")
+                .title("\"Allchive 서버 API문서\"")
+                .description("Allchive 서버의 API 문서 입니다.")
                 .license(license);
     }
 

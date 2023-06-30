@@ -1,4 +1,4 @@
-package allchive.server.infrastructure.config.redis;
+package allchive.server.infrastructure.redis.config;
 
 
 import java.time.Duration;
@@ -29,6 +29,23 @@ public class RedisCacheConfig {
                                 RedisSerializationContext.SerializationPair.fromSerializer(
                                         new GenericJackson2JsonRedisSerializer()))
                         .entryTtl(Duration.ofMinutes(30L));
+
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf)
+                .cacheDefaults(redisCacheConfiguration)
+                .build();
+    }
+
+    @Bean
+    public CacheManager oidcCacheManager(RedisConnectionFactory cf) {
+        RedisCacheConfiguration redisCacheConfiguration =
+                RedisCacheConfiguration.defaultCacheConfig()
+                        .serializeKeysWith(
+                                RedisSerializationContext.SerializationPair.fromSerializer(
+                                        new StringRedisSerializer()))
+                        .serializeValuesWith(
+                                RedisSerializationContext.SerializationPair.fromSerializer(
+                                        new GenericJackson2JsonRedisSerializer()))
+                        .entryTtl(Duration.ofDays(7L));
 
         return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf)
                 .cacheDefaults(redisCacheConfiguration)
