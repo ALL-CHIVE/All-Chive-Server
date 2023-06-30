@@ -1,5 +1,6 @@
 package allchive.server.infrastructure.oauth.kakao.config;
 
+
 import allchive.server.core.error.exception.OtherServerBadRequestException;
 import allchive.server.core.error.exception.OtherServerExpiredTokenException;
 import allchive.server.core.error.exception.OtherServerForbiddenException;

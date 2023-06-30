@@ -19,7 +19,6 @@ public class KakaoUserInfoDto {
     private final String name;
     private final OauthProvider oauthProvider;
 
-
     public OauthInfo toOauthInfo() {
         return OauthInfo.builder().oid(oauthId).provider(oauthProvider).build();
     }

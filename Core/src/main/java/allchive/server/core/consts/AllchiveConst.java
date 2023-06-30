@@ -8,6 +8,8 @@ public class AllchiveConst {
     public static final String TOKEN_TYPE = "type";
     public static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
+
+    public static final String KID = "kid";
     public static final String KR_YES = "예";
     public static final String KR_NO = "아니요";
 
@@ -23,7 +25,6 @@ public class AllchiveConst {
 
     public static final String KAKAO_OAUTH_QUERY_STRING =
             "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
-
 
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",

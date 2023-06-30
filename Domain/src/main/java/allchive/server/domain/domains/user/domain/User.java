@@ -3,7 +3,9 @@ package allchive.server.domain.domains.user.domain;
 
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
+import allchive.server.domain.domains.user.domain.enums.UserRole;
 import allchive.server.domain.domains.user.domain.enums.UserState;
+import allchive.server.domain.domains.user.exception.exceptions.ForbiddenUserException;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,4 +33,14 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private UserState userState = UserState.NORMAL;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole = UserRole.USER;
+
+    public void login() {
+        if (!UserState.NORMAL.equals(this.userState)) {
+            throw ForbiddenUserException.EXCEPTION;
+        }
+        lastLoginAt = LocalDateTime.now();
+    }
 }

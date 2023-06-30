@@ -1,6 +1,6 @@
 package allchive.server.infrastructure.oauth.kakao.config;
 
-import allchive.server.core.dto.ErrorReason;
+
 import allchive.server.infrastructure.oauth.kakao.dto.KakaoKauthErrorResponse;
 import allchive.server.infrastructure.oauth.kakao.exception.KakaoKauthErrorCode;
 import feign.Response;

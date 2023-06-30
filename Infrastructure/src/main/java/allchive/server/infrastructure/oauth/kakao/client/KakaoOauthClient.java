@@ -24,7 +24,7 @@ public interface KakaoOauthClient {
             @PathVariable("CODE") String code,
             @PathVariable("CLIENT_SECRET") String client_secret);
 
-    @Cacheable(cacheNames = "KakaoOICD", cacheManager = "oidcCacheManager")
+    @Cacheable(cacheNames = "KakaoOIDC", cacheManager = "oidcCacheManager")
     @GetMapping("/.well-known/jwks.json")
     OIDCPublicKeysResponse getKakaoOIDCOpenKeys();
 }

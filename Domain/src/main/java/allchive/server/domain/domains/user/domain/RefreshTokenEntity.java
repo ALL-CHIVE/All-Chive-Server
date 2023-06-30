@@ -15,6 +15,7 @@ public class RefreshTokenEntity {
     @Indexed private String refreshToken;
     @TimeToLive // TTL
     private Long ttl;
+
     @Builder
     private RefreshTokenEntity(Long id, String refreshToken, Long ttl) {
         this.id = id;
@@ -23,10 +24,6 @@ public class RefreshTokenEntity {
     }
 
     public static RefreshTokenEntity of(Long id, String refreshToken, Long ttl) {
-        return RefreshTokenEntity.builder()
-                .id(id)
-                .refreshToken(refreshToken)
-                .ttl(ttl)
-                .build();
+        return RefreshTokenEntity.builder().id(id).refreshToken(refreshToken).ttl(ttl).build();
     }
 }

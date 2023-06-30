@@ -3,6 +3,7 @@ package allchive.server.api.config;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import allchive.server.core.dto.ErrorReason;
+import allchive.server.core.error.BaseDynamicException;
 import allchive.server.core.error.BaseErrorException;
 import allchive.server.core.error.ErrorResponse;
 import allchive.server.core.error.GlobalErrorCode;
@@ -89,6 +90,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         final ErrorResponse errorResponse = ErrorResponse.from(errorReason);
         return ResponseEntity.status(HttpStatus.valueOf(errorReason.getStatus()))
                 .body(errorResponse);
+    }
+
+    // dynamic error 처리
+    @ExceptionHandler(BaseDynamicException.class)
+    public ResponseEntity<ErrorResponse> BaseDynamicExceptionHandler(
+            BaseDynamicException e, HttpServletRequest request) {
+        ErrorResponse errorResponse =
+                ErrorResponse.from(ErrorReason.of(e.getStatus(), e.getCode(), e.getMessage()));
+        return ResponseEntity.status(HttpStatus.valueOf(e.getStatus())).body(errorResponse);
     }
 
     // 위에서 따로 처리하지 않은 에러를 모두 처리해줍니다.

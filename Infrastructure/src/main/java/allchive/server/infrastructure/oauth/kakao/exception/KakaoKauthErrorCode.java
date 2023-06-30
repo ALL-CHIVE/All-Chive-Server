@@ -1,13 +1,12 @@
 package allchive.server.infrastructure.oauth.kakao.exception;
 
+import static allchive.server.core.consts.AllchiveConst.BAD_REQUEST;
+
 import allchive.server.core.dto.ErrorReason;
 import allchive.server.core.error.BaseDynamicException;
 import allchive.server.core.error.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import static allchive.server.core.consts.AllchiveConst.BAD_REQUEST;
-
 
 @Getter
 @AllArgsConstructor

@@ -1,5 +1,6 @@
 package allchive.server.api.auth.service;
 
+
 import allchive.server.api.auth.model.dto.response.OauthLoginLinkResponse;
 import allchive.server.api.auth.service.helper.KakaoOauthHelper;
 import allchive.server.core.annotation.UseCase;
@@ -21,7 +22,7 @@ public class OauthLinkUseCase {
         }
     }
 
-    public OauthLoginLinkResponse getKaKaoOauthLink(String referer, OauthProvider provider) {
+    public OauthLoginLinkResponse getKaKaoOauthLink(OauthProvider provider, String referer) {
         switch (provider) {
             case KAKAO:
                 return new OauthLoginLinkResponse(kakaoOauthHelper.getKaKaoOauthLink(referer));
@@ -29,5 +30,4 @@ public class OauthLinkUseCase {
                 throw InvalidOauthProviderException.EXCEPTION;
         }
     }
-
 }

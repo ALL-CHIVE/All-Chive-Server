@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers("/**/health/**")
                 .permitAll()
+                .mvcMatchers("/example/**")
+                .permitAll()
                 .anyRequest()
                 .hasRole("USER");
 
