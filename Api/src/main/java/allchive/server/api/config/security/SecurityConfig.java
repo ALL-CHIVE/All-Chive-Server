@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers("/example/**")
                 .permitAll()
+                .mvcMatchers("/auth/**")
+                .permitAll()
                 .anyRequest()
                 .hasRole("USER");
 
