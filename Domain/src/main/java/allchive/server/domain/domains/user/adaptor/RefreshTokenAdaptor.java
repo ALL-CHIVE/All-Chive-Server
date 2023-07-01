@@ -14,4 +14,8 @@ public class RefreshTokenAdaptor {
     public void save(RefreshTokenEntity newRefreshTokenEntityEntity) {
         refreshTokenRepository.save(newRefreshTokenEntityEntity);
     }
+
+    public void deleteTokenByUserId(Long userId) {
+        refreshTokenRepository.deleteById(userId.toString());
+    }
 }

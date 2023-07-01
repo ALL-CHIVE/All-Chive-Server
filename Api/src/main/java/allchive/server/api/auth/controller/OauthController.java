@@ -33,18 +33,16 @@ public class OauthController {
             @RequestHeader(value = "host", required = false) String host) {
         if (referer.contains(host)) {
             String format = String.format("https://%s/", host);
-            return oauthLinkUseCase.getKaKaoOauthLink(provider, format);
+            return oauthLinkUseCase.getOauthLink(provider, format);
         }
-        return oauthLinkUseCase.getKaKaoOauthLink(provider, referer);
+        return oauthLinkUseCase.getOauthLink(provider, referer);
     }
 
     @Operation(summary = "개발용 oauth 링크발급", deprecated = true)
     @GetMapping("/link/{provider}/test")
     public OauthLoginLinkResponse getOauthLinkTest(
             @PathVariable("provider") OauthProvider provider) {
-        if (springEnvironmentHelper.isProdProfile()) {}
-
-        return oauthLinkUseCase.getKaKaoOauthLinkTest(provider);
+        return oauthLinkUseCase.getOauthLinkTest(provider);
     }
 
     @Operation(
@@ -71,7 +69,7 @@ public class OauthController {
     }
 
     @Operation(summary = "회원가입")
-    @PostMapping("/register/{provider}/test")
+    @PostMapping("/register/{provider}")
     public OauthRegisterResponse oauthUserRegister(
             @PathVariable("provider") OauthProvider provider,
             @RequestParam("idToken") String idToken,

@@ -20,7 +20,7 @@ public class KakaoUserInfoDto {
     private final OauthProvider oauthProvider;
 
     public OauthInfo toOauthInfo() {
-        return OauthInfo.builder().oid(oauthId).provider(oauthProvider).build();
+        return OauthInfo.of(oauthProvider, oauthId);
     }
 }
 ;

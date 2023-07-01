@@ -40,4 +40,10 @@ public class UserDomainService {
     public void validUserCanRegister(OauthInfo oauthInfo) {
         if (!checkUserCanRegister(oauthInfo)) throw AlreadySignUpUserException.EXCEPTION;
     }
+
+    @Transactional
+    public void deleteUserById(Long userId) {
+        User user = userAdaptor.queryUserById(userId);
+        user.withdrawUser();
+    }
 }

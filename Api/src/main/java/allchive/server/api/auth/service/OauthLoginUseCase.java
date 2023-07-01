@@ -43,6 +43,7 @@ public class OauthLoginUseCase {
         }
     }
 
+    /** idtoken 가져오기 * */
     private OauthTokenResponse getCredential(OauthProvider provider, String code, String referer) {
         switch (provider) {
             case KAKAO:
@@ -61,6 +62,7 @@ public class OauthLoginUseCase {
         }
     }
 
+    /** idtoken 분석 * */
     private OauthInfo getOauthInfo(OauthProvider provider, String idToken) {
         switch (provider) {
             case KAKAO:
