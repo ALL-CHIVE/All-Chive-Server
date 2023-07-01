@@ -7,7 +7,6 @@ import allchive.server.core.jwt.JwtTokenProvider;
 import allchive.server.domain.domains.user.adaptor.RefreshTokenAdaptor;
 import allchive.server.domain.domains.user.domain.RefreshTokenEntity;
 import allchive.server.domain.domains.user.domain.User;
-import allchive.server.domain.domains.user.domain.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,16 +21,16 @@ public class TokenGenerateHelper {
     @Transactional
     public OauthSignInResponse execute(User user) {
         String newAccessToken =
-                jwtTokenProvider.generateAccessToken(user.getId(), UserRole.USER.getValue());
+                jwtTokenProvider.generateAccessToken(user.getId(), user.getUserRole().getValue());
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user.getId());
 
-        RefreshTokenEntity newRefreshTokenEntityEntity =
+        RefreshTokenEntity newRefreshTokenEntity =
                 RefreshTokenEntity.builder()
                         .refreshToken(newRefreshToken)
                         .id(user.getId())
                         .ttl(jwtTokenProvider.getRefreshTokenTTLSecond())
                         .build();
-        refreshTokenAdaptor.save(newRefreshTokenEntityEntity);
+        refreshTokenAdaptor.save(newRefreshTokenEntity);
 
         return OauthSignInResponse.of(
                 true,

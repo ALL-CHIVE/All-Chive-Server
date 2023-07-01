@@ -31,6 +31,7 @@ public class OauthRegisterUseCase {
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
     }
 
+    /** idtoken 분석 * */
     private OauthInfo getOauthInfo(OauthProvider provider, String idToken) {
         switch (provider) {
             case KAKAO:

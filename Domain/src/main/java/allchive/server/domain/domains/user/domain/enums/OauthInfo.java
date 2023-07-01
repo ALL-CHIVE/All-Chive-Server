@@ -13,19 +13,22 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OauthInfo {
-
     @Enumerated(EnumType.STRING)
     private OauthProvider provider;
 
     private String oid;
 
     @Builder
-    public OauthInfo(OauthProvider provider, String oid) {
+    private OauthInfo(OauthProvider provider, String oid) {
         this.provider = provider;
         this.oid = oid;
     }
 
-    public OauthInfo withDrawOauthInfo() {
-        return OauthInfo.builder().oid(oid).provider(provider).build();
+    public static OauthInfo of(OauthProvider provider, String oid) {
+        return OauthInfo.builder().provider(provider).oid(oid).build();
+    }
+
+    public void withDrawOauthInfo() {
+        this.oid = null;
     }
 }
