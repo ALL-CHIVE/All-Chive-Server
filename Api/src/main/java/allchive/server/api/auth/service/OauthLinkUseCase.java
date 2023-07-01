@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class OauthLinkUseCase {
     private final KakaoOauthHelper kakaoOauthHelper;
 
-    public OauthLoginLinkResponse getKaKaoOauthLinkTest(OauthProvider provider) {
+    public OauthLoginLinkResponse getOauthLinkTest(OauthProvider provider) {
         switch (provider) {
             case KAKAO:
                 return new OauthLoginLinkResponse(kakaoOauthHelper.getKaKaoOauthLinkTest());
@@ -22,7 +22,7 @@ public class OauthLinkUseCase {
         }
     }
 
-    public OauthLoginLinkResponse getKaKaoOauthLink(OauthProvider provider, String referer) {
+    public OauthLoginLinkResponse getOauthLink(OauthProvider provider, String referer) {
         switch (provider) {
             case KAKAO:
                 return new OauthLoginLinkResponse(kakaoOauthHelper.getKaKaoOauthLink(referer));

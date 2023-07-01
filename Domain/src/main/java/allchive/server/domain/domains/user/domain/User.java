@@ -5,6 +5,7 @@ import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.UserRole;
 import allchive.server.domain.domains.user.domain.enums.UserState;
+import allchive.server.domain.domains.user.exception.exceptions.AlreadyDeletedUserException;
 import allchive.server.domain.domains.user.exception.exceptions.ForbiddenUserException;
 import java.time.LocalDateTime;
 import javax.persistence.*;
@@ -31,7 +32,7 @@ public class User extends BaseTimeEntity {
 
     @NotNull private LocalDateTime lastLoginAt;
 
-    private String Email;
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private UserState userState = UserState.NORMAL;
@@ -60,5 +61,16 @@ public class User extends BaseTimeEntity {
             throw ForbiddenUserException.EXCEPTION;
         }
         lastLoginAt = LocalDateTime.now();
+    }
+
+    public void withdrawUser() {
+        if (UserState.DELETED.equals(this.userState)) {
+            throw AlreadyDeletedUserException.EXCEPTION;
+        }
+        this.userState = UserState.DELETED;
+        this.nickname = LocalDateTime.now() + "삭제한 유저";
+        this.profileImgUrl = null;
+        this.email = null;
+        this.oauthInfo.withDrawOauthInfo();
     }
 }

@@ -26,4 +26,8 @@ public class UserAdaptor {
     public void save(User user) {
         userRepository.save(user);
     }
+
+    public User queryUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
+    }
 }

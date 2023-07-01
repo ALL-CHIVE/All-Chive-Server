@@ -10,10 +10,13 @@ import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import allchive.server.infrastructure.oauth.kakao.client.KakaoInfoClient;
 import allchive.server.infrastructure.oauth.kakao.client.KakaoOauthClient;
 import allchive.server.infrastructure.oauth.kakao.dto.KakaoTokenResponse;
+import allchive.server.infrastructure.oauth.kakao.dto.KakaoUnlinkTarget;
 import allchive.server.infrastructure.oauth.kakao.dto.OIDCPublicKeysResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Helper
+@Slf4j
 @RequiredArgsConstructor
 public class KakaoOauthHelper {
     private final KakaoOAuthProperties kakaoOauthProperties;
@@ -57,14 +60,13 @@ public class KakaoOauthHelper {
                 kakaoOauthProperties.getClientSecret());
     }
 
+    /** idtoken 분석 * */
     public OauthInfo getOauthInfoByIdToken(String idToken) {
         OIDCDecodePayload oidcDecodePayload = getOIDCDecodePayload(idToken);
-        return OauthInfo.builder()
-                .provider(OauthProvider.KAKAO)
-                .oid(oidcDecodePayload.getSub())
-                .build();
+        return OauthInfo.of(OauthProvider.KAKAO, oidcDecodePayload.getSub());
     }
 
+    /** oidc decode * */
     public OIDCDecodePayload getOIDCDecodePayload(String token) {
         OIDCPublicKeysResponse oidcPublicKeysResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
         return oauthOIDCHelper.getPayloadFromIdToken(
@@ -72,5 +74,18 @@ public class KakaoOauthHelper {
                 kakaoOauthProperties.getBaseUrl(),
                 kakaoOauthProperties.getAppId(),
                 oidcPublicKeysResponse);
+    }
+
+    /** kakao측 회원 탈퇴 * */
+    public void withdrawOauthUser(String oid) {
+        String kakaoAdminKey = kakaoOauthProperties.getAdminKey();
+        KakaoUnlinkTarget unlinkKaKaoTarget = KakaoUnlinkTarget.from(oid);
+        String header = "KakaoAK " + kakaoAdminKey;
+        log.info(
+                "{} {} {}",
+                header,
+                unlinkKaKaoTarget.getTargetIdType(),
+                unlinkKaKaoTarget.getAud());
+        kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget);
     }
 }

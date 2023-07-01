@@ -17,6 +17,8 @@ public enum GlobalErrorCode implements BaseErrorCode {
     _INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "GLOBAL_500_1", "서버 오류. 관리자에게 문의 부탁드립니다."),
     INVALID_OAUTH_PROVIDER(INTERNAL_SERVER, "GLOBAL_500_2", "지원하지 않는 OAuth Provider 입니다."),
 
+    SECURITY_CONTEXT_NOT_FOUND(INTERNAL_SERVER, "GLOBAL_500_3", "security context not found"),
+
     /** 토큰 에러 * */
     // TODO : 에러 코드 정렬
     INVALID_TOKEN(UNAUTHORIZED, "AUTH_401_2", "올바르지 않은 토큰입니다."),
