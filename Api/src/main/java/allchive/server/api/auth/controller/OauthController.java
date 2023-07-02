@@ -25,7 +25,9 @@ public class OauthController {
     private final OauthRegisterUseCase oauthRegisterUseCase;
     private final SpringEnvironmentHelper springEnvironmentHelper;
 
-    @Operation(summary = "oauth 링크발급", description = "oauth 링크를 받아볼수 있습니다.")
+    @Operation(
+            summary = "oauth 링크발급",
+            description = "oauth 링크를 받아볼수 있습니다. referer, host 입력 안하셔도 됩니다!")
     @GetMapping("/link/{provider}")
     public OauthLoginLinkResponse getOauthLink(
             @PathVariable("provider") OauthProvider provider,
@@ -47,7 +49,7 @@ public class OauthController {
 
     @Operation(
             summary = "로그인",
-            description = "referer, host 입력 안하셔도 됩니다!" + "회원가입 안된 유저일 경우, canLogin=false 값을 보냅니다!")
+            description = "referer, host 입력 안하셔도 됩니다! 회원가입 안된 유저일 경우, canLogin=false 값을 보냅니다!")
     @PostMapping("/login/{provider}")
     public OauthSignInResponse oauthUserLogin(
             @PathVariable("provider") OauthProvider provider,
@@ -62,7 +64,7 @@ public class OauthController {
     }
 
     @Operation(summary = "개발용 로그인", deprecated = true)
-    @PostMapping("/login/{provider}/test")
+    @GetMapping("/login/{provider}/test")
     public OauthSignInResponse oauthUserLoginTest(
             @PathVariable("provider") OauthProvider provider, @RequestParam("code") String code) {
         return oauthLoginUseCase.executeTest(provider, code);
