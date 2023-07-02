@@ -22,6 +22,20 @@ spring:
     database: mysql
 
 ---
+# local
+spring:
+  config:
+    activate:
+      on-profile: local
+
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+    org.hibernate.SQL: debug
+---
 # dev
 spring:
   config:
@@ -34,6 +48,7 @@ logging:
     com.zaxxer.hikari: TRACE
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
+    org.hibernate.SQL: debug
 
 ---
 # prod

@@ -43,4 +43,10 @@ public class Category extends BaseTimeEntity {
                 .topic(topic)
                 .build();
     }
+
+    public void update(String title, boolean publicStatus, Topic topic) {
+        this.title = title;
+        this.publicStatus = publicStatus;
+        this.topic = topic;
+    }
 }
