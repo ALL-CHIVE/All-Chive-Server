@@ -6,4 +6,4 @@ import lombok.RequiredArgsConstructor;
 
 @Adaptor
 @RequiredArgsConstructor
-public class TitleAdaptor {}
+public class CategoryPinAdaptor {}
