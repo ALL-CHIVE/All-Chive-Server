@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 
 @RequiredArgsConstructor
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity()
 public class SecurityConfig {
     private final FilterConfig filterConfig;
 
@@ -40,8 +40,6 @@ public class SecurityConfig {
                 .mvcMatchers("/**/health/**")
                 .permitAll()
                 .mvcMatchers("/example/**")
-                .permitAll()
-                .mvcMatchers("/auth/**")
                 .permitAll()
                 .anyRequest()
                 .hasRole("USER");
