@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "1-1. [auth]")
-public class authController {
+public class AuthController {
     private final WithdrawUserUseCase withdrawUserUseCase;
     private final LogOutUserUseCase logOutUserUseCase;
     private final TokenRefreshUseCase tokenRefreshUseCase;

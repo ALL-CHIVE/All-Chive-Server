@@ -1,13 +1,17 @@
 package allchive.server.domain.domains.user.domain;
 
 
+import allchive.server.domain.common.convertor.StringListConverter;
 import allchive.server.domain.common.model.BaseTimeEntity;
+import allchive.server.domain.domains.category.domain.enums.Topic;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.UserRole;
 import allchive.server.domain.domains.user.domain.enums.UserState;
 import allchive.server.domain.domains.user.exception.exceptions.AlreadyDeletedUserException;
 import allchive.server.domain.domains.user.exception.exceptions.ForbiddenUserException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -39,6 +43,9 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
+
+    @Convert(converter = StringListConverter.class)
+    private List<Topic> topics = new ArrayList();
 
     @Builder
     private User(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
@@ -72,5 +79,6 @@ public class User extends BaseTimeEntity {
         this.profileImgUrl = null;
         this.email = null;
         this.oauthInfo.withDrawOauthInfo();
+        this.topics = new ArrayList<>();
     }
 }
