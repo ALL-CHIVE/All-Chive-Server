@@ -24,7 +24,7 @@ public enum GlobalErrorCode implements BaseErrorCode {
     INVALID_TOKEN(UNAUTHORIZED, "AUTH_401_2", "올바르지 않은 토큰입니다."),
     INVALID_ACCESS_TOKEN_ERROR(UNAUTHORIZED, "AUTH_401_4", "알맞은 accessToken 을 넣어주세요."),
     EXPIRED_TOKEN(UNAUTHORIZED, "AUTH_401_3", "만료된 엑세스 토큰입니다"),
-    EXPIRED_REFRESH_TOKEN(UNAUTHORIZED, "AUTH_401_5", "만료된 리프레시 토큰입니다"),
+    EXPIRED_REFRESH_TOKEN(UNAUTHORIZED, "AUTH_403_1", "인증 시간이 만료되었습니다. 재 로그인 해주세요."),
     INVALID_AUTH_TOKEN(UNAUTHORIZED, "AUTH_401_2", "액세스 토큰이 유효하지 않습니다"),
     INVALID_REFRESH_TOKEN(UNAUTHORIZED, "AUTH_401_4", "리프레시 토큰이 유효하지 않습니다"),
     MISMATCH_REFRESH_TOKEN(UNAUTHORIZED, "AUTH_401_6", "리프레시 토큰의 유저 정보가 일치하지 않습니다"),
@@ -32,6 +32,7 @@ public enum GlobalErrorCode implements BaseErrorCode {
     UNSUPPORTED_TOKEN(UNAUTHORIZED, "AUTH_401_7", "지원하지 않는 토큰입니다"),
     INVALID_SIGNATURE(UNAUTHORIZED, "AUTH_401_8", "잘못된 JWT 서명입니다"),
     NO_TOKEN(UNAUTHORIZED, "AUTH_401_1", "토큰이 존재하지 않습니다"),
+
 
     /** Feign Client 오류 */
     OTHER_SERVER_BAD_REQUEST(BAD_REQUEST, "FEIGN_400_1", "Other server bad request"),

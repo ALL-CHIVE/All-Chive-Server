@@ -1,7 +1,9 @@
 package allchive.server.api.auth.controller;
 
 
+import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
 import allchive.server.api.auth.service.LogOutUserUseCase;
+import allchive.server.api.auth.service.TokenRefreshUseCase;
 import allchive.server.api.auth.service.WithdrawUserUseCase;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class authController {
     private final WithdrawUserUseCase withdrawUserUseCase;
     private final LogOutUserUseCase logOutUserUseCase;
+    private final TokenRefreshUseCase tokenRefreshUseCase;
 
     @Operation(summary = "회원탈퇴를 합니다.")
     @DeleteMapping("/withdrawal/{provider}")
@@ -29,5 +32,11 @@ public class authController {
     @PostMapping("/logout")
     public void logOutUser() {
         logOutUserUseCase.execute();
+    }
+
+    @Operation(summary = "토큰 재발급을 합니다.")
+    @PostMapping("/token/refresh")
+    public OauthRegisterResponse refreshToken(@RequestParam(value = "refreshToken") String refreshToken) {
+        return tokenRefreshUseCase.execute(refreshToken);
     }
 }

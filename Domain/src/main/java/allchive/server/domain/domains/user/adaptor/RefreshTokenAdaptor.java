@@ -2,6 +2,7 @@ package allchive.server.domain.domains.user.adaptor;
 
 
 import allchive.server.core.annotation.Adaptor;
+import allchive.server.core.error.exception.ExpiredRefreshTokenException;
 import allchive.server.domain.domains.user.domain.RefreshTokenEntity;
 import allchive.server.domain.domains.user.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,5 +18,10 @@ public class RefreshTokenAdaptor {
 
     public void deleteTokenByUserId(Long userId) {
         refreshTokenRepository.deleteById(userId.toString());
+    }
+
+    public RefreshTokenEntity findTokenByRefreshToken(String refreshToken) {
+        return refreshTokenRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> ExpiredRefreshTokenException.EXCEPTION);
     }
 }
