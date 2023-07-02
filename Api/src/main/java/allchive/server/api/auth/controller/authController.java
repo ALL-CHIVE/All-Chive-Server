@@ -36,7 +36,8 @@ public class authController {
 
     @Operation(summary = "토큰 재발급을 합니다.")
     @PostMapping("/token/refresh")
-    public OauthRegisterResponse refreshToken(@RequestParam(value = "refreshToken") String refreshToken) {
+    public OauthRegisterResponse refreshToken(
+            @RequestParam(value = "refreshToken") String refreshToken) {
         return tokenRefreshUseCase.execute(refreshToken);
     }
 }

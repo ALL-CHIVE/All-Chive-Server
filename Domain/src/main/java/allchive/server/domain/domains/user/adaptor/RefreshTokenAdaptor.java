@@ -21,7 +21,8 @@ public class RefreshTokenAdaptor {
     }
 
     public RefreshTokenEntity findTokenByRefreshToken(String refreshToken) {
-        return refreshTokenRepository.findByRefreshToken(refreshToken)
+        return refreshTokenRepository
+                .findByRefreshToken(refreshToken)
                 .orElseThrow(() -> ExpiredRefreshTokenException.EXCEPTION);
     }
 }

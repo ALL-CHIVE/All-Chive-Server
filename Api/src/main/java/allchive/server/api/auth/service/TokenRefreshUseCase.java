@@ -1,7 +1,7 @@
 package allchive.server.api.auth.service;
 
+
 import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
-import allchive.server.api.auth.model.dto.response.OauthSignInResponse;
 import allchive.server.api.auth.service.helper.TokenGenerateHelper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.jwt.JwtTokenProvider;
