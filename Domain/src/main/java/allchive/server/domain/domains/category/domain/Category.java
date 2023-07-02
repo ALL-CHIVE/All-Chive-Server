@@ -3,6 +3,8 @@ package allchive.server.domain.domains.category.domain;
 
 import allchive.server.domain.common.model.BaseTimeEntity;
 import javax.persistence.*;
+
+import allchive.server.domain.domains.category.domain.enums.Topic;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +18,9 @@ public class Category extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Topic topic;
-
     // 카테고리 만든 사람
     private Long userId;
     private String title;
     private boolean publicStatus = Boolean.FALSE;
+    private Topic topic;
 }

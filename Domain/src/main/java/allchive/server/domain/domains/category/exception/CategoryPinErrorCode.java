@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @AllArgsConstructor
-public enum TitleErrorCode implements BaseErrorCode {
+public enum CategoryPinErrorCode implements BaseErrorCode {
     ;
     private HttpStatus status;
     private String code;
