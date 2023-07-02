@@ -5,6 +5,7 @@ import allchive.server.domain.common.model.BaseTimeEntity;
 import javax.persistence.*;
 
 import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.exception.exceptions.NoAuthurityUpdateCategoryException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,5 +49,11 @@ public class Category extends BaseTimeEntity {
         this.title = title;
         this.publicStatus = publicStatus;
         this.topic = topic;
+    }
+
+    public void validateUser(Long userId) {
+        if (!this.userId.equals(userId)) {
+            throw NoAuthurityUpdateCategoryException.EXCEPTION;
+        }
     }
 }

@@ -20,4 +20,8 @@ public class CategoryDomainService {
         category.update(title, publicStatus, topic);
         categoryAdaptor.save(category);
     }
+
+    public void deleteCategory(Long categoryId) {
+        categoryAdaptor.deleteById(categoryId);
+    }
 }

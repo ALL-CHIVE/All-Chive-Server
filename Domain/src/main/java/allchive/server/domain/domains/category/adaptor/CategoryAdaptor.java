@@ -20,4 +20,8 @@ public class CategoryAdaptor {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(()-> CategoryNotFoundException.EXCEPTION);
     }
+
+    public void deleteById(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
+    }
 }

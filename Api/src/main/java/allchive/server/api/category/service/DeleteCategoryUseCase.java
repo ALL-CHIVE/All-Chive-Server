@@ -1,7 +1,5 @@
 package allchive.server.api.category.service;
 
-import allchive.server.api.category.model.dto.request.CreateCategoryRequest;
-import allchive.server.api.category.model.mapper.CategoryMapper;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.category.adaptor.CategoryAdaptor;
@@ -13,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
-public class CreateCategoryUseCase {
-    private final CategoryMapper categoryMapper;
+public class DeleteCategoryUseCase {
     private final CategoryDomainService categoryDomainService;
+    private final CategoryValidator categoryValidator;
 
     @Transactional
-    public void execute(CreateCategoryRequest request) {
+    public void execute(Long categoryId) {
         Long userId = SecurityUtil.getCurrentUserId();
-        final Category category = categoryMapper.toEntity(request, userId);
-        categoryDomainService.createCategory(category);
+        categoryValidator.verifyUser(userId, categoryId);
+        categoryDomainService.deleteCategory(categoryId);
     }
 }
