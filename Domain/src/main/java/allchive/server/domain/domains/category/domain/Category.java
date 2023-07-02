@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import allchive.server.domain.domains.category.domain.enums.Topic;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,24 @@ public class Category extends BaseTimeEntity {
     private Long userId;
     private String title;
     private boolean publicStatus = Boolean.FALSE;
+
+    @Enumerated(EnumType.STRING)
     private Topic topic;
+
+    @Builder
+    private Category(Long userId, String title, boolean publicStatus, Topic topic) {
+        this.userId = userId;
+        this.title = title;
+        this.publicStatus = publicStatus;
+        this.topic = topic;
+    }
+
+    public static Category of(Long userId, String title, boolean publicStatus, Topic topic) {
+        return Category.builder()
+                .userId(userId)
+                .title(title)
+                .publicStatus(publicStatus)
+                .topic(topic)
+                .build();
+    }
 }
