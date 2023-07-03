@@ -33,4 +33,8 @@ public class CategoryAdaptor {
             List<Long> blockList, Long userId, Pageable pageable) {
         return categoryRepository.querySliceCategoryExceptBlock(blockList, userId, pageable);
     }
+
+    public Slice<Category> querySliceCategoryByUserId(Long userId, Pageable pageable) {
+        return categoryRepository.querySliceCategoryByUserId(userId, pageable);
+    }
 }

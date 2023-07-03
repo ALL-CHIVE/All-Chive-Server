@@ -34,11 +34,28 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
         return SliceUtil.toSlice(categories, pageable);
     }
 
+    @Override
+    public Slice<Category> querySliceCategoryByUserId(Long userId, Pageable pageable) {
+        List<Category> categories =
+                queryFactory
+                        .select(category)
+                        .from(category)
+                        .where(userIdEq(userId))
+                        .orderBy(pinDesc(userId), scrapDesc(), createdAtDesc())
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize() + 1)
+                        .fetch();
+        return SliceUtil.toSlice(categories, pageable);
+    }
+
     private BooleanExpression userIdNotIn(List<Long> blockList) {
         return category.userId.notIn(blockList);
     }
 
-    // TODO : 데이터 없으면 오류뜨는거 처리
+    private BooleanExpression userIdEq(Long userId) {
+        return category.userId.eq(userId);
+    }
+
     private OrderSpecifier<Long> pinDesc(Long userId) {
         NumberExpression<Long> pinStatus =
                 new CaseBuilder().when(category.pinUserId.contains(userId)).then(1L).otherwise(0L);

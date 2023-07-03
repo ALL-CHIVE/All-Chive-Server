@@ -9,4 +9,6 @@ import org.springframework.data.domain.Slice;
 public interface CategoryCustomRepository {
     Slice<Category> querySliceCategoryExceptBlock(
             List<Long> blockList, Long userId, Pageable pageable);
+
+    Slice<Category> querySliceCategoryByUserId(Long userId, Pageable pageable);
 }

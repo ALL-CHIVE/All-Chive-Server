@@ -3,6 +3,7 @@ package allchive.server.api.category.model.dto.response;
 
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.category.domain.Category;
+import allchive.server.domain.domains.category.domain.enums.Topic;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -23,6 +24,9 @@ public class CategoryResponse {
     @DateFormat
     private LocalDateTime createdAt;
 
+    @Schema(defaultValue = "카테고리 주제", description = "카테고리 주제")
+    private Topic topic;
+
     @Schema(description = "카테고리 컨텐츠 중 이미지 수")
     private Long imgCnt;
 
@@ -41,6 +45,7 @@ public class CategoryResponse {
             String title,
             String imageUrl,
             LocalDateTime createdAt,
+            Topic topic,
             Long imgCnt,
             Long linkCnt,
             Long scrapCnt,
@@ -49,6 +54,7 @@ public class CategoryResponse {
         this.title = title;
         this.imageUrl = imageUrl;
         this.createdAt = createdAt;
+        this.topic = topic;
         this.imgCnt = imgCnt;
         this.linkCnt = linkCnt;
         this.scrapCnt = scrapCnt;
@@ -61,6 +67,7 @@ public class CategoryResponse {
                 .imageUrl(category.getImageUrl())
                 .title(category.getTitle())
                 .createdAt(category.getCreatedAt())
+                .topic(category.getTopic())
                 .imgCnt(category.getImgCnt())
                 .linkCnt(category.getLinkCnt())
                 .scrapCnt(category.getScrapCnt())
