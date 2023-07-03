@@ -15,4 +15,9 @@ public class Scrap extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    private Long categoryId;
 }

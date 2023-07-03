@@ -36,8 +36,8 @@ public class CategoryResponse {
     @Schema(description = "카테고리 스크랩 수")
     private Long scrapCnt;
 
-    @Schema(description = "카테고리 고정 여부, true == 고정됨")
-    private boolean pinStatus;
+    @Schema(description = "카테고리 스크랩/고정 여부, true == 스크랩/고정됨")
+    private boolean markStatus;
 
     @Builder
     private CategoryResponse(
@@ -49,7 +49,7 @@ public class CategoryResponse {
             Long imgCnt,
             Long linkCnt,
             Long scrapCnt,
-            boolean pinStatus) {
+            boolean markStatus) {
         this.categoryId = categoryId;
         this.title = title;
         this.imageUrl = imageUrl;
@@ -58,10 +58,10 @@ public class CategoryResponse {
         this.imgCnt = imgCnt;
         this.linkCnt = linkCnt;
         this.scrapCnt = scrapCnt;
-        this.pinStatus = pinStatus;
+        this.markStatus = markStatus;
     }
 
-    public static CategoryResponse of(Category category, boolean pinStatus) {
+    public static CategoryResponse of(Category category, boolean markStatus) {
         return CategoryResponse.builder()
                 .categoryId(category.getId())
                 .imageUrl(category.getImageUrl())
@@ -71,7 +71,7 @@ public class CategoryResponse {
                 .imgCnt(category.getImgCnt())
                 .linkCnt(category.getLinkCnt())
                 .scrapCnt(category.getScrapCnt())
-                .pinStatus(pinStatus)
+                .markStatus(markStatus)
                 .build();
     }
 }

@@ -21,13 +21,13 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
 
     @Override
     public Slice<Category> querySliceCategoryExceptBlock(
-            List<Long> blockList, Long userId, Pageable pageable) {
+            List<Long> categoryIdList, List<Long> blockList, Pageable pageable) {
         List<Category> categories =
                 queryFactory
                         .select(category)
                         .from(category)
                         .where(userIdNotIn(blockList))
-                        .orderBy(pinDesc(userId), scrapDesc(), createdAtDesc())
+                        .orderBy(scrabListDesc(categoryIdList), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
                         .fetch();
@@ -41,7 +41,21 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
                         .select(category)
                         .from(category)
                         .where(userIdEq(userId))
-                        .orderBy(pinDesc(userId), scrapDesc(), createdAtDesc())
+                        .orderBy(pinDesc(userId), scrapCntDesc(), createdAtDesc())
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize() + 1)
+                        .fetch();
+        return SliceUtil.toSlice(categories, pageable);
+    }
+
+    @Override
+    public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Pageable pageable) {
+        List<Category> categories =
+                queryFactory
+                        .select(category)
+                        .from(category)
+                        .where(categoryIdListIn(categoryIdList))
+                        .orderBy(scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
                         .fetch();
@@ -56,13 +70,23 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
         return category.userId.eq(userId);
     }
 
+    private BooleanExpression categoryIdListIn(List<Long> categortIdList) {
+        return category.id.in(categortIdList);
+    }
+
+    private OrderSpecifier<Long> scrabListDesc(List<Long> categoryIdList) {
+        NumberExpression<Long> pinStatus =
+                new CaseBuilder().when(category.id.in(categoryIdList)).then(1L).otherwise(0L);
+        return pinStatus.desc();
+    }
+
     private OrderSpecifier<Long> pinDesc(Long userId) {
         NumberExpression<Long> pinStatus =
                 new CaseBuilder().when(category.pinUserId.contains(userId)).then(1L).otherwise(0L);
         return pinStatus.desc();
     }
 
-    private OrderSpecifier<Long> scrapDesc() {
+    private OrderSpecifier<Long> scrapCntDesc() {
         return category.scrapCnt.desc();
     }
 

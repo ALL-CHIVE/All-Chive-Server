@@ -30,11 +30,16 @@ public class CategoryAdaptor {
     }
 
     public Slice<Category> querySliceCategoryExceptBlock(
-            List<Long> blockList, Long userId, Pageable pageable) {
-        return categoryRepository.querySliceCategoryExceptBlock(blockList, userId, pageable);
+            List<Long> categoryIdList, List<Long> blockList, Pageable pageable) {
+        return categoryRepository.querySliceCategoryExceptBlock(
+                categoryIdList, blockList, pageable);
     }
 
     public Slice<Category> querySliceCategoryByUserId(Long userId, Pageable pageable) {
         return categoryRepository.querySliceCategoryByUserId(userId, pageable);
+    }
+
+    public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Pageable pageable) {
+        return categoryRepository.querySliceCategoryIn(categoryIdList, pageable);
     }
 }
