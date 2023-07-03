@@ -5,7 +5,10 @@ import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.category.domain.Category;
 import allchive.server.domain.domains.category.exception.exceptions.CategoryNotFoundException;
 import allchive.server.domain.domains.category.repository.CategoryRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -17,11 +20,17 @@ public class CategoryAdaptor {
     }
 
     public Category findById(Long categoryId) {
-        return categoryRepository.findById(categoryId)
-                .orElseThrow(()-> CategoryNotFoundException.EXCEPTION);
+        return categoryRepository
+                .findById(categoryId)
+                .orElseThrow(() -> CategoryNotFoundException.EXCEPTION);
     }
 
     public void deleteById(Long categoryId) {
         categoryRepository.deleteById(categoryId);
+    }
+
+    public Slice<Category> querySliceCategoryExceptBlock(
+            List<Long> blockList, Long userId, Pageable pageable) {
+        return categoryRepository.querySliceCategoryExceptBlock(blockList, userId, pageable);
     }
 }

@@ -1,13 +1,11 @@
 package allchive.server.domain.domains.category.exception;
 
+import static allchive.server.core.consts.AllchiveConst.*;
 
 import allchive.server.core.dto.ErrorReason;
 import allchive.server.core.error.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-
-import static allchive.server.core.consts.AllchiveConst.*;
 
 @Getter
 @AllArgsConstructor
