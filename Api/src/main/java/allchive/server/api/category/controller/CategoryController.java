@@ -4,6 +4,7 @@ package allchive.server.api.category.controller;
 import allchive.server.api.category.model.dto.request.CreateCategoryRequest;
 import allchive.server.api.category.model.dto.request.UpdateCategoryRequest;
 import allchive.server.api.category.model.dto.response.CategoryResponse;
+import allchive.server.api.category.model.dto.response.CategoryTitleResponse;
 import allchive.server.api.category.service.*;
 import allchive.server.api.common.slice.SliceResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,7 @@ public class CategoryController {
     private final GetCategoryUseCase getCategoryUseCase;
     private final GetArchivedCategoryUseCase getArchivedCategoryUseCase;
     private final GetScrapCategoryUseCase getScrapCategoryUseCase;
+    private final GetCategoryTitleUseCase getCategoryTitleUseCase;
 
     @Operation(summary = "카테고리를 생성합니다.")
     @PostMapping()
@@ -73,5 +75,11 @@ public class CategoryController {
     public SliceResponse<CategoryResponse> getScrapCategory(
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
         return getScrapCategoryUseCase.execute(pageable);
+    }
+
+    @Operation(summary = "카테고리 이름 리스트를 가져옵니다.")
+    @GetMapping(value = "/lists")
+    public CategoryTitleResponse getScrapCategory() {
+        return getCategoryTitleUseCase.execute();
     }
 }

@@ -42,4 +42,8 @@ public class CategoryAdaptor {
     public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Pageable pageable) {
         return categoryRepository.querySliceCategoryIn(categoryIdList, pageable);
     }
+
+    public List<Category> findAllByUserIdOrderByTopic(Long userId) {
+        return categoryRepository.findAllByUserIdOrderByTopic(userId);
+    }
 }
