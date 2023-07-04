@@ -4,6 +4,7 @@ package allchive.server.domain.domains.user.domain;
 import allchive.server.domain.common.model.BaseTimeEntity;
 import javax.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,14 @@ public class Scrap extends BaseTimeEntity {
     private User user;
 
     private Long categoryId;
+
+    @Builder
+    private Scrap(User user, Long categoryId) {
+        this.user = user;
+        this.categoryId = categoryId;
+    }
+
+    public static Scrap of(User user, Long categoryId) {
+        return Scrap.builder().user(user).categoryId(categoryId).build();
+    }
 }

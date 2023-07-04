@@ -16,4 +16,6 @@ public interface CategoryCustomRepository {
     Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Topic topic, Pageable pageable);
 
     List<Category> queryCategoryByUserId(Long userId);
+
+    boolean queryCategoryExist(Long categoryId);
 }

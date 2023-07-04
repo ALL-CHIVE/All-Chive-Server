@@ -25,4 +25,10 @@ public class CategoryDomainService {
     public void deleteCategory(Long categoryId) {
         categoryAdaptor.deleteById(categoryId);
     }
+
+    public void updateScrapCount(Long categoryId, int i) {
+        Category category = categoryAdaptor.findById(categoryId);
+        category.updateScrapCnt(i);
+        categoryAdaptor.save(category);
+    }
 }

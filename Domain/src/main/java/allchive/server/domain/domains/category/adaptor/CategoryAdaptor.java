@@ -52,4 +52,8 @@ public class CategoryAdaptor {
     public List<Category> queryCategoryByUserId(Long userId) {
         return categoryRepository.queryCategoryByUserId(userId);
     }
+
+    public boolean queryCategoryExist(Long categoryId) {
+        return categoryRepository.queryCategoryExist(categoryId);
+    }
 }
