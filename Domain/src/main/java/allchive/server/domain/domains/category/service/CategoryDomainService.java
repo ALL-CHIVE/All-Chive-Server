@@ -16,8 +16,9 @@ public class CategoryDomainService {
         categoryAdaptor.save(category);
     }
 
-    public void updateCategory(Category category, String title, boolean publicStatus, Topic topic) {
-        category.update(title, publicStatus, topic);
+    public void updateCategory(
+            Category category, String title, String imageUrl, boolean publicStatus, Topic topic) {
+        category.update(title, imageUrl, publicStatus, topic);
         categoryAdaptor.save(category);
     }
 
