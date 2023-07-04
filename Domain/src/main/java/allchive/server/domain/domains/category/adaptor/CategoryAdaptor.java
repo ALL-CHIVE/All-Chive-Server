@@ -44,7 +44,8 @@ public class CategoryAdaptor {
         return categoryRepository.querySliceCategoryByUserId(userId, topic, pageable);
     }
 
-    public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Topic topic, Pageable pageable) {
+    public Slice<Category> querySliceCategoryIn(
+            List<Long> categoryIdList, Topic topic, Pageable pageable) {
         return categoryRepository.querySliceCategoryIn(categoryIdList, topic, pageable);
     }
 

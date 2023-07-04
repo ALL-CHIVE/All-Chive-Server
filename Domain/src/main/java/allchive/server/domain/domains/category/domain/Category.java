@@ -43,7 +43,12 @@ public class Category extends BaseTimeEntity {
 
     @Builder
     private Category(
-            Long userId, String imageUrl, String title, boolean publicStatus, boolean deleteStatus, Topic topic) {
+            Long userId,
+            String imageUrl,
+            String title,
+            boolean publicStatus,
+            boolean deleteStatus,
+            Topic topic) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.title = title;

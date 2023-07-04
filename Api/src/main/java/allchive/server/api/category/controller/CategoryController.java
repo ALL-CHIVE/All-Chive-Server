@@ -57,7 +57,8 @@ public class CategoryController {
             summary = "주제별 카테고리 리스트를 가져옵니다.",
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자")
     @GetMapping()
-    public SliceResponse<CategoryResponse> getCategory(@RequestParam("topic") Topic topic,
+    public SliceResponse<CategoryResponse> getCategory(
+            @RequestParam("topic") Topic topic,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
         return getCategoryUseCase.execute(topic, pageable);
     }
@@ -66,7 +67,8 @@ public class CategoryController {
             summary = "내 아카이빙 주제별 카테고리 리스트를 가져옵니다.",
             description = "sort parameter는 입력하지 말아주세요! sorting : 고정 -> 스크랩 수 -> 생성일자")
     @GetMapping(value = "/me/archiving")
-    public SliceResponse<CategoryResponse> getArchivedCategory(@RequestParam("topic") Topic topic,
+    public SliceResponse<CategoryResponse> getArchivedCategory(
+            @RequestParam("topic") Topic topic,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
         return getArchivedCategoryUseCase.execute(topic, pageable);
     }
@@ -75,7 +77,8 @@ public class CategoryController {
             summary = "스크랩 주제별 카테고리 리스트를 가져옵니다.",
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 수 -> 생성일자")
     @GetMapping(value = "/me/scrap")
-    public SliceResponse<CategoryResponse> getScrapCategory(@RequestParam("topic") Topic topic,
+    public SliceResponse<CategoryResponse> getScrapCategory(
+            @RequestParam("topic") Topic topic,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
         return getScrapCategoryUseCase.execute(topic, pageable);
     }

@@ -6,9 +6,8 @@ import allchive.server.api.category.model.dto.response.CategoryTitleResponse;
 import allchive.server.api.category.model.vo.TitleContentCntVo;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.category.domain.Category;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Mapper
 @Slf4j

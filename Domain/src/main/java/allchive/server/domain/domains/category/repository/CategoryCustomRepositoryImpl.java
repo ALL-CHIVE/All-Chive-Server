@@ -27,7 +27,11 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
                 queryFactory
                         .select(category)
                         .from(category)
-                        .where(userIdNotIn(blockList), publicStatusTrue(), topicEq(topic), deleteStatusFalse())
+                        .where(
+                                userIdNotIn(blockList),
+                                publicStatusTrue(),
+                                topicEq(topic),
+                                deleteStatusFalse())
                         .orderBy(scrabListDesc(categoryIdList), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
@@ -50,12 +54,17 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
     }
 
     @Override
-    public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Topic topic, Pageable pageable) {
+    public Slice<Category> querySliceCategoryIn(
+            List<Long> categoryIdList, Topic topic, Pageable pageable) {
         List<Category> categories =
                 queryFactory
                         .select(category)
                         .from(category)
-                        .where(categoryIdListIn(categoryIdList), publicStatusTrue(), topicEq(topic), deleteStatusFalse())
+                        .where(
+                                categoryIdListIn(categoryIdList),
+                                publicStatusTrue(),
+                                topicEq(topic),
+                                deleteStatusFalse())
                         .orderBy(scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)

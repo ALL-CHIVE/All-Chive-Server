@@ -2,9 +2,8 @@ package allchive.server.domain.domains.category.repository;
 
 
 import allchive.server.domain.domains.category.domain.Category;
-import java.util.List;
-
 import allchive.server.domain.domains.category.domain.enums.Topic;
+import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
