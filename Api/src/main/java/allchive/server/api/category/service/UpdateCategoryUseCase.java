@@ -1,5 +1,6 @@
 package allchive.server.api.category.service;
 
+
 import allchive.server.api.category.model.dto.request.UpdateCategoryRequest;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
@@ -22,6 +23,11 @@ public class UpdateCategoryUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         categoryValidator.verifyUser(userId, categoryId);
         Category category = categoryAdaptor.findById(categoryId);
-        categoryDomainService.updateCategory(category, request.getTitle(), request.isPublicStatus(), request.getTopic());
+        categoryDomainService.updateCategory(
+                category,
+                request.getTitle(),
+                request.getImageUrl(),
+                request.isPublicStatus(),
+                request.getTopic());
     }
 }
