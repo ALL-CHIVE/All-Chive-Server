@@ -15,4 +15,10 @@ public class ContentTagGroup extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Content content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tag tag;
 }
