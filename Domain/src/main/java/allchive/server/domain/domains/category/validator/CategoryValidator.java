@@ -17,4 +17,8 @@ public class CategoryValidator {
     public void validationPublicStatus(Long categoryId, Long userId) {
         categoryAdaptor.findById(categoryId).validatePublicStatus(userId);
     }
+
+    public void validationDeleteStatus(Long categoryId, Long userId) {
+        categoryAdaptor.findById(categoryId).validateDeleteStatus(userId);
+    }
 }

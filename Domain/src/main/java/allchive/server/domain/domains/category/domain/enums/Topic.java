@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Topic {
+    ALL("ALL"),
     FOOD("FOOD"),
     LIFE("LIFE"),
     HOME_LIVING("HOME_LIVING"),

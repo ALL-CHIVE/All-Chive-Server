@@ -14,7 +14,7 @@ public class CreateCategoryRequest {
     @Schema(defaultValue = "카테고리 이미지 url", description = "카테고리 이미지 url")
     private String imageUrl;
 
-    @Schema(defaultValue = "디자인", description = "주제")
+    @Schema(defaultValue = "DESIGN", description = "주제")
     @ValidEnum(target = Topic.class)
     private Topic topic;
 

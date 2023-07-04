@@ -33,6 +33,7 @@ public class GetCategoryContentsUseCase {
     public CategoryContentsResponse execute(Long categoryId, Pageable pageable) {
         Long userId = SecurityUtil.getCurrentUserId();
         categoryValidator.validationPublicStatus(categoryId, userId);
+        categoryValidator.validationDeleteStatus(categoryId, userId);
         Category category = categoryAdaptor.findById(categoryId);
         Slice<Content> contentList =
                 contentAdaptor.querySliceContentByCategoryId(categoryId, pageable);

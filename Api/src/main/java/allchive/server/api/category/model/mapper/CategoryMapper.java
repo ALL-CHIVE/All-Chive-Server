@@ -6,9 +6,12 @@ import allchive.server.api.category.model.dto.response.CategoryTitleResponse;
 import allchive.server.api.category.model.vo.TitleContentCntVo;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.category.domain.Category;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
 @Mapper
+@Slf4j
 public class CategoryMapper {
     public Category toEntity(CreateCategoryRequest request, Long userId) {
         return Category.of(

@@ -3,6 +3,7 @@ package allchive.server.domain.domains.category.domain;
 
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.exception.exceptions.DeletedCategoryException;
 import allchive.server.domain.domains.category.exception.exceptions.NoAuthurityUpdateCategoryException;
 import allchive.server.domain.domains.category.exception.exceptions.NotPublicCategoryException;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class Category extends BaseTimeEntity {
     private Long scrapCnt;
     private Long linkCnt;
     private Long imgCnt;
+    private Boolean deleteStatus = Boolean.FALSE;
 
     @ElementCollection
     @CollectionTable(name = "tbl_category_pin", joinColumns = @JoinColumn(name = "category_id"))
@@ -41,11 +43,12 @@ public class Category extends BaseTimeEntity {
 
     @Builder
     private Category(
-            Long userId, String imageUrl, String title, boolean publicStatus, Topic topic) {
+            Long userId, String imageUrl, String title, boolean publicStatus, boolean deleteStatus, Topic topic) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.title = title;
         this.publicStatus = publicStatus;
+        this.deleteStatus = deleteStatus;
         this.topic = topic;
         this.scrapCnt = 0L;
         this.linkCnt = 0L;
@@ -59,6 +62,7 @@ public class Category extends BaseTimeEntity {
                 .imageUrl(imageUrl)
                 .title(title)
                 .publicStatus(publicStatus)
+                .deleteStatus(Boolean.FALSE)
                 .topic(topic)
                 .build();
     }
@@ -79,6 +83,12 @@ public class Category extends BaseTimeEntity {
     public void validatePublicStatus(Long userId) {
         if (!this.publicStatus && !this.userId.equals(userId)) {
             throw NotPublicCategoryException.EXCEPTION;
+        }
+    }
+
+    public void validateDeleteStatus(Long userId) {
+        if (!this.publicStatus && !this.userId.equals(userId)) {
+            throw DeletedCategoryException.EXCEPTION;
         }
     }
 }

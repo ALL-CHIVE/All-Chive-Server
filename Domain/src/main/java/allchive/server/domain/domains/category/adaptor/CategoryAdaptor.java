@@ -2,7 +2,9 @@ package allchive.server.domain.domains.category.adaptor;
 
 
 import allchive.server.core.annotation.Adaptor;
+import allchive.server.core.error.exception.InternalServerError;
 import allchive.server.domain.domains.category.domain.Category;
+import allchive.server.domain.domains.category.domain.enums.Topic;
 import allchive.server.domain.domains.category.exception.exceptions.CategoryNotFoundException;
 import allchive.server.domain.domains.category.repository.CategoryRepository;
 import java.util.List;
@@ -16,6 +18,9 @@ public class CategoryAdaptor {
     private final CategoryRepository categoryRepository;
 
     public void save(Category category) {
+        if (category.getTopic().equals(Topic.ALL)) {
+            throw InternalServerError.EXCEPTION;
+        }
         categoryRepository.save(category);
     }
 
@@ -30,20 +35,20 @@ public class CategoryAdaptor {
     }
 
     public Slice<Category> querySliceCategoryExceptBlock(
-            List<Long> categoryIdList, List<Long> blockList, Pageable pageable) {
+            List<Long> categoryIdList, List<Long> blockList, Topic topic, Pageable pageable) {
         return categoryRepository.querySliceCategoryExceptBlock(
-                categoryIdList, blockList, pageable);
+                categoryIdList, blockList, topic, pageable);
     }
 
-    public Slice<Category> querySliceCategoryByUserId(Long userId, Pageable pageable) {
-        return categoryRepository.querySliceCategoryByUserId(userId, pageable);
+    public Slice<Category> querySliceCategoryByUserId(Long userId, Topic topic, Pageable pageable) {
+        return categoryRepository.querySliceCategoryByUserId(userId, topic, pageable);
     }
 
-    public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Pageable pageable) {
-        return categoryRepository.querySliceCategoryIn(categoryIdList, pageable);
+    public Slice<Category> querySliceCategoryIn(List<Long> categoryIdList, Topic topic, Pageable pageable) {
+        return categoryRepository.querySliceCategoryIn(categoryIdList, topic, pageable);
     }
 
-    public List<Category> findAllByUserIdOrderByTopic(Long userId) {
-        return categoryRepository.findAllByUserIdOrderByTopic(userId);
+    public List<Category> queryCategoryByUserId(Long userId) {
+        return categoryRepository.queryCategoryByUserId(userId);
     }
 }
