@@ -13,4 +13,8 @@ public class CategoryValidator {
     public void verifyUser(Long userId, Long categoryId) {
         categoryAdaptor.findById(categoryId).validateUser(userId);
     }
+
+    public void validationPublicStatus(Long categoryId, Long userId) {
+        categoryAdaptor.findById(categoryId).validatePublicStatus(userId);
+    }
 }

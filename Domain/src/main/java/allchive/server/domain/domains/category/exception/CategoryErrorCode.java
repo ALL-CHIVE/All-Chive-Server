@@ -11,6 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CategoryErrorCode implements BaseErrorCode {
     CATEGORY_NOT_FOUND(BAD_REQUEST, "CATEGORY_400_1", "카테고리 정보를 찾을 수 없습니다."),
+    NOT_PUBLIC_CATEGORY(BAD_REQUEST, "CATEGORY_400_2", "공개된 카테고리가 아닙니다."),
 
     NO_AUTHORITY_UPDATE_CATEGORY(FORBIDDEN, "CATEGORY_403_1", "카테고리 수정 권한이 없습니다.");
     private int status;

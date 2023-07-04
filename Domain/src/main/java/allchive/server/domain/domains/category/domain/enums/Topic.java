@@ -11,15 +11,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Topic {
-    FOOD("푸드"),
-    LIFE("라이프"),
-    HOME_LIVING("홈/리빙"),
-    SHOPPING("쇼핑"),
-    SPORT("스포츠"),
-    SELF_IMPROVEMENT("자기 계발"),
-    TECH("테크"),
-    DESIGN("디자인"),
-    TREND("트렌드");
+    FOOD("FOOD"),
+    LIFE("LIFE"),
+    HOME_LIVING("HOME_LIVING"),
+    SHOPPING("SHOPPING"),
+    SPORT("SPORT"),
+    SELF_IMPROVEMENT("SELF_IMPROVEMENT"),
+    TECH("TECH"),
+    DESIGN("DESIGN"),
+    TREND("TREND");
 
     @JsonValue private String value;
 

@@ -7,6 +7,8 @@ import allchive.server.domain.domains.category.exception.exceptions.NoAuthurityU
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+
+import allchive.server.domain.domains.category.exception.exceptions.NotPublicCategoryException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,6 +74,12 @@ public class Category extends BaseTimeEntity {
     public void validateUser(Long userId) {
         if (!this.userId.equals(userId)) {
             throw NoAuthurityUpdateCategoryException.EXCEPTION;
+        }
+    }
+
+    public void validatePublicStatus(Long userId) {
+        if (!this.publicStatus && !this.userId.equals(userId)) {
+            throw NotPublicCategoryException.EXCEPTION;
         }
     }
 }

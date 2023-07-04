@@ -3,6 +3,7 @@ package allchive.server.api.category.controller;
 
 import allchive.server.api.category.model.dto.request.CreateCategoryRequest;
 import allchive.server.api.category.model.dto.request.UpdateCategoryRequest;
+import allchive.server.api.category.model.dto.response.CategoryContentsResponse;
 import allchive.server.api.category.model.dto.response.CategoryResponse;
 import allchive.server.api.category.model.dto.response.CategoryTitleResponse;
 import allchive.server.api.category.service.*;
@@ -29,6 +30,7 @@ public class CategoryController {
     private final GetArchivedCategoryUseCase getArchivedCategoryUseCase;
     private final GetScrapCategoryUseCase getScrapCategoryUseCase;
     private final GetCategoryTitleUseCase getCategoryTitleUseCase;
+    private final GetCategoryContentsUseCase getCategoryContentsUseCase;
 
     @Operation(summary = "카테고리를 생성합니다.")
     @PostMapping()
@@ -50,6 +52,7 @@ public class CategoryController {
         deleteCategoryUseCase.execute(categoryId);
     }
 
+    // TODO : publicStatus 고려
     @Operation(
             summary = "카테고리 리스트를 가져옵니다.",
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자")
@@ -81,5 +84,12 @@ public class CategoryController {
     @GetMapping(value = "/lists")
     public CategoryTitleResponse getScrapCategory() {
         return getCategoryTitleUseCase.execute();
+    }
+
+    @Operation(summary = "카테고리 이름 리스트를 가져옵니다.")
+    @GetMapping(value = "/{categoryId}/contents")
+    public CategoryContentsResponse getCategoryContents(@RequestParam("categoryId") Long categoryId,
+            @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
+        return getCategoryContentsUseCase.execute(categoryId, pageable);
     }
 }
