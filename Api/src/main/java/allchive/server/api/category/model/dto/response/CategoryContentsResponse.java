@@ -1,12 +1,12 @@
 package allchive.server.api.category.model.dto.response;
 
+
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.content.model.dto.response.ContentResponse;
 import allchive.server.domain.domains.category.domain.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.domain.Slice;
 
 @Getter
 public class CategoryContentsResponse {
@@ -22,14 +22,19 @@ public class CategoryContentsResponse {
     private Long totalContentsCount;
 
     @Builder
-    private CategoryContentsResponse(SliceResponse<ContentResponse> contents, String categoryTitle, Long categoryId, Long totalContentsCount) {
+    private CategoryContentsResponse(
+            SliceResponse<ContentResponse> contents,
+            String categoryTitle,
+            Long categoryId,
+            Long totalContentsCount) {
         this.contents = contents;
         this.categoryTitle = categoryTitle;
         this.categoryId = categoryId;
         this.totalContentsCount = totalContentsCount;
     }
 
-    public static CategoryContentsResponse of(SliceResponse<ContentResponse> contentResponseSlice, Category category) {
+    public static CategoryContentsResponse of(
+            SliceResponse<ContentResponse> contentResponseSlice, Category category) {
         return CategoryContentsResponse.builder()
                 .categoryId(category.getId())
                 .categoryTitle(category.getTitle())

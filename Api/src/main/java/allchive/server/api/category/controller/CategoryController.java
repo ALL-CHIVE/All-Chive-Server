@@ -88,7 +88,8 @@ public class CategoryController {
 
     @Operation(summary = "카테고리 이름 리스트를 가져옵니다.")
     @GetMapping(value = "/{categoryId}/contents")
-    public CategoryContentsResponse getCategoryContents(@RequestParam("categoryId") Long categoryId,
+    public CategoryContentsResponse getCategoryContents(
+            @RequestParam("categoryId") Long categoryId,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
         return getCategoryContentsUseCase.execute(categoryId, pageable);
     }

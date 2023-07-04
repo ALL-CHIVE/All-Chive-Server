@@ -4,11 +4,10 @@ package allchive.server.domain.domains.category.domain;
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.category.domain.enums.Topic;
 import allchive.server.domain.domains.category.exception.exceptions.NoAuthurityUpdateCategoryException;
+import allchive.server.domain.domains.category.exception.exceptions.NotPublicCategoryException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-
-import allchive.server.domain.domains.category.exception.exceptions.NotPublicCategoryException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

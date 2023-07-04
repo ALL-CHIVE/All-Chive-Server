@@ -2,9 +2,8 @@ package allchive.server.domain.domains.content.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import javax.persistence.*;
-
 import allchive.server.domain.domains.content.domain.enums.ContentType;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.util.List;
-
 @Adaptor
 @RequiredArgsConstructor
 public class ContentAdaptor {
