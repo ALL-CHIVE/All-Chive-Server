@@ -81,6 +81,13 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
                 .fetch();
     }
 
+    @Override
+    public boolean queryCategoryExist(Long categoryId) {
+        Category fetchOne =
+                queryFactory.selectFrom(category).where(categoryIdEq(categoryId)).fetchFirst();
+        return fetchOne != null;
+    }
+
     private BooleanExpression userIdNotIn(List<Long> blockList) {
         return category.userId.notIn(blockList);
     }
@@ -106,6 +113,10 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
 
     private BooleanExpression categoryIdListIn(List<Long> categortIdList) {
         return category.id.in(categortIdList);
+    }
+
+    private BooleanExpression categoryIdEq(Long categoryId) {
+        return category.id.eq(categoryId);
     }
 
     private OrderSpecifier<Long> scrabListDesc(List<Long> categoryIdList) {
