@@ -100,4 +100,12 @@ public class Category extends BaseTimeEntity {
     public void updateScrapCnt(int i) {
         this.scrapCnt += i;
     }
+
+    public void addPinUserId(Long userId) {
+        this.getPinUserId().add(userId);
+    }
+
+    public void deletePinUserId(Long userId) {
+        this.getPinUserId().remove(userId);
+    }
 }

@@ -3,7 +3,9 @@ package allchive.server.domain.domains.category.validator;
 
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.category.adaptor.CategoryAdaptor;
+import allchive.server.domain.domains.category.exception.exceptions.AlreadyPinnedCategoryException;
 import allchive.server.domain.domains.category.exception.exceptions.CategoryNotFoundException;
+import allchive.server.domain.domains.category.exception.exceptions.NotPinnedCategoryException;
 import lombok.RequiredArgsConstructor;
 
 @Validator
@@ -26,6 +28,18 @@ public class CategoryValidator {
     public void validateExistCategory(Long categoryId) {
         if (!categoryAdaptor.queryCategoryExist(categoryId)) {
             throw CategoryNotFoundException.EXCEPTION;
+        }
+    }
+
+    public void validateAlreadyPinStatus(Long categoryId, Long userId) {
+        if (categoryAdaptor.findById(categoryId).getPinUserId().contains(userId)) {
+            throw AlreadyPinnedCategoryException.EXCEPTION;
+        }
+    }
+
+    public void validateNotPinStatus(Long categoryId, Long userId) {
+        if (!categoryAdaptor.findById(categoryId).getPinUserId().contains(userId)) {
+            throw NotPinnedCategoryException.EXCEPTION;
         }
     }
 }

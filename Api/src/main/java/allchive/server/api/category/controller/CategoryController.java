@@ -33,6 +33,7 @@ public class CategoryController {
     private final GetCategoryTitleUseCase getCategoryTitleUseCase;
     private final GetCategoryContentsUseCase getCategoryContentsUseCase;
     private final UpdateCategoryScrapUseCase updateCategoryScrapUseCase;
+    private final UpdateCategoryPinUseCase updateCategoryPinUseCase;
 
     @Operation(summary = "카테고리를 생성합니다.")
     @PostMapping()
@@ -103,5 +104,12 @@ public class CategoryController {
     public void updateCategoryScrap(
             @RequestParam("cancel") Boolean cancel, @PathVariable("categoryId") Long categoryId) {
         updateCategoryScrapUseCase.execute(categoryId, cancel);
+    }
+
+    @Operation(summary = "카테고리를 고정합니다.", description = "고정 취소면 cancel에 true 값 보내주세요")
+    @PatchMapping(value = "/{categoryId}/pin")
+    public void updateCategoryPin(
+            @RequestParam("cancel") Boolean cancel, @PathVariable("categoryId") Long categoryId) {
+        updateCategoryPinUseCase.execute(categoryId, cancel);
     }
 }
