@@ -9,12 +9,14 @@ import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
 
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class S3PresignedUrlService {
     private final AmazonS3 amazonS3;
@@ -25,10 +27,11 @@ public class S3PresignedUrlService {
     @Value("${aws.s3.base-url}")
     private String baseUrl;
 
-    public String getPreSignedUrl(Long id, PresignedType presignedType) {
+    public ImageUrlDto getPreSignedUrl(Long id, PresignedType presignedType) {
         String fileName = generateFileName(id, presignedType);
         GeneratePresignedUrlRequest generatePresignedUrlRequest = getGeneratePreSignedUrlRequest(fileName);
-        return amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString();
+        String url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString();
+        return ImageUrlDto.of(url, fileName);
     }
 
     private String generateFileName(Long id, PresignedType presignedType) {
