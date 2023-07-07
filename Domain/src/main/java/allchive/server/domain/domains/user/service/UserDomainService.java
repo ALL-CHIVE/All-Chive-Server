@@ -46,4 +46,10 @@ public class UserDomainService {
         User user = userAdaptor.queryUserById(userId);
         user.withdrawUser();
     }
+
+    @Transactional
+    public void updateUserInfo(Long userId, String name, String email, String nickname, String imgUrl) {
+        User user = userAdaptor.queryUserById(userId);
+        user.updateInfo(name, email, nickname, imgUrl);
+    }
 }

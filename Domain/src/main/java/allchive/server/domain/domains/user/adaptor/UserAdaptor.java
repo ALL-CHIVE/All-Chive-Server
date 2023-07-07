@@ -7,6 +7,7 @@ import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.exception.exceptions.UserNotFoundException;
 import allchive.server.domain.domains.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class UserAdaptor {
         userRepository.save(user);
     }
 
+    @Transactional
     public User queryUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
