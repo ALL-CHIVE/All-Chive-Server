@@ -5,6 +5,7 @@ import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import javax.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,44 @@ public class Content extends BaseTimeEntity {
     private String memo;
 
     private boolean deleteStatus = Boolean.FALSE;
+
+    @Builder
+    private Content(
+            Long categoryId,
+            ContentType contentType,
+            String imageUrl,
+            String linkUrl,
+            String title,
+            String memo,
+            boolean deleteStatus) {
+        this.categoryId = categoryId;
+        this.contentType = contentType;
+        this.imageUrl = imageUrl;
+        this.linkUrl = linkUrl;
+        this.title = title;
+        this.memo = memo;
+        this.deleteStatus = deleteStatus;
+    }
+
+    public static Content of(
+            Long categoryId,
+            ContentType contentType,
+            String imageUrl,
+            String linkUrl,
+            String title,
+            String memo) {
+        return Content.builder()
+                .categoryId(categoryId)
+                .contentType(contentType)
+                .imageUrl(imageUrl)
+                .linkUrl(linkUrl)
+                .title(title)
+                .memo(memo)
+                .deleteStatus(Boolean.FALSE)
+                .build();
+    }
+
+    public void delete() {
+        this.deleteStatus = Boolean.TRUE;
+    }
 }

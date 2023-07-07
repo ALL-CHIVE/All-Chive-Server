@@ -16,4 +16,8 @@ public class ContentTagGroupAdaptor {
     public List<ContentTagGroup> queryContentIn(List<Content> contentList) {
         return contentTagGroupRepository.queryContentTagGroupIn(contentList);
     }
+
+    public List<ContentTagGroup> findAllByContent(Content content) {
+        return contentTagGroupRepository.findAllByContent(content);
+    }
 }
