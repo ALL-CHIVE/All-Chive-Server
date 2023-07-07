@@ -26,4 +26,8 @@ public class ContentAdaptor {
         return contentRepository.findById(contentId)
                 .orElseThrow(() -> ContentNotFoundException.EXCEPTION);
     }
+
+    public void deleteById(Long contentId) {
+        contentRepository.deleteById(contentId);
+    }
 }
