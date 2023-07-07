@@ -4,11 +4,9 @@ package allchive.server.domain.domains.user.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
-import allchive.server.domain.domains.user.exception.exceptions.DuplicatedNicknameException;
 import allchive.server.domain.domains.user.exception.exceptions.UserNotFoundException;
 import allchive.server.domain.domains.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @Adaptor
 @RequiredArgsConstructor

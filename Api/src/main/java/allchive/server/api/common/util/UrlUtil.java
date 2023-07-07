@@ -1,10 +1,10 @@
 package allchive.server.api.common.util;
 
+import static allchive.server.core.consts.AllchiveConst.*;
+
 import allchive.server.core.helper.SpringEnvironmentHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import static allchive.server.core.consts.AllchiveConst.*;
 
 @Component
 public class UrlUtil {
@@ -30,7 +30,8 @@ public class UrlUtil {
     }
 
     private static Boolean validateUrl(String url) {
-        return url.contains(STAGING_ASSET_URL) || url.contains(PROD_ASSET_URL) || url.contains(S3_ASSET_URL);
+        return url.contains(STAGING_ASSET_URL)
+                || url.contains(PROD_ASSET_URL)
+                || url.contains(S3_ASSET_URL);
     }
-
 }

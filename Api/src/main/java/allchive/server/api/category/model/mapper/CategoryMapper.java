@@ -8,7 +8,6 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.category.domain.Category;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 
 @Mapper
 public class CategoryMapper {

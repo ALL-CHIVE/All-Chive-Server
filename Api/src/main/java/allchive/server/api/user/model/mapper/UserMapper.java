@@ -1,12 +1,10 @@
 package allchive.server.api.user.model.mapper;
 
+
 import allchive.server.api.user.model.dto.response.GetUserProfileResponse;
-import allchive.server.api.user.service.GetUserProfileUseCase;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.category.domain.Category;
 import allchive.server.domain.domains.user.domain.User;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.util.List;
 
 @Mapper

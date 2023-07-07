@@ -5,7 +5,6 @@ import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
-import allchive.server.domain.domains.user.exception.exceptions.AlreadySignUpUserException;
 import allchive.server.domain.domains.user.exception.exceptions.DuplicatedNicknameException;
 import allchive.server.domain.domains.user.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +41,8 @@ public class UserDomainService {
         user.withdrawUser();
     }
 
-    public void updateUserInfo(Long userId, String name, String email, String nickname, String imgUrl) {
+    public void updateUserInfo(
+            Long userId, String name, String email, String nickname, String imgUrl) {
         User user = userAdaptor.queryUserById(userId);
         user.updateInfo(name, email, nickname, imgUrl);
     }

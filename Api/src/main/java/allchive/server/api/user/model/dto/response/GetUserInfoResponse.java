@@ -1,5 +1,6 @@
 package allchive.server.api.user.model.dto.response;
 
+
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.domain.domains.user.domain.User;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,7 +21,6 @@ public class GetUserInfoResponse {
     @Schema(defaultValue = "닉네임", description = "닉네임")
     private String nickname;
 
-
     @Builder
     public GetUserInfoResponse(String imgUrl, String email, String name, String nickname) {
         this.imgUrl = imgUrl;
@@ -28,7 +28,6 @@ public class GetUserInfoResponse {
         this.name = name;
         this.nickname = nickname;
     }
-
 
     public static GetUserInfoResponse from(User user) {
         return GetUserInfoResponse.builder()

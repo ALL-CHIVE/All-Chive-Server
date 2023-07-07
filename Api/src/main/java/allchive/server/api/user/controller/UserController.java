@@ -1,5 +1,6 @@
 package allchive.server.api.user.controller;
 
+
 import allchive.server.api.user.model.dto.request.CheckUserNicknameRequest;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.api.user.model.dto.response.GetUserInfoResponse;

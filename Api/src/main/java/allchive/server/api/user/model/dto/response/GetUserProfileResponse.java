@@ -1,5 +1,6 @@
 package allchive.server.api.user.model.dto.response;
 
+
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.domain.domains.user.domain.User;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +25,8 @@ public class GetUserProfileResponse {
     private int publicCategoryCount;
 
     @Builder
-    private GetUserProfileResponse(String nickname, String imgUrl, int linkCount, int imgCount, int publicCategoryCount) {
+    private GetUserProfileResponse(
+            String nickname, String imgUrl, int linkCount, int imgCount, int publicCategoryCount) {
         this.nickname = nickname;
         this.imgUrl = imgUrl;
         this.linkCount = linkCount;
@@ -32,7 +34,8 @@ public class GetUserProfileResponse {
         this.publicCategoryCount = publicCategoryCount;
     }
 
-    public static GetUserProfileResponse of(User user, int linkCount, int imgCount, int publicCategoryCount) {
+    public static GetUserProfileResponse of(
+            User user, int linkCount, int imgCount, int publicCategoryCount) {
         return GetUserProfileResponse.builder()
                 .nickname(user.getNickname())
                 .imgUrl(UrlUtil.toAssetUrl(user.getProfileImgUrl()))

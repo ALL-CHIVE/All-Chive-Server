@@ -1,5 +1,6 @@
 package allchive.server.api.user.service;
 
+
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.user.model.dto.response.GetUserProfileResponse;
 import allchive.server.api.user.model.mapper.UserMapper;
@@ -9,10 +10,9 @@ import allchive.server.domain.domains.category.domain.Category;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.validator.UserValidator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
