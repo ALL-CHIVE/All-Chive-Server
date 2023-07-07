@@ -4,7 +4,7 @@ import static allchive.server.domain.domains.category.domain.QCategory.category;
 
 import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.category.domain.Category;
-import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.domain.enums.Subject;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -22,7 +22,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
 
     @Override
     public Slice<Category> querySliceCategoryExceptBlock(
-            List<Long> categoryIdList, List<Long> blockList, Topic topic, Pageable pageable) {
+            List<Long> categoryIdList, List<Long> blockList, Subject subject, Pageable pageable) {
         List<Category> categories =
                 queryFactory
                         .select(category)
@@ -30,7 +30,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
                         .where(
                                 userIdNotIn(blockList),
                                 publicStatusTrue(),
-                                topicEq(topic),
+                                subjectEq(subject),
                                 deleteStatusFalse())
                         .orderBy(scrabListDesc(categoryIdList), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
@@ -40,12 +40,13 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
     }
 
     @Override
-    public Slice<Category> querySliceCategoryByUserId(Long userId, Topic topic, Pageable pageable) {
+    public Slice<Category> querySliceCategoryByUserId(
+            Long userId, Subject subject, Pageable pageable) {
         List<Category> categories =
                 queryFactory
                         .select(category)
                         .from(category)
-                        .where(userIdEq(userId), topicEq(topic), deleteStatusFalse())
+                        .where(userIdEq(userId), subjectEq(subject), deleteStatusFalse())
                         .orderBy(pinDesc(userId), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
@@ -55,7 +56,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
 
     @Override
     public Slice<Category> querySliceCategoryIn(
-            List<Long> categoryIdList, Topic topic, Pageable pageable) {
+            List<Long> categoryIdList, Subject subject, Pageable pageable) {
         List<Category> categories =
                 queryFactory
                         .select(category)
@@ -63,7 +64,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
                         .where(
                                 categoryIdListIn(categoryIdList),
                                 publicStatusTrue(),
-                                topicEq(topic),
+                                subjectEq(subject),
                                 deleteStatusFalse())
                         .orderBy(scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
@@ -77,7 +78,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
         return queryFactory
                 .selectFrom(category)
                 .where(userIdEq(userId), deleteStatusFalse())
-                .orderBy(topicDesc(), createdAtDesc())
+                .orderBy(subjectDesc(), createdAtDesc())
                 .fetch();
     }
 
@@ -96,11 +97,11 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
         return category.publicStatus.eq(Boolean.TRUE);
     }
 
-    private BooleanExpression topicEq(Topic topic) {
-        if (topic.equals(Topic.ALL)) {
+    private BooleanExpression subjectEq(Subject subject) {
+        if (subject.equals(Subject.ALL)) {
             return null;
         }
-        return category.topic.eq(topic);
+        return category.subject.eq(subject);
     }
 
     private BooleanExpression deleteStatusFalse() {
@@ -139,7 +140,7 @@ public class CategoryCustomRepositoryImpl implements CategoryCustomRepository {
         return category.createdAt.desc();
     }
 
-    private OrderSpecifier<Topic> topicDesc() {
-        return category.topic.desc();
+    private OrderSpecifier<Subject> subjectDesc() {
+        return category.subject.desc();
     }
 }

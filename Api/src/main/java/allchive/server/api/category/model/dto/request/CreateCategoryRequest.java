@@ -2,7 +2,7 @@ package allchive.server.api.category.model.dto.request;
 
 
 import allchive.server.core.annotation.ValidEnum;
-import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.domain.enums.Subject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -15,8 +15,8 @@ public class CreateCategoryRequest {
     private String imageUrl;
 
     @Schema(defaultValue = "DESIGN", description = "주제")
-    @ValidEnum(target = Topic.class)
-    private Topic topic;
+    @ValidEnum(target = Subject.class)
+    private Subject subject;
 
     @Schema(defaultValue = "false", description = "공개 여부")
     private boolean publicStatus;

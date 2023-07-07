@@ -28,6 +28,6 @@ public class UpdateCategoryUseCase {
                 request.getTitle(),
                 request.getImageUrl(),
                 request.isPublicStatus(),
-                request.getTopic());
+                request.getSubject());
     }
 }
