@@ -29,12 +29,10 @@ public class UserAdaptor {
         userRepository.save(user);
     }
 
-    @Transactional
     public User queryUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    @Transactional(readOnly = true)
     public Boolean existsByNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
     }

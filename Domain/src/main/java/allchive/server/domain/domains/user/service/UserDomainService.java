@@ -7,6 +7,7 @@ import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.exception.exceptions.AlreadySignUpUserException;
 import allchive.server.domain.domains.user.exception.exceptions.DuplicatedNicknameException;
+import allchive.server.domain.domains.user.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserDomainService {
     private final UserAdaptor userAdaptor;
+    private final UserValidator userValidator;
 
     public Boolean checkUserCanLogin(OauthInfo oauthInfo) {
         return userAdaptor.exist(oauthInfo);
@@ -21,7 +23,7 @@ public class UserDomainService {
 
     @Transactional
     public User registerUser(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
-        validUserCanRegister(oauthInfo);
+        userValidator.validUserCanRegister(oauthInfo);
         final User newUser = User.of(nickname, profileImgUrl, oauthInfo);
         userAdaptor.save(newUser);
         return newUser;
@@ -34,21 +36,12 @@ public class UserDomainService {
         return user;
     }
 
-    public Boolean checkUserCanRegister(OauthInfo oauthInfo) {
-        return !userAdaptor.exist(oauthInfo);
-    }
-
-    public void validUserCanRegister(OauthInfo oauthInfo) {
-        if (!checkUserCanRegister(oauthInfo)) throw AlreadySignUpUserException.EXCEPTION;
-    }
-
     @Transactional
     public void deleteUserById(Long userId) {
         User user = userAdaptor.queryUserById(userId);
         user.withdrawUser();
     }
 
-    @Transactional
     public void updateUserInfo(Long userId, String name, String email, String nickname, String imgUrl) {
         User user = userAdaptor.queryUserById(userId);
         user.updateInfo(name, email, nickname, imgUrl);

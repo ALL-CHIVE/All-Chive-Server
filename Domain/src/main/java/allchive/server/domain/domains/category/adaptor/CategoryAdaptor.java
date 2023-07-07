@@ -59,7 +59,6 @@ public class CategoryAdaptor {
         return categoryRepository.queryCategoryExist(categoryId);
     }
 
-    @Transactional
     public List<Category> findAllByUserId(Long userId) {
         return categoryRepository.findAllByUserId(userId);
     }
