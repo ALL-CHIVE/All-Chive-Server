@@ -28,6 +28,8 @@ public class AllchiveConst {
 
     public static final String STAGING_ASSET_URL = "https://asset.staging.allchive.co.kr/";
     public static final String PROD_ASSET_URL = "https://asset.allchive.co.kr/";
+    public static final String S3_ASSET_URL =
+            "https://asset.staging.allchive.co.kr.s3.ap-northeast-2.amazonaws.com/";
 
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",

@@ -28,6 +28,8 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @NotNull private String nickname;
 
     private String profileImgUrl;
@@ -80,5 +82,16 @@ public class User extends BaseTimeEntity {
         this.email = null;
         this.oauthInfo.withDrawOauthInfo();
         this.subjects = new ArrayList<>();
+        this.name = null;
+    }
+
+    public void updateInfo(String name, String email, String nickname, String imgUrl) {
+        if (!UserState.NORMAL.equals(this.userState)) {
+            throw ForbiddenUserException.EXCEPTION;
+        }
+        this.name = name;
+        this.email = email;
+        this.nickname = nickname;
+        this.profileImgUrl = imgUrl;
     }
 }
