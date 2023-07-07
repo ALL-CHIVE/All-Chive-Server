@@ -1,16 +1,16 @@
 package allchive.server.api.content.model.dto.response;
 
+
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.tag.model.dto.response.TagResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class ContentTagResponse {
@@ -40,9 +40,14 @@ public class ContentTagResponse {
     private List<TagResponse> tagList;
 
     @Builder
-    private ContentTagResponse(Long contentId, String contentTitle, ContentType contentType,
-                              String link, String imgUrl, LocalDateTime contentCreatedAt,
-                              List<TagResponse> tagList) {
+    private ContentTagResponse(
+            Long contentId,
+            String contentTitle,
+            ContentType contentType,
+            String link,
+            String imgUrl,
+            LocalDateTime contentCreatedAt,
+            List<TagResponse> tagList) {
         this.contentId = contentId;
         this.contentTitle = contentTitle;
         this.contentType = contentType;

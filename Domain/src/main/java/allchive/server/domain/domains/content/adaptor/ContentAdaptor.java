@@ -23,7 +23,8 @@ public class ContentAdaptor {
     }
 
     public Content findById(Long contentId) {
-        return contentRepository.findById(contentId)
+        return contentRepository
+                .findById(contentId)
                 .orElseThrow(() -> ContentNotFoundException.EXCEPTION);
     }
 

@@ -33,8 +33,14 @@ public class Content extends BaseTimeEntity {
     private boolean deleteStatus = Boolean.FALSE;
 
     @Builder
-    private Content(Long categoryId, ContentType contentType, String imageUrl,
-                   String linkUrl, String title, String memo, boolean deleteStatus) {
+    private Content(
+            Long categoryId,
+            ContentType contentType,
+            String imageUrl,
+            String linkUrl,
+            String title,
+            String memo,
+            boolean deleteStatus) {
         this.categoryId = categoryId;
         this.contentType = contentType;
         this.imageUrl = imageUrl;
@@ -44,8 +50,13 @@ public class Content extends BaseTimeEntity {
         this.deleteStatus = deleteStatus;
     }
 
-    public static Content of(Long categoryId, ContentType contentType, String imageUrl,
-                             String linkUrl, String title, String memo) {
+    public static Content of(
+            Long categoryId,
+            ContentType contentType,
+            String imageUrl,
+            String linkUrl,
+            String title,
+            String memo) {
         return Content.builder()
                 .categoryId(categoryId)
                 .contentType(contentType)

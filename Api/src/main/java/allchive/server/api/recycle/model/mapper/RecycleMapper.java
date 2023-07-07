@@ -1,5 +1,6 @@
 package allchive.server.api.recycle.model.mapper;
 
+
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.domain.enums.RecycleType;

@@ -42,7 +42,9 @@ public class ContentResponse {
             String contentTitle,
             ContentType contentType,
             LocalDateTime contentCreatedAt,
-            String tag,String link, String imgUrl,
+            String tag,
+            String link,
+            String imgUrl,
             Long tagCount) {
         this.contentId = contentId;
         this.contentTitle = contentTitle;

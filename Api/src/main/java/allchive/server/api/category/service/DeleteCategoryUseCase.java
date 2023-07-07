@@ -25,7 +25,8 @@ public class DeleteCategoryUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         categoryValidator.verifyUser(userId, categoryId);
         categoryDomainService.deleteById(categoryId);
-        Recycle recycle = recycleMapper.toCategoryRecycleEntity(userId, categoryId, RecycleType.CATEGORY);
+        Recycle recycle =
+                recycleMapper.toCategoryRecycleEntity(userId, categoryId, RecycleType.CATEGORY);
         recycleDomainService.save(recycle);
     }
 }

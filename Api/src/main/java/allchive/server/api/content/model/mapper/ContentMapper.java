@@ -9,9 +9,7 @@ import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.tag.model.dto.response.TagResponse;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper
 public class ContentMapper {
@@ -27,14 +25,21 @@ public class ContentMapper {
     }
 
     public Content toEntity(CreateContentRequest request) {
-        return Content.of(request.getCategoryId(),request.getContentType(), UrlUtil.convertUrlToKey(request.getImgUrl()),
-                request.getLink(), request.getTitle(), request.getMemo());
+        return Content.of(
+                request.getCategoryId(),
+                request.getContentType(),
+                UrlUtil.convertUrlToKey(request.getImgUrl()),
+                request.getLink(),
+                request.getTitle(),
+                request.getMemo());
     }
 
-    public ContentTagResponse toContentTagResponse(Content content, List<ContentTagGroup> contentTagGroupList) {
-        List<TagResponse> tagResponseList = contentTagGroupList.stream()
-                .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))
-                .toList();
+    public ContentTagResponse toContentTagResponse(
+            Content content, List<ContentTagGroup> contentTagGroupList) {
+        List<TagResponse> tagResponseList =
+                contentTagGroupList.stream()
+                        .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))
+                        .toList();
         return ContentTagResponse.of(content, tagResponseList);
     }
 }

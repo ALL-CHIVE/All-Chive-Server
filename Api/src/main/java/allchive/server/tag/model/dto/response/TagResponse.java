@@ -1,5 +1,6 @@
 package allchive.server.tag.model.dto.response;
 
+
 import allchive.server.domain.domains.content.domain.Tag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -20,9 +21,6 @@ public class TagResponse {
     }
 
     public static TagResponse from(Tag tag) {
-        return TagResponse.builder()
-                .tagId(tag.getId())
-                .name(tag.getName())
-                .build();
+        return TagResponse.builder().tagId(tag.getId()).name(tag.getName()).build();
     }
 }

@@ -2,16 +2,13 @@ package allchive.server.domain.domains.recycle.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import javax.persistence.*;
-
-import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Table(name = "tbl_recycle")
@@ -31,7 +28,12 @@ public class Recycle extends BaseTimeEntity {
     private LocalDateTime deletedAt;
 
     @Builder
-    private Recycle(RecycleType recycleType, Long contentId, Long categoryId, Long userId, LocalDateTime deletedAt) {
+    private Recycle(
+            RecycleType recycleType,
+            Long contentId,
+            Long categoryId,
+            Long userId,
+            LocalDateTime deletedAt) {
         this.recycleType = recycleType;
         this.contentId = contentId;
         this.categoryId = categoryId;
@@ -39,7 +41,8 @@ public class Recycle extends BaseTimeEntity {
         this.deletedAt = deletedAt;
     }
 
-    public static Recycle of(RecycleType recycleType, Long contentId, Long categoryId, Long userId) {
+    public static Recycle of(
+            RecycleType recycleType, Long contentId, Long categoryId, Long userId) {
         return Recycle.builder()
                 .categoryId(categoryId)
                 .contentId(contentId)
@@ -48,5 +51,4 @@ public class Recycle extends BaseTimeEntity {
                 .deletedAt(LocalDateTime.now())
                 .build();
     }
-
 }

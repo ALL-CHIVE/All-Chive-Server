@@ -1,12 +1,11 @@
 package allchive.server.api.content.model.dto.request;
 
+
 import allchive.server.core.annotation.ValidEnum;
-import allchive.server.domain.domains.category.domain.enums.Subject;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 public class CreateContentRequest {

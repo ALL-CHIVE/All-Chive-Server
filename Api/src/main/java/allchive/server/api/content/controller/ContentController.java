@@ -1,6 +1,6 @@
 package allchive.server.api.content.controller;
 
-import allchive.server.api.category.model.dto.request.CreateCategoryRequest;
+
 import allchive.server.api.content.model.dto.request.CreateContentRequest;
 import allchive.server.api.content.model.dto.response.ContentTagResponse;
 import allchive.server.api.content.service.CreateContentUseCase;
