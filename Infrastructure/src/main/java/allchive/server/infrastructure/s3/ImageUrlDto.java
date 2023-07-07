@@ -1,5 +1,6 @@
 package allchive.server.infrastructure.s3;
 
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,9 +16,6 @@ public class ImageUrlDto {
     }
 
     public static ImageUrlDto of(String url, String key) {
-        return ImageUrlDto.builder()
-                .key(key)
-                .url(url)
-                .build();
+        return ImageUrlDto.builder().key(key).url(url).build();
     }
 }

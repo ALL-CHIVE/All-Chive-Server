@@ -1,9 +1,9 @@
 package allchive.server.api.common.util;
 
-import allchive.server.core.helper.SpringEnvironmentHelper;
-import static allchive.server.core.consts.AllchiveConst.STAGING_ASSET_URL;
 import static allchive.server.core.consts.AllchiveConst.PROD_ASSET_URL;
+import static allchive.server.core.consts.AllchiveConst.STAGING_ASSET_URL;
 
+import allchive.server.core.helper.SpringEnvironmentHelper;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

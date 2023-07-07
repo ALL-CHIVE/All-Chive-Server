@@ -1,5 +1,6 @@
 package allchive.server.api.image.controller;
 
+
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.image.model.dto.response.ImageUrlResponse;
 import allchive.server.infrastructure.s3.PresignedType;
@@ -22,20 +23,23 @@ public class ImageController {
     @GetMapping(value = "/categories/image")
     public ImageUrlResponse getCategoryPresignedUrl() {
         Long userId = SecurityUtil.getCurrentUserId();
-        return ImageUrlResponse.from(s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.CATEGORY));
+        return ImageUrlResponse.from(
+                s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.CATEGORY));
     }
 
     @Operation(summary = "컨텐츠 관련 이미지 업로드 url 요청할수 있는 api 입니다.")
     @GetMapping(value = "/contents/image")
     public ImageUrlResponse getContentPresignedUrl() {
         Long userId = SecurityUtil.getCurrentUserId();
-        return ImageUrlResponse.from(s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.CONTENT));
+        return ImageUrlResponse.from(
+                s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.CONTENT));
     }
 
     @Operation(summary = "컨텐츠 관련 이미지 업로드 url 요청할수 있는 api 입니다.")
     @GetMapping(value = "/user/image")
     public ImageUrlResponse getUserPresignedUrl() {
         Long userId = SecurityUtil.getCurrentUserId();
-        return ImageUrlResponse.from(s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.USER));
+        return ImageUrlResponse.from(
+                s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.USER));
     }
 }

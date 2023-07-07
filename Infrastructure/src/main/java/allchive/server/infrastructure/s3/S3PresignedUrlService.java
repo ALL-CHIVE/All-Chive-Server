@@ -1,19 +1,18 @@
 package allchive.server.infrastructure.s3;
 
+
 import allchive.server.core.error.exception.InternalServerError;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.Headers;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
+import java.util.Date;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.net.URL;
-import java.util.Date;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -29,7 +28,8 @@ public class S3PresignedUrlService {
 
     public ImageUrlDto getPreSignedUrl(Long id, PresignedType presignedType) {
         String fileName = generateFileName(id, presignedType);
-        GeneratePresignedUrlRequest generatePresignedUrlRequest = getGeneratePreSignedUrlRequest(fileName);
+        GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                getGeneratePreSignedUrlRequest(fileName);
         String url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString();
         return ImageUrlDto.of(url, fileName);
     }
@@ -42,10 +42,7 @@ public class S3PresignedUrlService {
             case CATEGORY -> fileName = baseUrl + "/category/";
             default -> throw InternalServerError.EXCEPTION;
         }
-        return fileName
-                + id.toString()
-                + "/"
-                + UUID.randomUUID();
+        return fileName + id.toString() + "/" + UUID.randomUUID();
     }
 
     private GeneratePresignedUrlRequest getGeneratePreSignedUrlRequest(String fileName) {
@@ -55,8 +52,7 @@ public class S3PresignedUrlService {
                         .withKey(fileName)
                         .withExpiration(getPreSignedUrlExpiration());
         generatePresignedUrlRequest.addRequestParameter(
-                Headers.S3_CANNED_ACL,
-                CannedAccessControlList.PublicRead.toString());
+                Headers.S3_CANNED_ACL, CannedAccessControlList.PublicRead.toString());
         return generatePresignedUrlRequest;
     }
 
