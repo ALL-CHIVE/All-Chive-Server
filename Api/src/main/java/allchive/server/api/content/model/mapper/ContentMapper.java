@@ -1,6 +1,7 @@
 package allchive.server.api.content.model.mapper;
 
 
+import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.content.model.dto.request.CreateContentRequest;
 import allchive.server.api.content.model.dto.response.ContentResponse;
 import allchive.server.api.content.model.dto.response.ContentTagResponse;
@@ -26,7 +27,7 @@ public class ContentMapper {
     }
 
     public Content toEntity(CreateContentRequest request) {
-        return Content.of(request.getCategoryId(),request.getContentType(), request.getImgUrl(),
+        return Content.of(request.getCategoryId(),request.getContentType(), UrlUtil.convertUrlToKey(request.getImgUrl()),
                 request.getLink(), request.getTitle(), request.getMemo());
     }
 

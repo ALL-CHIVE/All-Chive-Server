@@ -1,5 +1,6 @@
 package allchive.server.api.content.model.dto.response;
 
+import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
@@ -57,7 +58,7 @@ public class ContentTagResponse {
                 .contentTitle(content.getTitle())
                 .contentType(content.getContentType())
                 .link(content.getLinkUrl())
-                .imgUrl(content.getImageUrl())
+                .imgUrl(UrlUtil.toAssetUrl(content.getImageUrl()))
                 .contentCreatedAt(content.getCreatedAt())
                 .tagList(tagList)
                 .build();

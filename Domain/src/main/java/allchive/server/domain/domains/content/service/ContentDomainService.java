@@ -2,6 +2,7 @@ package allchive.server.domain.domains.content.service;
 
 
 import allchive.server.core.annotation.DomainService;
+import allchive.server.domain.domains.category.domain.Category;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ public class ContentDomainService {
     }
 
     public void deleteById(Long contentId) {
-        contentAdaptor.deleteById(contentId);
+        Content content = contentAdaptor.findById(contentId);
+        content.delete();
+        save(content);
     }
 }
