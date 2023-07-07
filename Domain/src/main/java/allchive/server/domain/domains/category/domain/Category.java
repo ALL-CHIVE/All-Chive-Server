@@ -108,4 +108,8 @@ public class Category extends BaseTimeEntity {
     public void deletePinUserId(Long userId) {
         this.getPinUserId().remove(userId);
     }
+
+    public void delete() {
+        this.deleteStatus = Boolean.TRUE;
+    }
 }

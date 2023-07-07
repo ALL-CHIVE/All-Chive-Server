@@ -42,4 +42,8 @@ public class CategoryValidator {
             throw NotPinnedCategoryException.EXCEPTION;
         }
     }
+
+    public void validateCategoryUser(Long categoryId, Long userId) {
+        categoryAdaptor.findById(categoryId).validateUser(userId);
+    }
 }
