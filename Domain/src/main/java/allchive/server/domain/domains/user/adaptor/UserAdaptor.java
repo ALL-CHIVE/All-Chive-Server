@@ -30,4 +30,8 @@ public class UserAdaptor {
     public User queryUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
+
+    public Boolean existsByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
 }

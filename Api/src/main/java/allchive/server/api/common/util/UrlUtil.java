@@ -1,7 +1,6 @@
 package allchive.server.api.common.util;
 
-import static allchive.server.core.consts.AllchiveConst.PROD_ASSET_URL;
-import static allchive.server.core.consts.AllchiveConst.STAGING_ASSET_URL;
+import static allchive.server.core.consts.AllchiveConst.*;
 
 import allchive.server.core.helper.SpringEnvironmentHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ public class UrlUtil {
 
     @Autowired
     private UrlUtil(SpringEnvironmentHelper springEnvironmentHelper) {
-        this.springEnvironmentHelper = springEnvironmentHelper;
+        UrlUtil.springEnvironmentHelper = springEnvironmentHelper;
     }
 
     public static String toAssetUrl(String key) {
@@ -21,5 +20,18 @@ public class UrlUtil {
             return PROD_ASSET_URL + key;
         }
         return STAGING_ASSET_URL + key;
+    }
+
+    public static String convertUrlToKey(String url) {
+        if (validateUrl(url)) {
+            return url.split("/", 4)[3];
+        }
+        return url;
+    }
+
+    private static Boolean validateUrl(String url) {
+        return url.contains(STAGING_ASSET_URL)
+                || url.contains(PROD_ASSET_URL)
+                || url.contains(S3_ASSET_URL);
     }
 }

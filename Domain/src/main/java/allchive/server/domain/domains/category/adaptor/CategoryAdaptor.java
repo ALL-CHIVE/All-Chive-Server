@@ -57,4 +57,8 @@ public class CategoryAdaptor {
     public boolean queryCategoryExist(Long categoryId) {
         return categoryRepository.queryCategoryExist(categoryId);
     }
+
+    public List<Category> findAllByUserId(Long userId) {
+        return categoryRepository.findAllByUserId(userId);
+    }
 }
