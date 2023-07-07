@@ -4,7 +4,7 @@ package allchive.server.domain.domains.category.service;
 import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.category.adaptor.CategoryAdaptor;
 import allchive.server.domain.domains.category.domain.Category;
-import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.domain.enums.Subject;
 import lombok.RequiredArgsConstructor;
 
 @DomainService
@@ -17,8 +17,12 @@ public class CategoryDomainService {
     }
 
     public void updateCategory(
-            Category category, String title, String imageUrl, boolean publicStatus, Topic topic) {
-        category.update(title, imageUrl, publicStatus, topic);
+            Category category,
+            String title,
+            String imageUrl,
+            boolean publicStatus,
+            Subject subject) {
+        category.update(title, imageUrl, publicStatus, subject);
         categoryAdaptor.save(category);
     }
 

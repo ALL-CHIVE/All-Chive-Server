@@ -26,6 +26,9 @@ public class AllchiveConst {
     public static final String KAKAO_OAUTH_QUERY_STRING =
             "/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code";
 
+    public static final String STAGING_ASSET_URL = "https://asset.staging.allchive.co.kr/";
+    public static final String PROD_ASSET_URL = "https://asset.allchive.co.kr/";
+
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
     };
