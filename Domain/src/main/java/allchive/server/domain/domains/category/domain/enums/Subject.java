@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Topic {
+public enum Subject {
     ALL("ALL"),
     FOOD("FOOD"),
     LIFE("LIFE"),

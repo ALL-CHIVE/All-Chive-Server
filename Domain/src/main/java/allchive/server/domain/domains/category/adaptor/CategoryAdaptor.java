@@ -4,7 +4,7 @@ package allchive.server.domain.domains.category.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.core.error.exception.InternalServerError;
 import allchive.server.domain.domains.category.domain.Category;
-import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.domain.enums.Subject;
 import allchive.server.domain.domains.category.exception.exceptions.CategoryNotFoundException;
 import allchive.server.domain.domains.category.repository.CategoryRepository;
 import java.util.List;
@@ -18,7 +18,7 @@ public class CategoryAdaptor {
     private final CategoryRepository categoryRepository;
 
     public void save(Category category) {
-        if (category.getTopic().equals(Topic.ALL)) {
+        if (category.getSubject().equals(Subject.ALL)) {
             throw InternalServerError.EXCEPTION;
         }
         categoryRepository.save(category);
@@ -35,18 +35,19 @@ public class CategoryAdaptor {
     }
 
     public Slice<Category> querySliceCategoryExceptBlock(
-            List<Long> categoryIdList, List<Long> blockList, Topic topic, Pageable pageable) {
+            List<Long> categoryIdList, List<Long> blockList, Subject subject, Pageable pageable) {
         return categoryRepository.querySliceCategoryExceptBlock(
-                categoryIdList, blockList, topic, pageable);
+                categoryIdList, blockList, subject, pageable);
     }
 
-    public Slice<Category> querySliceCategoryByUserId(Long userId, Topic topic, Pageable pageable) {
-        return categoryRepository.querySliceCategoryByUserId(userId, topic, pageable);
+    public Slice<Category> querySliceCategoryByUserId(
+            Long userId, Subject subject, Pageable pageable) {
+        return categoryRepository.querySliceCategoryByUserId(userId, subject, pageable);
     }
 
     public Slice<Category> querySliceCategoryIn(
-            List<Long> categoryIdList, Topic topic, Pageable pageable) {
-        return categoryRepository.querySliceCategoryIn(categoryIdList, topic, pageable);
+            List<Long> categoryIdList, Subject subject, Pageable pageable) {
+        return categoryRepository.querySliceCategoryIn(categoryIdList, subject, pageable);
     }
 
     public List<Category> queryCategoryByUserId(Long userId) {

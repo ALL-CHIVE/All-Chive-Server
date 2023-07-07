@@ -2,7 +2,7 @@ package allchive.server.domain.domains.category.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.domain.enums.Subject;
 import allchive.server.domain.domains.category.exception.exceptions.DeletedCategoryException;
 import allchive.server.domain.domains.category.exception.exceptions.NoAuthurityUpdateCategoryException;
 import allchive.server.domain.domains.category.exception.exceptions.NotPublicCategoryException;
@@ -39,7 +39,7 @@ public class Category extends BaseTimeEntity {
     private List<Long> pinUserId = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private Topic topic;
+    private Subject subject;
 
     @Builder
     private Category(
@@ -48,35 +48,35 @@ public class Category extends BaseTimeEntity {
             String title,
             boolean publicStatus,
             boolean deleteStatus,
-            Topic topic) {
+            Subject subject) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.title = title;
         this.publicStatus = publicStatus;
         this.deleteStatus = deleteStatus;
-        this.topic = topic;
+        this.subject = subject;
         this.scrapCnt = 0L;
         this.linkCnt = 0L;
         this.imgCnt = 0L;
     }
 
     public static Category of(
-            Long userId, String title, String imageUrl, boolean publicStatus, Topic topic) {
+            Long userId, String title, String imageUrl, boolean publicStatus, Subject subject) {
         return Category.builder()
                 .userId(userId)
                 .imageUrl(imageUrl)
                 .title(title)
                 .publicStatus(publicStatus)
                 .deleteStatus(Boolean.FALSE)
-                .topic(topic)
+                .subject(subject)
                 .build();
     }
 
-    public void update(String title, String imageUrl, boolean publicStatus, Topic topic) {
+    public void update(String title, String imageUrl, boolean publicStatus, Subject subject) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.publicStatus = publicStatus;
-        this.topic = topic;
+        this.subject = subject;
     }
 
     public void validateUser(Long userId) {

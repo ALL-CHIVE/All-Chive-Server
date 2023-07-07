@@ -8,7 +8,7 @@ import allchive.server.api.category.model.dto.response.CategoryResponse;
 import allchive.server.api.category.model.dto.response.CategoryTitleResponse;
 import allchive.server.api.category.service.*;
 import allchive.server.api.common.slice.SliceResponse;
-import allchive.server.domain.domains.category.domain.enums.Topic;
+import allchive.server.domain.domains.category.domain.enums.Subject;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class CategoryController {
         updateCategoryUseCase.execute(categoryId, updateCategoryRequest);
     }
 
-    @Operation(summary = "카테고리를 수정합니다.")
+    @Operation(summary = "카테고리를 삭제합니다.")
     @DeleteMapping(value = "/{categoryId}")
     public void deleteCategory(@PathVariable("categoryId") Long categoryId) {
         deleteCategoryUseCase.execute(categoryId);
@@ -60,9 +60,9 @@ public class CategoryController {
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자")
     @GetMapping()
     public SliceResponse<CategoryResponse> getCategory(
-            @RequestParam("topic") Topic topic,
+            @RequestParam("subject") Subject subject,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getCategoryUseCase.execute(topic, pageable);
+        return getCategoryUseCase.execute(subject, pageable);
     }
 
     @Operation(
@@ -70,9 +70,9 @@ public class CategoryController {
             description = "sort parameter는 입력하지 말아주세요! sorting : 고정 -> 스크랩 수 -> 생성일자")
     @GetMapping(value = "/me/archiving")
     public SliceResponse<CategoryResponse> getArchivedCategory(
-            @RequestParam("topic") Topic topic,
+            @RequestParam("subject") Subject subject,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getArchivedCategoryUseCase.execute(topic, pageable);
+        return getArchivedCategoryUseCase.execute(subject, pageable);
     }
 
     @Operation(
@@ -80,9 +80,9 @@ public class CategoryController {
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 수 -> 생성일자")
     @GetMapping(value = "/me/scrap")
     public SliceResponse<CategoryResponse> getScrapCategory(
-            @RequestParam("topic") Topic topic,
+            @RequestParam("subject") Subject subject,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getScrapCategoryUseCase.execute(topic, pageable);
+        return getScrapCategoryUseCase.execute(subject, pageable);
     }
 
     @Operation(summary = "사용 중인 주제 & 카테고리 리스트를 가져옵니다. (컨텐츠 추가 시 사용)")

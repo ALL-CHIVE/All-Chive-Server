@@ -26,7 +26,7 @@ public class OauthRegisterUseCase {
         final User user =
                 userDomainService.registerUser(
                         registerRequest.getNickname(),
-                        registerRequest.getProfileImgUrl(),
+                        registerRequest.getProfileImgKey(),
                         oauthInfo);
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
     }

@@ -1,3 +1,11 @@
+aws:
+  access-key: ${AWS_ACCESS_KEY:testKey}
+  secret-key: ${AWS_SECRET_KEY:secretKey}
+  s3:
+    bucket: ${AWS_S3_BUCKET:bucket}
+    base-url: ${AWS_S3_BASEURL:baseUrl}
+
+
 
 ---
 spring:

@@ -18,14 +18,14 @@ public class CategoryMapper {
                 request.getTitle(),
                 request.getImageUrl(),
                 request.isPublicStatus(),
-                request.getTopic());
+                request.getSubject());
     }
 
     public CategoryTitleResponse toCategoryTitleResponse(List<Category> categories) {
         CategoryTitleResponse response = CategoryTitleResponse.init();
         categories.forEach(
                 category -> {
-                    switch (category.getTopic()) {
+                    switch (category.getSubject()) {
                         case FOOD -> response.addFood(TitleContentCntVo.from(category));
                         case LIFE -> response.addLife(TitleContentCntVo.from(category));
                         case HOME_LIVING -> response.addHomeLiving(
