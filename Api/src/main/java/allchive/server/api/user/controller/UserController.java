@@ -1,9 +1,10 @@
 package allchive.server.api.user.controller;
 
-import allchive.server.api.category.model.dto.request.CreateCategoryRequest;
+import allchive.server.api.user.model.dto.request.CheckUserNicknameRequest;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.api.user.model.dto.response.GetUserInfoResponse;
 import allchive.server.api.user.model.dto.response.GetUserProfileResponse;
+import allchive.server.api.user.service.CheckUserNicknameUseCase;
 import allchive.server.api.user.service.GetUserInfoUseCase;
 import allchive.server.api.user.service.GetUserProfileUseCase;
 import allchive.server.api.user.service.UpdateUserInfoUseCase;
@@ -22,6 +23,7 @@ public class UserController {
     private final GetUserProfileUseCase getUserProfileUseCase;
     private final GetUserInfoUseCase getUserInfoUseCase;
     private final UpdateUserInfoUseCase updateUserInfoUseCase;
+    private final CheckUserNicknameUseCase checkUserNicknameUseCase;
 
     @Operation(summary = "아카이빙 현황과 내 프로필을 가져옵니다.")
     @GetMapping()
@@ -39,5 +41,11 @@ public class UserController {
     @PostMapping(value = "/info")
     public void getUserInfo(@RequestBody UpdateUserInfoRequest updateUserInfoRequest) {
         updateUserInfoUseCase.execute(updateUserInfoRequest);
+    }
+
+    @Operation(summary = "닉네임 중복체크합니다.")
+    @PostMapping(value = "/nickname")
+    public void checkUserNickname(@RequestBody CheckUserNicknameRequest request) {
+        checkUserNicknameUseCase.execute(request);
     }
 }

@@ -4,6 +4,7 @@ package allchive.server.domain.domains.user.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
+import allchive.server.domain.domains.user.exception.exceptions.DuplicatedNicknameException;
 import allchive.server.domain.domains.user.exception.exceptions.UserNotFoundException;
 import allchive.server.domain.domains.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,10 @@ public class UserAdaptor {
     @Transactional
     public User queryUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean existsByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
     }
 }

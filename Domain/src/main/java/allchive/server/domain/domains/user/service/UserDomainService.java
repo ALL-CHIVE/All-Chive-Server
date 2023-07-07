@@ -6,6 +6,7 @@ import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.exception.exceptions.AlreadySignUpUserException;
+import allchive.server.domain.domains.user.exception.exceptions.DuplicatedNicknameException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,5 +52,11 @@ public class UserDomainService {
     public void updateUserInfo(Long userId, String name, String email, String nickname, String imgUrl) {
         User user = userAdaptor.queryUserById(userId);
         user.updateInfo(name, email, nickname, imgUrl);
+    }
+
+    public void checkUserNickname(String nickname) {
+        if (userAdaptor.existsByNickname(nickname)) {
+            throw DuplicatedNicknameException.EXCEPTION;
+        }
     }
 }
