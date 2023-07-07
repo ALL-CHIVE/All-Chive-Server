@@ -1,6 +1,7 @@
 package allchive.server.api.category.model.dto.response;
 
 
+import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.category.domain.Category;
 import allchive.server.domain.domains.category.domain.enums.Topic;
@@ -64,7 +65,7 @@ public class CategoryResponse {
     public static CategoryResponse of(Category category, boolean markStatus) {
         return CategoryResponse.builder()
                 .categoryId(category.getId())
-                .imageUrl(category.getImageUrl())
+                .imageUrl(UrlUtil.toAssetUrl(category.getImageUrl()))
                 .title(category.getTitle())
                 .createdAt(category.getCreatedAt())
                 .topic(category.getTopic())
