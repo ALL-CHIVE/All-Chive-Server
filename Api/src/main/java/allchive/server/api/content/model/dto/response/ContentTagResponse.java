@@ -1,16 +1,18 @@
 package allchive.server.api.content.model.dto.response;
 
-
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
+import allchive.server.tag.model.dto.response.TagResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
-public class ContentResponse {
+public class ContentTagResponse {
     @Schema(description = "컨텐츠 고유번호")
     private Long contentId;
 
@@ -26,44 +28,38 @@ public class ContentResponse {
     @Schema(defaultValue = "컨텐츠 이미지 url", description = "컨텐츠 이미지 url")
     private String imgUrl;
 
-    @Schema(defaultValue = "2023.07.02", description = "컨텐츠 생성일자")
+    @Schema(
+            type = "string",
+            pattern = "yyyy.MM.dd",
+            defaultValue = "2023.07.02",
+            description = "컨텐츠 생성일자")
     @DateFormat
     private LocalDateTime contentCreatedAt;
 
-    @Schema(description = "컨텐츠 태그")
-    private String Tag;
-
-    @Schema(description = "컨텐츠 태그 총 개수")
-    private Long TagCount;
+    private List<TagResponse> tagList;
 
     @Builder
-    private ContentResponse(
-            Long contentId,
-            String contentTitle,
-            ContentType contentType,
-            LocalDateTime contentCreatedAt,
-            String tag,String link, String imgUrl,
-            Long tagCount) {
+    private ContentTagResponse(Long contentId, String contentTitle, ContentType contentType,
+                              String link, String imgUrl, LocalDateTime contentCreatedAt,
+                              List<TagResponse> tagList) {
         this.contentId = contentId;
         this.contentTitle = contentTitle;
         this.contentType = contentType;
-        this.contentCreatedAt = contentCreatedAt;
         this.link = link;
         this.imgUrl = imgUrl;
-        Tag = tag;
-        TagCount = tagCount;
+        this.contentCreatedAt = contentCreatedAt;
+        this.tagList = tagList;
     }
 
-    public static ContentResponse of(Content content, String tag, Long tagCount) {
-        return ContentResponse.builder()
+    public static ContentTagResponse of(Content content, List<TagResponse> tagList) {
+        return ContentTagResponse.builder()
                 .contentId(content.getId())
                 .contentTitle(content.getTitle())
                 .contentType(content.getContentType())
                 .link(content.getLinkUrl())
                 .imgUrl(content.getImageUrl())
                 .contentCreatedAt(content.getCreatedAt())
-                .tag(tag)
-                .tagCount(tagCount)
+                .tagList(tagList)
                 .build();
     }
 }
