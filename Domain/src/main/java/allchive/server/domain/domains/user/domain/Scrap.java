@@ -20,15 +20,15 @@ public class Scrap extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    private Long categoryId;
+    private Long archivingId;
 
     @Builder
-    private Scrap(User user, Long categoryId) {
+    private Scrap(User user, Long archivingId) {
         this.user = user;
-        this.categoryId = categoryId;
+        this.archivingId = archivingId;
     }
 
-    public static Scrap of(User user, Long categoryId) {
-        return Scrap.builder().user(user).categoryId(categoryId).build();
+    public static Scrap of(User user, Long archivingId) {
+        return Scrap.builder().user(user).archivingId(archivingId).build();
     }
 }

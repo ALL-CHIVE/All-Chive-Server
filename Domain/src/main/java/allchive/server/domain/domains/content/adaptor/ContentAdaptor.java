@@ -14,8 +14,8 @@ import org.springframework.data.domain.Slice;
 public class ContentAdaptor {
     private final ContentRepository contentRepository;
 
-    public Slice<Content> querySliceContentByCategoryId(Long categoryId, Pageable pageable) {
-        return contentRepository.querySliceContentByCategoryId(categoryId, pageable);
+    public Slice<Content> querySliceContentByArchivingId(Long archivingId, Pageable pageable) {
+        return contentRepository.querySliceContentByArchivingId(archivingId, pageable);
     }
 
     public void save(Content content) {

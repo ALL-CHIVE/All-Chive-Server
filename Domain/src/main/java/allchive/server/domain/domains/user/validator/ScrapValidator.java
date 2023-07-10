@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 public class ScrapValidator {
     private final ScrapAdaptor scrapAdaptor;
 
-    public void validateExistScrap(User user, Long categoryId) {
-        if (scrapAdaptor.findByUserAndCategoryId(user, categoryId).isPresent()) {
+    public void validateExistScrap(User user, Long archivingId) {
+        if (scrapAdaptor.findByUserAndArchivingId(user, archivingId).isPresent()) {
             throw AlreadyExistScrapException.EXCEPTION;
         }
     }

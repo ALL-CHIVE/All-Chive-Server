@@ -18,8 +18,8 @@ public class ScrapAdaptor {
         return scrapRepository.findAllByUserId(userId);
     }
 
-    public Optional<Scrap> findByUserAndCategoryId(User user, Long categoryId) {
-        return scrapRepository.findAllByUserAndCategoryId(user, categoryId);
+    public Optional<Scrap> findByUserAndArchivingId(User user, Long archivingId) {
+        return scrapRepository.findAllByUserAndArchivingId(user, archivingId);
     }
 
     public void delete(Scrap scrap) {

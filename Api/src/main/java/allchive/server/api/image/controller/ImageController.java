@@ -20,11 +20,11 @@ public class ImageController {
     private final S3PresignedUrlService s3PresignedUrlService;
 
     @Operation(summary = "카테고리 관련 이미지 업로드 url 요청할수 있는 api 입니다.")
-    @GetMapping(value = "/categories/image")
-    public ImageUrlResponse getCategoryPresignedUrl() {
+    @GetMapping(value = "/archivings/image")
+    public ImageUrlResponse getArchivingPresignedUrl() {
         Long userId = SecurityUtil.getCurrentUserId();
         return ImageUrlResponse.from(
-                s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.CATEGORY));
+                s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.ARCHIVING));
     }
 
     @Operation(summary = "컨텐츠 관련 이미지 업로드 url 요청할수 있는 api 입니다.")

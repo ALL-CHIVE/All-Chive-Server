@@ -3,7 +3,7 @@ package allchive.server.domain.domains.user.domain;
 
 import allchive.server.domain.common.convertor.StringListConverter;
 import allchive.server.domain.common.model.BaseTimeEntity;
-import allchive.server.domain.domains.category.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Subject;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.UserRole;
 import allchive.server.domain.domains.user.domain.enums.UserState;
