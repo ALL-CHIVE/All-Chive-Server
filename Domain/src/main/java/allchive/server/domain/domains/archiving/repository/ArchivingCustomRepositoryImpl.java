@@ -4,7 +4,7 @@ import static allchive.server.domain.domains.archiving.domain.QArchiving.archivi
 
 import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.archiving.domain.Archiving;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -22,7 +22,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     @Override
     public Slice<Archiving> querySliceArchivingExceptBlock(
-            List<Long> archivingIdList, List<Long> blockList, Subject subject, Pageable pageable) {
+            List<Long> archivingIdList, List<Long> blockList, Category category, Pageable pageable) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -30,7 +30,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .where(
                                 userIdNotIn(blockList),
                                 publicStatusTrue(),
-                                subjectEq(subject),
+                                categoryEq(category),
                                 deleteStatusFalse())
                         .orderBy(scrabListDesc(archivingIdList), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
@@ -41,12 +41,12 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     @Override
     public Slice<Archiving> querySliceArchivingByUserId(
-            Long userId, Subject subject, Pageable pageable) {
+            Long userId, Category category, Pageable pageable) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
                         .from(archiving)
-                        .where(userIdEq(userId), subjectEq(subject), deleteStatusFalse())
+                        .where(userIdEq(userId), categoryEq(category), deleteStatusFalse())
                         .orderBy(pinDesc(userId), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
@@ -56,7 +56,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     @Override
     public Slice<Archiving> querySliceArchivingIn(
-            List<Long> archivingIdList, Subject subject, Pageable pageable) {
+            List<Long> archivingIdList, Category category, Pageable pageable) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -64,7 +64,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .where(
                                 archivingIdListIn(archivingIdList),
                                 publicStatusTrue(),
-                                subjectEq(subject),
+                                categoryEq(category),
                                 deleteStatusFalse())
                         .orderBy(scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
@@ -78,7 +78,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         return queryFactory
                 .selectFrom(archiving)
                 .where(userIdEq(userId), deleteStatusFalse())
-                .orderBy(subjectDesc(), createdAtDesc())
+                .orderBy(categoryDesc(), createdAtDesc())
                 .fetch();
     }
 
@@ -97,11 +97,11 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         return archiving.publicStatus.eq(Boolean.TRUE);
     }
 
-    private BooleanExpression subjectEq(Subject subject) {
-        if (subject.equals(Subject.ALL)) {
+    private BooleanExpression categoryEq(Category category) {
+        if (category.equals(Category.ALL)) {
             return null;
         }
-        return archiving.subject.eq(subject);
+        return archiving.category.eq(category);
     }
 
     private BooleanExpression deleteStatusFalse() {
@@ -140,7 +140,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         return archiving.createdAt.desc();
     }
 
-    private OrderSpecifier<Subject> subjectDesc() {
-        return archiving.subject.desc();
+    private OrderSpecifier<Category> categoryDesc() {
+        return archiving.category.desc();
     }
 }

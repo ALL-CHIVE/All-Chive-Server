@@ -17,14 +17,14 @@ public class ArchivingMapper {
                 request.getTitle(),
                 UrlUtil.convertUrlToKey(request.getImageUrl()),
                 request.isPublicStatus(),
-                request.getSubject());
+                request.getCategory());
     }
 
     public ArchivingTitleResponse toArchivingTitleResponse(List<Archiving> archivings) {
         ArchivingTitleResponse response = ArchivingTitleResponse.init();
         archivings.forEach(
                 archiving -> {
-                    switch (archiving.getSubject()) {
+                    switch (archiving.getCategory()) {
                         case FOOD -> response.addFood(TitleContentCntVo.from(archiving));
                         case LIFE -> response.addLife(TitleContentCntVo.from(archiving));
                         case HOME_LIVING -> response.addHomeLiving(

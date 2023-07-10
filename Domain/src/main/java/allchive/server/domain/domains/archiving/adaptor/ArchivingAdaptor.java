@@ -5,7 +5,7 @@ import allchive.server.core.annotation.Adaptor;
 import allchive.server.core.error.exception.InternalServerError;
 import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.archiving.domain.Archiving;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
 import allchive.server.domain.domains.archiving.repository.ArchivingRepository;
 
@@ -21,7 +21,7 @@ public class ArchivingAdaptor {
     private final ArchivingRepository archivingRepository;
 
     public void save(Archiving archiving) {
-        if (archiving.getSubject().equals(Subject.ALL)) {
+        if (archiving.getCategory().equals(Category.ALL)) {
             throw InternalServerError.EXCEPTION;
         }
         archivingRepository.save(archiving);
@@ -38,19 +38,19 @@ public class ArchivingAdaptor {
     }
 
     public Slice<Archiving> querySliceArchivingExceptBlock(
-            List<Long> archivingIdList, List<Long> blockList, Subject subject, Pageable pageable) {
+            List<Long> archivingIdList, List<Long> blockList, Category category, Pageable pageable) {
         return archivingRepository.querySliceArchivingExceptBlock(
-                archivingIdList, blockList, subject, pageable);
+                archivingIdList, blockList, category, pageable);
     }
 
     public Slice<Archiving> querySliceArchivingByUserId(
-            Long userId, Subject subject, Pageable pageable) {
-        return archivingRepository.querySliceArchivingByUserId(userId, subject, pageable);
+            Long userId, Category category, Pageable pageable) {
+        return archivingRepository.querySliceArchivingByUserId(userId, category, pageable);
     }
 
     public Slice<Archiving> querySliceArchivingIn(
-            List<Long> archivingIdList, Subject subject, Pageable pageable) {
-        return archivingRepository.querySliceArchivingIn(archivingIdList, subject, pageable);
+            List<Long> archivingIdList, Category category, Pageable pageable) {
+        return archivingRepository.querySliceArchivingIn(archivingIdList, category, pageable);
     }
 
     public List<Archiving> queryArchivingByUserId(Long userId) {

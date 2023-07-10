@@ -6,7 +6,7 @@ import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -19,11 +19,11 @@ public class GetArchivedArchivingUseCase {
     private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional(readOnly = true)
-    public SliceResponse<ArchivingResponse> execute(Subject subject, Pageable pageable) {
+    public SliceResponse<ArchivingResponse> execute(Category category, Pageable pageable) {
         Long userId = SecurityUtil.getCurrentUserId();
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingByUserId(userId, subject, pageable)
+                        .querySliceArchivingByUserId(userId, category, pageable)
                         .map(
                                 archiving ->
                                         ArchivingResponse.of(

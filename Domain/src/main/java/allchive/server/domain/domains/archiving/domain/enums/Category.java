@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Subject {
+public enum Category {
     ALL("ALL"),
     FOOD("FOOD"),
     LIFE("LIFE"),
@@ -27,7 +27,7 @@ public enum Subject {
     @JsonCreator
     public static OauthProvider parsing(String inputValue) {
         return Stream.of(OauthProvider.values())
-                .filter(subject -> subject.getValue().equals(inputValue))
+                .filter(category -> category.getValue().equals(inputValue))
                 .findFirst()
                 .orElse(null);
     }

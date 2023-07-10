@@ -6,7 +6,7 @@ import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
 import java.util.List;
@@ -22,13 +22,13 @@ public class GetScrapArchivingUseCase {
     private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional(readOnly = true)
-    public SliceResponse<ArchivingResponse> execute(Subject subject, Pageable pageable) {
+    public SliceResponse<ArchivingResponse> execute(Category category, Pageable pageable) {
         Long userId = SecurityUtil.getCurrentUserId();
         List<Long> archivingIdList =
                 scrapAdaptor.findAllByUserId(userId).stream().map(Scrap::getArchivingId).toList();
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingIn(archivingIdList, subject, pageable)
+                        .querySliceArchivingIn(archivingIdList, category, pageable)
                         .map(
                                 archiving ->
                                         ArchivingResponse.of(

@@ -2,7 +2,7 @@ package allchive.server.domain.domains.archiving.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.archiving.exception.exceptions.DeletedArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.NoAuthurityUpdateArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.NotPublicArchivingException;
@@ -39,7 +39,7 @@ public class Archiving extends BaseTimeEntity {
     private List<Long> pinUserId = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private Subject subject;
+    private Category category;
 
     @Builder
     private Archiving(
@@ -48,35 +48,35 @@ public class Archiving extends BaseTimeEntity {
             String title,
             boolean publicStatus,
             boolean deleteStatus,
-            Subject subject) {
+            Category category) {
         this.userId = userId;
         this.imageUrl = imageUrl;
         this.title = title;
         this.publicStatus = publicStatus;
         this.deleteStatus = deleteStatus;
-        this.subject = subject;
+        this.category = category;
         this.scrapCnt = 0L;
         this.linkCnt = 0L;
         this.imgCnt = 0L;
     }
 
     public static Archiving of(
-            Long userId, String title, String imageUrl, boolean publicStatus, Subject subject) {
+            Long userId, String title, String imageUrl, boolean publicStatus, Category category) {
         return Archiving.builder()
                 .userId(userId)
                 .imageUrl(imageUrl)
                 .title(title)
                 .publicStatus(publicStatus)
                 .deleteStatus(Boolean.FALSE)
-                .subject(subject)
+                .category(category)
                 .build();
     }
 
-    public void update(String title, String imageUrl, boolean publicStatus, Subject subject) {
+    public void update(String title, String imageUrl, boolean publicStatus, Category category) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.publicStatus = publicStatus;
-        this.subject = subject;
+        this.category = category;
     }
 
     public void validateUser(Long userId) {

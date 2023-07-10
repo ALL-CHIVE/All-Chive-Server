@@ -4,7 +4,7 @@ package allchive.server.domain.domains.archiving.service;
 import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import lombok.RequiredArgsConstructor;
 
 @DomainService
@@ -21,8 +21,8 @@ public class ArchivingDomainService {
             String title,
             String imageUrl,
             boolean publicStatus,
-            Subject subject) {
-        archiving.update(title, imageUrl, publicStatus, subject);
+            Category category) {
+        archiving.update(title, imageUrl, publicStatus, category);
         archivingAdaptor.save(archiving);
     }
 

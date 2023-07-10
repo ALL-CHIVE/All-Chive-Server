@@ -8,7 +8,7 @@ import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
 import allchive.server.api.archiving.model.dto.response.ArchivingTitleResponse;
 import allchive.server.api.archiving.service.*;
 import allchive.server.api.common.slice.SliceResponse;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -60,9 +60,9 @@ public class ArchivingController {
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자")
     @GetMapping()
     public SliceResponse<ArchivingResponse> getArchiving(
-            @RequestParam("subject") Subject subject,
+            @RequestParam("category") Category category,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getArchivingUseCase.execute(subject, pageable);
+        return getArchivingUseCase.execute(category, pageable);
     }
 
     @Operation(
@@ -70,9 +70,9 @@ public class ArchivingController {
             description = "sort parameter는 입력하지 말아주세요! sorting : 고정 -> 스크랩 수 -> 생성일자")
     @GetMapping(value = "/me/archiving")
     public SliceResponse<ArchivingResponse> getArchivedArchiving(
-            @RequestParam("subject") Subject subject,
+            @RequestParam("category") Category category,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getArchivedArchivingUseCase.execute(subject, pageable);
+        return getArchivedArchivingUseCase.execute(category, pageable);
     }
 
     @Operation(
@@ -80,9 +80,9 @@ public class ArchivingController {
             description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 수 -> 생성일자")
     @GetMapping(value = "/me/scrap")
     public SliceResponse<ArchivingResponse> getScrapArchiving(
-            @RequestParam("subject") Subject subject,
+            @RequestParam("category") Category category,
             @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getScrapArchivingUseCase.execute(subject, pageable);
+        return getScrapArchivingUseCase.execute(category, pageable);
     }
 
     @Operation(summary = "사용 중인 주제 & 아카이빙 리스트를 가져옵니다. (컨텐츠 추가 시 사용)")

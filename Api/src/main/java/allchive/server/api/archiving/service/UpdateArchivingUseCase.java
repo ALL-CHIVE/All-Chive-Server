@@ -29,6 +29,6 @@ public class UpdateArchivingUseCase {
                 request.getTitle(),
                 UrlUtil.convertUrlToKey(request.getImageUrl()),
                 request.isPublicStatus(),
-                request.getSubject());
+                request.getCategory());
     }
 }

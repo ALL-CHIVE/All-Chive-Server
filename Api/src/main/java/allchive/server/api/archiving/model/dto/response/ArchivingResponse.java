@@ -4,7 +4,7 @@ package allchive.server.api.archiving.model.dto.response;
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.archiving.domain.Archiving;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -30,7 +30,7 @@ public class ArchivingResponse {
     private LocalDateTime createdAt;
 
     @Schema(defaultValue = "아카이빙 주제", description = "아카이빙 주제")
-    private Subject subject;
+    private Category category;
 
     @Schema(description = "아카이빙 컨텐츠 중 이미지 수")
     private Long imgCnt;
@@ -50,7 +50,7 @@ public class ArchivingResponse {
             String title,
             String imageUrl,
             LocalDateTime createdAt,
-            Subject subject,
+            Category category,
             Long imgCnt,
             Long linkCnt,
             Long scrapCnt,
@@ -59,7 +59,7 @@ public class ArchivingResponse {
         this.title = title;
         this.imageUrl = imageUrl;
         this.createdAt = createdAt;
-        this.subject = subject;
+        this.category = category;
         this.imgCnt = imgCnt;
         this.linkCnt = linkCnt;
         this.scrapCnt = scrapCnt;
@@ -72,7 +72,7 @@ public class ArchivingResponse {
                 .imageUrl(UrlUtil.toAssetUrl(archiving.getImageUrl()))
                 .title(archiving.getTitle())
                 .createdAt(archiving.getCreatedAt())
-                .subject(archiving.getSubject())
+                .category(archiving.getCategory())
                 .imgCnt(archiving.getImgCnt())
                 .linkCnt(archiving.getLinkCnt())
                 .scrapCnt(archiving.getScrapCnt())

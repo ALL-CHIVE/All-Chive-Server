@@ -2,7 +2,7 @@ package allchive.server.api.archiving.model.dto.request;
 
 
 import allchive.server.core.annotation.ValidEnum;
-import allchive.server.domain.domains.archiving.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -15,8 +15,8 @@ public class CreateArchivingRequest {
     private String imageUrl;
 
     @Schema(defaultValue = "DESIGN", description = "주제")
-    @ValidEnum(target = Subject.class)
-    private Subject subject;
+    @ValidEnum(target = Category.class)
+    private Category category;
 
     @Schema(defaultValue = "false", description = "공개 여부")
     private boolean publicStatus;
