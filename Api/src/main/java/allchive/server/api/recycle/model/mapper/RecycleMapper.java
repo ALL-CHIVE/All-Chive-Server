@@ -11,7 +11,7 @@ public class RecycleMapper {
         return Recycle.of(type, contentId, null, userId);
     }
 
-    public Recycle toCategoryRecycleEntity(Long userId, Long categoryId, RecycleType type) {
-        return Recycle.of(type, null, categoryId, userId);
+    public Recycle toArchivingRecycleEntity(Long userId, Long archivingId, RecycleType type) {
+        return Recycle.of(type, null, archivingId, userId);
     }
 }

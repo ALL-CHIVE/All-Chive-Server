@@ -19,7 +19,7 @@ public enum ContentType {
     @JsonCreator
     public static OauthProvider parsing(String inputValue) {
         return Stream.of(OauthProvider.values())
-                .filter(category -> category.getValue().equals(inputValue))
+                .filter(type -> type.getValue().equals(inputValue))
                 .findFirst()
                 .orElse(null);
     }

@@ -13,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 public class ScrapDomainService {
     private final ScrapAdaptor scrapAdaptor;
 
-    public void deleteScrapByUserAndCategoryId(User user, Long categoryId) {
+    public void deleteScrapByUserAndArchivingId(User user, Long archivingId) {
         Scrap scrap =
                 scrapAdaptor
-                        .findByUserAndCategoryId(user, categoryId)
+                        .findByUserAndArchivingId(user, archivingId)
                         .orElseThrow(() -> ScrapNotFoundException.EXCEPTION);
         ;
         scrapAdaptor.delete(scrap);

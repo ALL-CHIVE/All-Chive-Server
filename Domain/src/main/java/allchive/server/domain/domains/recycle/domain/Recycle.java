@@ -23,7 +23,7 @@ public class Recycle extends BaseTimeEntity {
     private RecycleType recycleType;
 
     private Long contentId;
-    private Long categoryId;
+    private Long archivingId;
     private Long userId;
     private LocalDateTime deletedAt;
 
@@ -31,20 +31,20 @@ public class Recycle extends BaseTimeEntity {
     private Recycle(
             RecycleType recycleType,
             Long contentId,
-            Long categoryId,
+            Long archivingId,
             Long userId,
             LocalDateTime deletedAt) {
         this.recycleType = recycleType;
         this.contentId = contentId;
-        this.categoryId = categoryId;
+        this.archivingId = archivingId;
         this.userId = userId;
         this.deletedAt = deletedAt;
     }
 
     public static Recycle of(
-            RecycleType recycleType, Long contentId, Long categoryId, Long userId) {
+            RecycleType recycleType, Long contentId, Long archivingId, Long userId) {
         return Recycle.builder()
-                .categoryId(categoryId)
+                .archivingId(archivingId)
                 .contentId(contentId)
                 .recycleType(recycleType)
                 .userId(userId)

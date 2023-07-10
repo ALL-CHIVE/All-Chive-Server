@@ -18,7 +18,7 @@ public class Content extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long categoryId;
+    private Long archivingId;
 
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
@@ -34,14 +34,14 @@ public class Content extends BaseTimeEntity {
 
     @Builder
     private Content(
-            Long categoryId,
+            Long archivingId,
             ContentType contentType,
             String imageUrl,
             String linkUrl,
             String title,
             String memo,
             boolean deleteStatus) {
-        this.categoryId = categoryId;
+        this.archivingId = archivingId;
         this.contentType = contentType;
         this.imageUrl = imageUrl;
         this.linkUrl = linkUrl;
@@ -51,14 +51,14 @@ public class Content extends BaseTimeEntity {
     }
 
     public static Content of(
-            Long categoryId,
+            Long archivingId,
             ContentType contentType,
             String imageUrl,
             String linkUrl,
             String title,
             String memo) {
         return Content.builder()
-                .categoryId(categoryId)
+                .archivingId(archivingId)
                 .contentType(contentType)
                 .imageUrl(imageUrl)
                 .linkUrl(linkUrl)

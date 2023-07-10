@@ -17,7 +17,7 @@ public enum OauthProvider {
     @JsonCreator
     public static OauthProvider parsing(String inputValue) {
         return Stream.of(OauthProvider.values())
-                .filter(category -> category.getValue().equals(inputValue))
+                .filter(oauthProvider -> oauthProvider.getValue().equals(inputValue))
                 .findFirst()
                 .orElse(null);
     }

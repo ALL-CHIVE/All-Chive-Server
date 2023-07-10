@@ -13,8 +13,8 @@ public class CreateContentRequest {
     @ValidEnum(target = ContentType.class)
     private ContentType contentType;
 
-    @Schema(defaultValue = "0", description = "카테고리 고유번호")
-    private Long categoryId;
+    @Schema(defaultValue = "0", description = "아카이빙 고유번호")
+    private Long archivingId;
 
     @Schema(defaultValue = "제목", description = "제목")
     private String title;

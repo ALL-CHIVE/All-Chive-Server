@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     List<Scrap> findAllByUserId(Long userId);
 
-    Optional<Scrap> findAllByUserAndCategoryId(User user, Long categoryId);
+    Optional<Scrap> findAllByUserAndArchivingId(User user, Long archivingId);
 }

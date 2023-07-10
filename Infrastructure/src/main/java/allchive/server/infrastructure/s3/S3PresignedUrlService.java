@@ -39,7 +39,7 @@ public class S3PresignedUrlService {
         switch (presignedType) {
             case USER -> fileName = baseUrl + "/user/";
             case CONTENT -> fileName = baseUrl + "/content/";
-            case CATEGORY -> fileName = baseUrl + "/category/";
+            case ARCHIVING -> fileName = baseUrl + "/archiving/";
             default -> throw InternalServerError.EXCEPTION;
         }
         return fileName + id.toString() + "/" + UUID.randomUUID();

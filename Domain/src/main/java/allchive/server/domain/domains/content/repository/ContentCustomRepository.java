@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface ContentCustomRepository {
-    Slice<Content> querySliceContentByCategoryId(Long categoryId, Pageable pageable);
+    Slice<Content> querySliceContentByArchivingId(Long archivingId, Pageable pageable);
 }

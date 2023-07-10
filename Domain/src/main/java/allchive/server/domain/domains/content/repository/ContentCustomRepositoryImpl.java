@@ -18,20 +18,20 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<Content> querySliceContentByCategoryId(Long categoryId, Pageable pageable) {
-        List<Content> categories =
+    public Slice<Content> querySliceContentByArchivingId(Long archivingId, Pageable pageable) {
+        List<Content> archivings =
                 queryFactory
                         .selectFrom(content)
-                        .where(categoryIdEq(categoryId))
+                        .where(archivingIdEq(archivingId))
                         .orderBy(createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
                         .fetch();
-        return SliceUtil.toSlice(categories, pageable);
+        return SliceUtil.toSlice(archivings, pageable);
     }
 
-    private BooleanExpression categoryIdEq(Long categoryId) {
-        return content.categoryId.eq(categoryId);
+    private BooleanExpression archivingIdEq(Long archivingId) {
+        return content.archivingId.eq(archivingId);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

@@ -26,7 +26,7 @@ public class ContentMapper {
 
     public Content toEntity(CreateContentRequest request) {
         return Content.of(
-                request.getCategoryId(),
+                request.getArchivingId(),
                 request.getContentType(),
                 UrlUtil.convertUrlToKey(request.getImgUrl()),
                 request.getLink(),
