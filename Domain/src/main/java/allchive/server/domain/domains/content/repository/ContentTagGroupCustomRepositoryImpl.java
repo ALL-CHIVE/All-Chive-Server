@@ -22,12 +22,12 @@ public class ContentTagGroupCustomRepositoryImpl implements ContentTagGroupCusto
                 .selectFrom(contentTagGroup)
                 .join(contentTagGroup.tag, tag)
                 .fetchJoin()
-                .where(categoryIdEq(contentList))
+                .where(archivingIdEq(contentList))
                 .orderBy(createdAtDesc())
                 .fetch();
     }
 
-    private BooleanExpression categoryIdEq(List<Content> contentList) {
+    private BooleanExpression archivingIdEq(List<Content> contentList) {
         return contentTagGroup.content.in(contentList);
     }
 

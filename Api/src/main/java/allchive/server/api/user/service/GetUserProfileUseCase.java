@@ -5,8 +5,8 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.user.model.dto.response.GetUserProfileResponse;
 import allchive.server.api.user.model.mapper.UserMapper;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.category.adaptor.CategoryAdaptor;
-import allchive.server.domain.domains.category.domain.Category;
+import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
+import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.validator.UserValidator;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 @RequiredArgsConstructor
 public class GetUserProfileUseCase {
-    private final CategoryAdaptor categoryAdaptor;
+    private final ArchivingAdaptor archivingAdaptor;
     private final UserAdaptor userAdaptor;
     private final UserMapper userMapper;
     private final UserValidator userValidator;
@@ -27,7 +27,7 @@ public class GetUserProfileUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         userValidator.validateUserStatusNormal(userId);
         User user = userAdaptor.queryUserById(userId);
-        List<Category> categoryList = categoryAdaptor.findAllByUserId(userId);
-        return userMapper.toGetUserProfileResponse(categoryList, user);
+        List<Archiving> archivingList = archivingAdaptor.findAllByUserId(userId);
+        return userMapper.toGetUserProfileResponse(archivingList, user);
     }
 }

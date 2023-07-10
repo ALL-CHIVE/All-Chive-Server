@@ -3,7 +3,7 @@ package allchive.server.domain.domains.user.domain;
 
 import allchive.server.domain.common.convertor.StringListConverter;
 import allchive.server.domain.common.model.BaseTimeEntity;
-import allchive.server.domain.domains.category.domain.enums.Subject;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.UserRole;
 import allchive.server.domain.domains.user.domain.enums.UserState;
@@ -47,7 +47,7 @@ public class User extends BaseTimeEntity {
     private UserRole userRole = UserRole.USER;
 
     @Convert(converter = StringListConverter.class)
-    private List<Subject> subjects = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     @Builder
     private User(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
@@ -81,7 +81,7 @@ public class User extends BaseTimeEntity {
         this.profileImgUrl = null;
         this.email = null;
         this.oauthInfo.withDrawOauthInfo();
-        this.subjects = new ArrayList<>();
+        this.categories = new ArrayList<>();
         this.name = null;
     }
 

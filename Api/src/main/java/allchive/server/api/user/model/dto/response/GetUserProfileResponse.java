@@ -22,26 +22,26 @@ public class GetUserProfileResponse {
     private int imgCount;
 
     @Schema(defaultValue = "0", description = "공개 아카이브 개수")
-    private int publicCategoryCount;
+    private int publicArchivingCount;
 
     @Builder
     private GetUserProfileResponse(
-            String nickname, String imgUrl, int linkCount, int imgCount, int publicCategoryCount) {
+            String nickname, String imgUrl, int linkCount, int imgCount, int publicArchivingCount) {
         this.nickname = nickname;
         this.imgUrl = imgUrl;
         this.linkCount = linkCount;
         this.imgCount = imgCount;
-        this.publicCategoryCount = publicCategoryCount;
+        this.publicArchivingCount = publicArchivingCount;
     }
 
     public static GetUserProfileResponse of(
-            User user, int linkCount, int imgCount, int publicCategoryCount) {
+            User user, int linkCount, int imgCount, int publicArchivingCount) {
         return GetUserProfileResponse.builder()
                 .nickname(user.getNickname())
                 .imgUrl(UrlUtil.toAssetUrl(user.getProfileImgUrl()))
                 .linkCount(linkCount)
                 .imgCount(imgCount)
-                .publicCategoryCount(publicCategoryCount)
+                .publicArchivingCount(publicArchivingCount)
                 .build();
     }
 }

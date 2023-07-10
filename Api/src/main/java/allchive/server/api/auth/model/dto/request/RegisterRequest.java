@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
     @Schema(
-            defaultValue = "staging/category/1/d241218a-a64c-4443-8aa4-ce98017a3d12",
+            defaultValue = "staging/archiving/1/d241218a-a64c-4443-8aa4-ce98017a3d12",
             description = "프로필 이미지 url")
     @NotBlank(message = "프로필 이미지 key를 입력하세요")
     private String profileImgKey;
