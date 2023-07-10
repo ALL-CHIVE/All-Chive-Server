@@ -6,7 +6,6 @@ import allchive.server.api.auth.model.dto.response.OauthLoginLinkResponse;
 import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
 import allchive.server.api.auth.model.dto.response.OauthSignInResponse;
 import allchive.server.api.auth.service.*;
-import allchive.server.core.helper.SpringEnvironmentHelper;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +23,7 @@ public class OauthController {
     private final OauthLoginUseCase oauthLoginUseCase;
     private final OauthRegisterUseCase oauthRegisterUseCase;
 
-//    /** 필요하면 쓸려고 남겨둠 **/
+    //    /** 필요하면 쓸려고 남겨둠 **/
     @Operation(
             summary = "oauth 링크발급",
             description = "oauth 링크를 받아볼수 있습니다. referer, host 입력 안하셔도 됩니다!",
@@ -70,9 +69,8 @@ public class OauthController {
             @PathVariable("provider") OauthProvider provider, @RequestParam("code") String code) {
         return oauthLoginUseCase.devLogin(provider, code);
     }
-    @Operation(
-            summary = "로그인 (idtoken 용)",
-            description = "회원가입 안된 유저일 경우, canLogin=false 값을 보냅니다!")
+
+    @Operation(summary = "로그인 (idtoken 용)", description = "회원가입 안된 유저일 경우, canLogin=false 값을 보냅니다!")
     @PostMapping("/login/{provider}/idtoken")
     public OauthSignInResponse oauthUserIdTokenLogin(
             @PathVariable("provider") OauthProvider provider,
