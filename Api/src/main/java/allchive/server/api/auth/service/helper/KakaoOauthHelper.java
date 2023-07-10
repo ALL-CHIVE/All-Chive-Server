@@ -47,12 +47,12 @@ public class KakaoOauthHelper {
         // TODO : 프론트 콜백 URL 알아내면 바꾸기
         return kakaoOauthClient.kakaoAuth(
                 kakaoOauthProperties.getClientId(),
-                referer + "/kakao/callback",
+                referer + "kakao/callback",
                 code,
                 kakaoOauthProperties.getClientSecret());
     }
 
-    public KakaoTokenResponse getKakaoOauthTokenTest(String code) {
+    public KakaoTokenResponse getKakaoOauthTokenDev(String code) {
         return kakaoOauthClient.kakaoAuth(
                 kakaoOauthProperties.getClientId(),
                 kakaoOauthProperties.getRedirectUrl(),

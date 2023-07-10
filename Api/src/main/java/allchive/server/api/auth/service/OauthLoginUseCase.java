@@ -16,30 +16,31 @@ import lombok.RequiredArgsConstructor;
 @UseCase
 @RequiredArgsConstructor
 public class OauthLoginUseCase {
-
     private final KakaoOauthHelper kakaoOauthHelper;
     private final UserDomainService userDomainService;
     private final TokenGenerateHelper tokenGenerateHelper;
 
-    public OauthSignInResponse execute(OauthProvider provider, String code, String referer) {
+    public OauthSignInResponse loginWithCode(OauthProvider provider, String code, String referer) {
         final OauthTokenResponse oauthTokenResponse = getCredential(provider, code, referer);
-        final OauthInfo oauthInfo = getOauthInfo(provider, oauthTokenResponse.getIdToken());
-        if (userDomainService.checkUserCanLogin(oauthInfo)) {
-            User user = userDomainService.loginUser(oauthInfo);
-            return tokenGenerateHelper.execute(user);
-        } else {
-            return OauthSignInResponse.cannotLogin(oauthTokenResponse.getIdToken());
-        }
+        return processLoginWithIdToken(provider, oauthTokenResponse.getIdToken());
     }
 
-    public OauthSignInResponse executeTest(OauthProvider provider, String code) {
-        final OauthTokenResponse oauthTokenResponse = getCredentialTest(provider, code);
-        final OauthInfo oauthInfo = getOauthInfo(provider, oauthTokenResponse.getIdToken());
+    public OauthSignInResponse loginWithIdToken(OauthProvider provider, String idToken) {
+        return processLoginWithIdToken(provider, idToken);
+    }
+
+    public OauthSignInResponse devLogin(OauthProvider provider, String code) {
+        final OauthTokenResponse oauthTokenResponse = getCredentialDev(provider, code);
+        return processLoginWithIdToken(provider, oauthTokenResponse.getIdToken());
+    }
+
+    private OauthSignInResponse processLoginWithIdToken(OauthProvider provider, String idToken) {
+        final OauthInfo oauthInfo = getOauthInfo(provider, idToken);
         if (userDomainService.checkUserCanLogin(oauthInfo)) {
             User user = userDomainService.loginUser(oauthInfo);
             return tokenGenerateHelper.execute(user);
         } else {
-            return OauthSignInResponse.cannotLogin(oauthTokenResponse.getIdToken());
+            return OauthSignInResponse.cannotLogin(idToken);
         }
     }
 
@@ -53,10 +54,10 @@ public class OauthLoginUseCase {
         }
     }
 
-    private OauthTokenResponse getCredentialTest(OauthProvider provider, String code) {
+    private OauthTokenResponse getCredentialDev(OauthProvider provider, String code) {
         switch (provider) {
             case KAKAO:
-                return OauthTokenResponse.from(kakaoOauthHelper.getKakaoOauthTokenTest(code));
+                return OauthTokenResponse.from(kakaoOauthHelper.getKakaoOauthTokenDev(code));
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }
