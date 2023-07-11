@@ -10,7 +10,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum OauthProvider {
-    KAKAO("KAKAO");
+    KAKAO("KAKAO"),
+    APPLE("APPLE");
 
     @JsonValue private String value;
 

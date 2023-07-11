@@ -44,7 +44,7 @@ public class OauthController {
     @GetMapping("/link/{provider}/dev")
     public OauthLoginLinkResponse getOauthLinkTest(
             @PathVariable("provider") OauthProvider provider) {
-        return oauthLinkUseCase.getOauthLinkTest(provider);
+        return oauthLinkUseCase.getOauthLinkDev(provider);
     }
 
     @Operation(
@@ -65,7 +65,7 @@ public class OauthController {
 
     @Operation(summary = "개발용 로그인", deprecated = true)
     @GetMapping("/login/{provider}/dev")
-    public OauthSignInResponse oauthUserLoginTest(
+    public OauthSignInResponse oauthUserLoginDev(
             @PathVariable("provider") OauthProvider provider, @RequestParam("code") String code) {
         return oauthLoginUseCase.devLogin(provider, code);
     }

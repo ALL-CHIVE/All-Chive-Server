@@ -34,7 +34,7 @@ public class KakaoOauthHelper {
                         referer + "kakao/callback");
     }
 
-    public String getKaKaoOauthLinkTest() {
+    public String getKaKaoOauthLinkDev() {
         return kakaoOauthProperties.getBaseUrl()
                 + String.format(
                         KAKAO_OAUTH_QUERY_STRING,
