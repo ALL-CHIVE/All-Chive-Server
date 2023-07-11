@@ -7,9 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-import lombok.SneakyThrows;
-
 import java.io.InputStream;
+import lombok.SneakyThrows;
 
 public class AppleOAuthErrorDecoder implements ErrorDecoder {
     @Override

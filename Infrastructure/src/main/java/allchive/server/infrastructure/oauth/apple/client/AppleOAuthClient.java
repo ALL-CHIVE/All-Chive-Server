@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
         url = "https://appleid.apple.com",
         configuration = AppleOAuthConfig.class)
 public interface AppleOAuthClient {
-
     @PostMapping("/auth/token?grant_type=authorization_code")
     AppleTokenResponse appleAuth(
             @RequestParam("client_id") String clientId,

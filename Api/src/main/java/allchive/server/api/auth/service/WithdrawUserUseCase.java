@@ -32,8 +32,8 @@ public class WithdrawUserUseCase {
             case KAKAO:
                 kakaoOauthHelper.withdrawKakaoOauthUser(user.getOauthInfo().getOid());
                 break;
-//            case APPLE:
-//                appleOAuthHelper.withdrawAppleOauthUser();
+                //            case APPLE:
+                //                appleOAuthHelper.withdrawAppleOauthUser();
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }
