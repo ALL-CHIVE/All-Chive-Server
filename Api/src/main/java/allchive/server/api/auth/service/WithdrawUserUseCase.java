@@ -1,6 +1,7 @@
 package allchive.server.api.auth.service;
 
 
+import allchive.server.api.auth.service.helper.AppleOAuthHelper;
 import allchive.server.api.auth.service.helper.KakaoOauthHelper;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WithdrawUserUseCase {
     private final KakaoOauthHelper kakaoOauthHelper;
+    private final AppleOAuthHelper appleOAuthHelper;
     private final UserAdaptor userAdaptor;
     private final RefreshTokenAdaptor refreshTokenAdaptor;
     private final UserDomainService userDomainService;
@@ -28,8 +30,10 @@ public class WithdrawUserUseCase {
         // oauth쪽 탈퇴
         switch (provider) {
             case KAKAO:
-                kakaoOauthHelper.withdrawOauthUser(user.getOauthInfo().getOid());
+                kakaoOauthHelper.withdrawKakaoOauthUser(user.getOauthInfo().getOid());
                 break;
+//            case APPLE:
+//                appleOAuthHelper.withdrawAppleOauthUser();
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }

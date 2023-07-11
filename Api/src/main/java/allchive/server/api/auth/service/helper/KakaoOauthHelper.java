@@ -61,7 +61,7 @@ public class KakaoOauthHelper {
     }
 
     /** idtoken 분석 * */
-    public OauthInfo getOauthInfoByIdToken(String idToken) {
+    public OauthInfo getKakaoOauthInfoByIdToken(String idToken) {
         OIDCDecodePayload oidcDecodePayload = getOIDCDecodePayload(idToken);
         return OauthInfo.of(OauthProvider.KAKAO, oidcDecodePayload.getSub());
     }
@@ -77,7 +77,7 @@ public class KakaoOauthHelper {
     }
 
     /** kakao측 회원 탈퇴 * */
-    public void withdrawOauthUser(String oid) {
+    public void withdrawKakaoOauthUser(String oid) {
         String kakaoAdminKey = kakaoOauthProperties.getAdminKey();
         KakaoUnlinkTarget unlinkKaKaoTarget = KakaoUnlinkTarget.from(oid);
         String header = "KakaoAK " + kakaoAdminKey;

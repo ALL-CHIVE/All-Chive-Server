@@ -1,21 +1,29 @@
 package allchive.server.api.auth.service.helper;
+import allchive.server.core.annotation.Helper;
+import allchive.server.core.dto.OIDCDecodePayload;
 import allchive.server.core.properties.AppleOAuthProperties;
-//import allchive.server.infrastructure.oauth.apple.client.AppleOAuthClient;
-//import allchive.server.infrastructure.oauth.apple.client.AppleOIDCClient;
+import allchive.server.domain.domains.user.domain.enums.OauthInfo;
+import allchive.server.domain.domains.user.domain.enums.OauthProvider;
+import allchive.server.infrastructure.oauth.apple.client.AppleOAuthClient;
+import allchive.server.infrastructure.oauth.apple.client.AppleOIDCClient;
+import allchive.server.infrastructure.oauth.apple.helper.AppleLoginUtil;
+import allchive.server.infrastructure.oauth.apple.response.AppleTokenResponse;
+import allchive.server.infrastructure.oauth.kakao.dto.OIDCPublicKeysResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import static allchive.server.core.consts.AllchiveConst.APPLE_OAUTH_QUERY_STRING;
 
 
-@Component
+@Helper
 @RequiredArgsConstructor
 public class AppleOAuthHelper {
     private final AppleOAuthProperties appleOAuthProperties;
-//    private final AppleOAuthClient appleOAuthClient;
-//    private final AppleOIDCClient appleOIDCClient;
-//    private final OauthOIDCHelper oAuthOIDCHelper;
+    private final AppleOAuthClient appleOAuthClient;
+    private final AppleOIDCClient appleOIDCClient;
+    private final OauthOIDCHelper oAuthOIDCHelper;
 
+    /** Link **/
     public String getAppleOAuthLink(String referer) {
         return appleOAuthProperties.getBaseUrl()
                 + String.format(
@@ -32,77 +40,53 @@ public class AppleOAuthHelper {
                         appleOAuthProperties.getRedirectUrl());
     }
 
-//    public AppleTokenResponse getOAuthTokenTest(String code) {
-//        return appleOAuthClient.appleAuth(
-//                appleOAuthProperties.getClientId(),
-//                appleOAuthProperties.getRedirectUrl(),
-//                code,
-//                this.getClientSecret());
-//    }
-//
-//    public OAuthUserInfoDto getUserInfo(String idToken, AppType type) {
-//        return OAuthUserInfoDto.builder()
-//                .oAuthProvider(Provider.APPLE)
-//                .email(getOIDCDecodePayload(idToken, type).getEmail())
-//                .oauthId(getOIDCDecodePayload(idToken, type).getSub())
-//                .build();
-//    }
-//
-//
-//    public AppleTokenResponse getOAuthToken(String code, String referer) {
-//        return appleOAuthClient.appleAuth(
-//                appleOAuthProperties.getClientId(),
-//                referer + appleOAuthProperties.getWebCallbackUrl(),
-//                code,
-//                this.getClientSecret());
-//    }
-//
-//    public AppleRevokeResponse revoke(String appleOAuthAccessToken) {
+    /** token * */
+    public AppleTokenResponse getAppleOAuthToken(String code, String referer) {
+        return appleOAuthClient.appleAuth(
+                appleOAuthProperties.getClientId(),
+                referer + appleOAuthProperties.getWebCallbackUrl(),
+                code,
+                this.getClientSecret());
+    }
+
+    public AppleTokenResponse getAppleOAuthTokenDev(String code) {
+        return appleOAuthClient.appleAuth(
+                appleOAuthProperties.getClientId(),
+                appleOAuthProperties.getRedirectUrl(),
+                code,
+                this.getClientSecret());
+    }
+
+    /** idtoken 분석 **/
+    public OauthInfo getAppleOAuthInfoByIdToken(String idToken) {
+        OIDCDecodePayload oidcDecodePayload = this.getOIDCDecodePayload(idToken);
+        return OauthInfo.builder().provider(OauthProvider.APPLE).oid(oidcDecodePayload.getSub()).build();
+    }
+
+    /** oidc decode * */
+    public OIDCDecodePayload getOIDCDecodePayload(String token) {
+        OIDCPublicKeysResponse oidcPublicKeysResponse = appleOIDCClient.getAppleOIDCOpenKeys();
+        return oAuthOIDCHelper.getPayloadFromIdToken(
+                token,
+                appleOAuthProperties.getBaseUrl(),
+                appleOAuthProperties.getClientId(),
+                oidcPublicKeysResponse);
+    }
+
+    /** apple측 회원 탈퇴 * */
+//    public void withdrawAppleOauthUser(String appleOAuthAccessToken) {
 //        appleOAuthClient.revoke(
 //                appleOAuthProperties.getClientId(), appleOAuthAccessToken, this.getClientSecret());
-//        return new AppleRevokeResponse(true);
 //    }
-//
-//    public OAuthInfo getOAuthInfoByIdToken(String idToken, AppType type) {
-//        OIDCDecodePayload oidcDecodePayload = this.getOIDCDecodePayload(idToken, type);
-//        return OAuthInfo.builder().provider(Provider.APPLE).oid(oidcDecodePayload.getSub()).build();
-//    }
-//
-//    public OAuthIdTokenDto getOAuthUserInfoByIdToken(String idToken, AppType type) {
-//        OIDCDecodePayload oidcDecodePayload = this.getOIDCDecodePayload(idToken, type);
-//        return OAuthIdTokenDto.builder()
-//                .provider(Provider.APPLE)
-//                .email(oidcDecodePayload.getEmail())
-//                .oid(oidcDecodePayload.getSub())
-//                .build();
-//    }
-//
-//    public OIDCDecodePayload getOIDCDecodePayload(String token, AppType type) {
-//        OIDCPublicKeysResponse oidcPublicKeysResponse = appleOIDCClient.getAppleOIDCOpenKeys();
-//        return oAuthOIDCHelper.getPayloadFromIdToken(
-//                token,
-//                appleOAuthProperties.getBaseUrl(),
-//                this.getClientIdByAppType(type),
-//                oidcPublicKeysResponse);
-//    }
-//
-//    private String getClientSecret() {
-//        return AppleLoginUtil.createClientSecret(
-//                appleOAuthProperties.getTeamId(),
-//                appleOAuthProperties.getClientId(),
-//                appleOAuthProperties.getKeyId(),
-//                appleOAuthProperties.getKeyPath(),
-//                appleOAuthProperties.getBaseUrl());
-//    }
-//
-//    private String getClientIdByAppType(AppType type) {
-//        switch (type) {
-//            case APP:
-//                return appleOAuthProperties.getAppClientId();
-//            case WEB:
-//                return appleOAuthProperties.getClientId();
-//            default:
-//                throw new BaseException(INVALID_OAUTH_APP_TYPE);
-//        }
-//    }
+
+
+    /** client secret 가져오기 **/
+    private String getClientSecret() {
+        return AppleLoginUtil.createClientSecret(
+                appleOAuthProperties.getTeamId(),
+                appleOAuthProperties.getClientId(),
+                appleOAuthProperties.getKeyId(),
+                appleOAuthProperties.getKeyPath(),
+                appleOAuthProperties.getBaseUrl());
+    }
 }

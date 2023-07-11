@@ -3,6 +3,7 @@ package allchive.server.api.auth.service;
 
 import allchive.server.api.auth.model.dto.response.OauthSignInResponse;
 import allchive.server.api.auth.model.dto.response.OauthTokenResponse;
+import allchive.server.api.auth.service.helper.AppleOAuthHelper;
 import allchive.server.api.auth.service.helper.KakaoOauthHelper;
 import allchive.server.api.auth.service.helper.TokenGenerateHelper;
 import allchive.server.core.annotation.UseCase;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OauthLoginUseCase {
     private final KakaoOauthHelper kakaoOauthHelper;
+    private final AppleOAuthHelper appleOAuthHelper;
     private final UserDomainService userDomainService;
     private final TokenGenerateHelper tokenGenerateHelper;
 
@@ -49,6 +51,8 @@ public class OauthLoginUseCase {
         switch (provider) {
             case KAKAO:
                 return OauthTokenResponse.from(kakaoOauthHelper.getKakaoOauthToken(code, referer));
+            case APPLE:
+                return OauthTokenResponse.from(appleOAuthHelper.getAppleOAuthToken(code, referer));
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }
@@ -58,6 +62,8 @@ public class OauthLoginUseCase {
         switch (provider) {
             case KAKAO:
                 return OauthTokenResponse.from(kakaoOauthHelper.getKakaoOauthTokenDev(code));
+            case APPLE:
+                return OauthTokenResponse.from(appleOAuthHelper.getAppleOAuthTokenDev(code));
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }
@@ -67,7 +73,9 @@ public class OauthLoginUseCase {
     private OauthInfo getOauthInfo(OauthProvider provider, String idToken) {
         switch (provider) {
             case KAKAO:
-                return kakaoOauthHelper.getOauthInfoByIdToken(idToken);
+                return kakaoOauthHelper.getKakaoOauthInfoByIdToken(idToken);
+            case APPLE:
+                return appleOAuthHelper.getAppleOAuthInfoByIdToken(idToken);
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }

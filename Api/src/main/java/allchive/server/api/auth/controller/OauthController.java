@@ -23,7 +23,6 @@ public class OauthController {
     private final OauthLoginUseCase oauthLoginUseCase;
     private final OauthRegisterUseCase oauthRegisterUseCase;
 
-    //    /** 필요하면 쓸려고 남겨둠 **/
     @Operation(
             summary = "oauth 링크발급",
             description = "oauth 링크를 받아볼수 있습니다. referer, host 입력 안하셔도 됩니다!",

@@ -3,6 +3,7 @@ package allchive.server.api.auth.service;
 
 import allchive.server.api.auth.model.dto.request.RegisterRequest;
 import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
+import allchive.server.api.auth.service.helper.AppleOAuthHelper;
 import allchive.server.api.auth.service.helper.KakaoOauthHelper;
 import allchive.server.api.auth.service.helper.TokenGenerateHelper;
 import allchive.server.core.annotation.UseCase;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OauthRegisterUseCase {
     private final KakaoOauthHelper kakaoOauthHelper;
+    private final AppleOAuthHelper appleOAuthHelper;
     private final UserDomainService userDomainService;
     private final TokenGenerateHelper tokenGenerateHelper;
 
@@ -35,7 +37,9 @@ public class OauthRegisterUseCase {
     private OauthInfo getOauthInfo(OauthProvider provider, String idToken) {
         switch (provider) {
             case KAKAO:
-                return kakaoOauthHelper.getOauthInfoByIdToken(idToken);
+                return kakaoOauthHelper.getKakaoOauthInfoByIdToken(idToken);
+            case APPLE:
+                return appleOAuthHelper.getAppleOAuthInfoByIdToken(idToken);
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }
