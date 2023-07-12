@@ -20,4 +20,8 @@ public class TagDomainService {
         tag.updateName(name);
         tagAdaptor.save(tag);
     }
+
+    public void deleteById(Long tagId) {
+        tagAdaptor.deleteById(tagId);
+    }
 }

@@ -18,11 +18,9 @@ public class ContentTagGroup extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action= OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Content content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action= OnDeleteAction.CASCADE)
     private Tag tag;
 }

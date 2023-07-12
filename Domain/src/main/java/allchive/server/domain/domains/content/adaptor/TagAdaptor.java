@@ -30,4 +30,8 @@ public class TagAdaptor {
         return tagRepository.findById(tagId)
                 .orElseThrow(() -> TagNotFoundException.EXCEPTION);
     }
+
+    public void deleteById(Long tagId) {
+        tagRepository.deleteById(tagId);
+    }
 }

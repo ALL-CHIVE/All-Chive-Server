@@ -4,6 +4,7 @@ package allchive.server.domain.domains.content.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
+import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.repository.ContentTagGroupRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +20,9 @@ public class ContentTagGroupAdaptor {
 
     public List<ContentTagGroup> findAllByContent(Content content) {
         return contentTagGroupRepository.findAllByContent(content);
+    }
+
+    public void deleteByTag(Tag tag) {
+        contentTagGroupRepository.deleteByTag(tag);
     }
 }
