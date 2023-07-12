@@ -8,7 +8,7 @@ import allchive.server.api.content.model.dto.response.ContentTagResponse;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
-import allchive.server.tag.model.dto.response.TagResponse;
+import allchive.server.api.tag.model.dto.response.TagResponse;
 import java.util.List;
 
 @Mapper

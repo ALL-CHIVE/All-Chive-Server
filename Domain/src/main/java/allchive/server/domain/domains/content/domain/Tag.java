@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Table(name = "tbl_tag")
 @Entity
@@ -18,4 +20,5 @@ public class Tag extends BaseTimeEntity {
 
     private String name;
     private Long userId;
+    private LocalDateTime usedAt;
 }

@@ -5,7 +5,7 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
-import allchive.server.tag.model.dto.response.TagResponse;
+import allchive.server.api.tag.model.dto.response.TagResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import java.util.List;

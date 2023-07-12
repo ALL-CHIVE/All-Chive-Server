@@ -1,4 +1,4 @@
-package allchive.server.tag.model.dto.response;
+package allchive.server.api.tag.model.dto.response;
 
 
 import allchive.server.domain.domains.content.domain.Tag;
