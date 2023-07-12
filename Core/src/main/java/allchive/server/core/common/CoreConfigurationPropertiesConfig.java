@@ -2,10 +2,15 @@ package allchive.server.core.common;
 
 
 import allchive.server.core.jwt.JwtProperties;
+import allchive.server.core.properties.AppleOAuthProperties;
 import allchive.server.core.properties.KakaoOAuthProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@EnableConfigurationProperties({JwtProperties.class, KakaoOAuthProperties.class})
+@EnableConfigurationProperties({
+    JwtProperties.class,
+    KakaoOAuthProperties.class,
+    AppleOAuthProperties.class
+})
 @Configuration
 public class CoreConfigurationPropertiesConfig {}

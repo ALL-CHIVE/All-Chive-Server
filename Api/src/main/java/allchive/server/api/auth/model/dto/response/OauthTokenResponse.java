@@ -1,6 +1,7 @@
 package allchive.server.api.auth.model.dto.response;
 
 
+import allchive.server.infrastructure.oauth.apple.response.AppleTokenResponse;
 import allchive.server.infrastructure.oauth.kakao.dto.KakaoTokenResponse;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,6 +24,14 @@ public class OauthTokenResponse {
                 .idToken(kakaoTokenResponse.getIdToken())
                 .refreshToken(kakaoTokenResponse.getRefreshToken())
                 .accessToken(kakaoTokenResponse.getAccessToken())
+                .build();
+    }
+
+    public static OauthTokenResponse from(AppleTokenResponse appleTokenResponse) {
+        return OauthTokenResponse.builder()
+                .idToken(appleTokenResponse.getIdToken())
+                .refreshToken(appleTokenResponse.getRefreshToken())
+                .accessToken(appleTokenResponse.getAccessToken())
                 .build();
     }
 }

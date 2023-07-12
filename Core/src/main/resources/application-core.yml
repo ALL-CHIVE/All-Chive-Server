@@ -14,3 +14,15 @@ oauth:
     redirect-url: ${KAKAO_REDIRECT}
     app-id: ${KAKAO_APP_ID}
     admin-key: ${KAKAO_ADMIN_KEY}
+
+  apple:
+    baseUrl: ${APPLE_BASE_URL}
+    clientId: ${APPLE_CLIENT}
+    appClientId: ${APPLE_APP_CLIENT_ID}
+    keyId: ${APPLE_KEY_ID}
+    redirectUrl: ${APPLE_REDIRECT}
+    teamId: ${APPLE_TEAM_ID}
+    scope: ${APPLE_SCOPE}
+    keyPath: ${APPLE_KEY_PATH}
+    webCallbackUrl: ${APPLE_WEB_CALLBACK}
+    appstoreIssuer: ${APPLE_APPSTORE_ISSUER}
