@@ -44,7 +44,7 @@ public class TagController {
         updateTagUseCase.execute(tagId, request);
     }
 
-    @Operation(summary = "태그를 수정합니다.")
+    @Operation(summary = "태그를 삭제합니다.")
     @DeleteMapping(value = "/{tagId}")
     public void deleteTag(@PathVariable("tagId") Long tagId) {
         deleteTagUseCase.execute(tagId);

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TagCustomRepository {
     List<Tag> queryTagByUserIdOrderByUsedAt(Long userId);
+
+    List<Tag> queryTagInTagIdList(List<Long> tagIds);
 }

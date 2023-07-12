@@ -24,12 +24,24 @@ public class TagCustomRepositoryImpl implements TagCustomRepository {
                 .fetch();
     }
 
+    @Override
+    public List<Tag> queryTagInTagIdList(List<Long> tagIds) {
+        return queryFactory
+                .selectFrom(tag)
+                .where(tagIdIn(tagIds))
+                .fetch();
+    }
+
     private BooleanExpression tagUserIdEq(Long userId) {
         return tag.userId.eq(userId);
     }
 
     private BooleanExpression usedAtNotNull() {
         return tag.usedAt.isNotNull();
+    }
+
+    private BooleanExpression tagIdIn(List<Long> tagIds) {
+        return tag.id.in(tagIds);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

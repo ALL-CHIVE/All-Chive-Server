@@ -9,7 +9,10 @@ import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.api.tag.model.dto.response.TagResponse;
+import allchive.server.domain.domains.content.domain.Tag;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 public class ContentMapper {
@@ -41,5 +44,9 @@ public class ContentMapper {
                         .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))
                         .toList();
         return ContentTagResponse.of(content, tagResponseList);
+    }
+
+    public List<ContentTagGroup> toContentTagGroupEntityList(Content content, List<Tag> tags) {
+        return tags.stream().map(tag -> ContentTagGroup.of(content, tag)).toList();
     }
 }
