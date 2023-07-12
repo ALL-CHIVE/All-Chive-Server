@@ -1,15 +1,14 @@
 package allchive.server.domain.domains.content.repository;
 
+import static allchive.server.domain.domains.content.domain.QTag.tag;
+
 import allchive.server.domain.domains.content.domain.Tag;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static allchive.server.domain.domains.content.domain.QTag.tag;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class TagCustomRepositoryImpl implements TagCustomRepository {
@@ -26,10 +25,7 @@ public class TagCustomRepositoryImpl implements TagCustomRepository {
 
     @Override
     public List<Tag> queryTagInTagIdList(List<Long> tagIds) {
-        return queryFactory
-                .selectFrom(tag)
-                .where(tagIdIn(tagIds))
-                .fetch();
+        return queryFactory.selectFrom(tag).where(tagIdIn(tagIds)).fetch();
     }
 
     private BooleanExpression tagUserIdEq(Long userId) {

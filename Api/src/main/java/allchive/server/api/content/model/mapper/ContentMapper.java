@@ -5,14 +5,12 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.content.model.dto.request.CreateContentRequest;
 import allchive.server.api.content.model.dto.response.ContentResponse;
 import allchive.server.api.content.model.dto.response.ContentTagResponse;
+import allchive.server.api.tag.model.dto.response.TagResponse;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
-import allchive.server.api.tag.model.dto.response.TagResponse;
 import allchive.server.domain.domains.content.domain.Tag;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper
 public class ContentMapper {

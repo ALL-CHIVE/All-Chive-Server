@@ -5,9 +5,8 @@ import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.exception.exceptions.TagNotFoundException;
 import allchive.server.domain.domains.content.repository.TagRepository;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -27,8 +26,7 @@ public class TagAdaptor {
     }
 
     public Tag findById(Long tagId) {
-        return tagRepository.findById(tagId)
-                .orElseThrow(() -> TagNotFoundException.EXCEPTION);
+        return tagRepository.findById(tagId).orElseThrow(() -> TagNotFoundException.EXCEPTION);
     }
 
     public void deleteById(Long tagId) {

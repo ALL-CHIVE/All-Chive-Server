@@ -5,10 +5,10 @@ import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.block.adaptor.BlockAdaptor;
-import allchive.server.domain.domains.block.domain.Block;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import allchive.server.domain.domains.block.adaptor.BlockAdaptor;
+import allchive.server.domain.domains.block.domain.Block;
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
 import java.util.List;
@@ -33,7 +33,8 @@ public class GetArchivingUseCase {
                 blockAdaptor.findByBlockFrom(userId).stream().map(Block::getBlockUser).toList();
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingExceptBlock(archivingIdList, blockList, category, pageable)
+                        .querySliceArchivingExceptBlock(
+                                archivingIdList, blockList, category, pageable)
                         .map(
                                 archiving ->
                                         ArchivingResponse.of(

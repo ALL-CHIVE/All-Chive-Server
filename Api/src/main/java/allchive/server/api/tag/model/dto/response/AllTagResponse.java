@@ -1,9 +1,9 @@
 package allchive.server.api.tag.model.dto.response;
 
-import lombok.Builder;
-import lombok.Getter;
 
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class AllTagResponse {
@@ -15,8 +15,6 @@ public class AllTagResponse {
     }
 
     public static AllTagResponse from(List<TagResponse> tags) {
-        return AllTagResponse.builder()
-                .tags(tags)
-                .build();
+        return AllTagResponse.builder().tags(tags).build();
     }
 }

@@ -7,8 +7,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Table(name = "tbl_content_tag_group")
@@ -32,9 +30,6 @@ public class ContentTagGroup extends BaseTimeEntity {
     }
 
     public static ContentTagGroup of(Content content, Tag tag) {
-        return ContentTagGroup.builder()
-                .content(content)
-                .tag(tag)
-                .build();
+        return ContentTagGroup.builder().content(content).tag(tag).build();
     }
 }

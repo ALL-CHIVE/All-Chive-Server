@@ -2,15 +2,13 @@ package allchive.server.domain.domains.content.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import javax.persistence.*;
-
 import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateException;
+import java.time.LocalDateTime;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Table(name = "tbl_tag")
@@ -34,11 +32,7 @@ public class Tag extends BaseTimeEntity {
 
     @Builder
     public static Tag of(String name, Long userId) {
-        return Tag.builder()
-                .name(name)
-                .userId(userId)
-                .usedAt(null)
-                .build();
+        return Tag.builder().name(name).userId(userId).usedAt(null).build();
     }
 
     public void validateUser(Long userId) {

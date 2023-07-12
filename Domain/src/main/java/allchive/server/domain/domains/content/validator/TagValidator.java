@@ -6,9 +6,8 @@ import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateException;
 import allchive.server.domain.domains.content.exception.exceptions.TagNotFoundException;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Validator
 @RequiredArgsConstructor
@@ -24,10 +23,11 @@ public class TagValidator {
         if (tagIds.size() != tags.size()) {
             throw TagNotFoundException.EXCEPTION;
         }
-        tags.forEach(tag -> {
-            if (!tag.getUserId().equals(userId)) {
-                throw NoAuthorityUpdateException.EXCEPTION;
-            }
-        });
+        tags.forEach(
+                tag -> {
+                    if (!tag.getUserId().equals(userId)) {
+                        throw NoAuthorityUpdateException.EXCEPTION;
+                    }
+                });
     }
 }

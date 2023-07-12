@@ -1,6 +1,6 @@
 package allchive.server.api.tag.controller;
 
-import allchive.server.api.content.model.dto.request.CreateContentRequest;
+
 import allchive.server.api.tag.model.dto.request.CreateTagRequest;
 import allchive.server.api.tag.model.dto.request.UpdateTagRequest;
 import allchive.server.api.tag.model.dto.response.AllTagResponse;
@@ -39,8 +39,8 @@ public class TagController {
 
     @Operation(summary = "태그를 수정합니다.")
     @PatchMapping(value = "/{tagId}")
-    public void updateTag(@PathVariable("tagId") Long tagId,
-                          @RequestBody UpdateTagRequest request) {
+    public void updateTag(
+            @PathVariable("tagId") Long tagId, @RequestBody UpdateTagRequest request) {
         updateTagUseCase.execute(tagId, request);
     }
 
