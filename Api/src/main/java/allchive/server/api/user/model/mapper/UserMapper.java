@@ -9,7 +9,8 @@ import java.util.List;
 
 @Mapper
 public class UserMapper {
-    public GetUserProfileResponse toGetUserProfileResponse(List<Archiving> archivingList, User user) {
+    public GetUserProfileResponse toGetUserProfileResponse(
+            List<Archiving> archivingList, User user) {
         int linkCount = 0, imgCount = 0, publicArchivingCount = 0;
         for (Archiving archiving : archivingList) {
             linkCount += archiving.getLinkCnt();

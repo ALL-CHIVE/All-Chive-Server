@@ -3,13 +3,10 @@ package allchive.server.domain.domains.archiving.adaptor;
 
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.core.error.exception.InternalServerError;
-import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
 import allchive.server.domain.domains.archiving.repository.ArchivingRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +35,10 @@ public class ArchivingAdaptor {
     }
 
     public Slice<Archiving> querySliceArchivingExceptBlock(
-            List<Long> archivingIdList, List<Long> blockList, Category category, Pageable pageable) {
+            List<Long> archivingIdList,
+            List<Long> blockList,
+            Category category,
+            Pageable pageable) {
         return archivingRepository.querySliceArchivingExceptBlock(
                 archivingIdList, blockList, category, pageable);
     }
