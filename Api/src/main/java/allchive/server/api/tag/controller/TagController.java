@@ -2,9 +2,11 @@ package allchive.server.api.tag.controller;
 
 import allchive.server.api.content.model.dto.request.CreateContentRequest;
 import allchive.server.api.tag.model.dto.request.CreateTagRequest;
+import allchive.server.api.tag.model.dto.request.UpdateTagRequest;
 import allchive.server.api.tag.model.dto.response.AllTagResponse;
 import allchive.server.api.tag.service.CreateTagUseCase;
 import allchive.server.api.tag.service.GetAllTagUseCase;
+import allchive.server.api.tag.service.UpdateTagUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class TagController {
     private final GetAllTagUseCase getAllTagUseCase;
     private final CreateTagUseCase createTagUseCase;
+    private final UpdateTagUseCase updateTagUseCase;
 
     @Operation(summary = "모든 태그를 가져옵니다.", description = "latest = true 면 최근 사용한 태그를 가져옵니다.")
     @GetMapping()
@@ -30,5 +33,12 @@ public class TagController {
     @PostMapping()
     public void createTag(@RequestBody CreateTagRequest request) {
         createTagUseCase.execute(request);
+    }
+
+    @Operation(summary = "태그를 수정합니다.")
+    @PatchMapping(value = "/{tagId}")
+    public void updateTag(@PathVariable("tagId") Long tagId,
+                          @RequestBody UpdateTagRequest request) {
+        updateTagUseCase.execute(tagId, request);
     }
 }

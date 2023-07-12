@@ -14,4 +14,10 @@ public class TagDomainService {
     public void save(Tag tag) {
         tagAdaptor.save(tag);
     }
+
+    public void updateTag(Long tagId, String name) {
+        Tag tag = tagAdaptor.findById(tagId);
+        tag.updateName(name);
+        tagAdaptor.save(tag);
+    }
 }

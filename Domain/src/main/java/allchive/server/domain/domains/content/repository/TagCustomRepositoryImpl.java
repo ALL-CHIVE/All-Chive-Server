@@ -1,6 +1,5 @@
 package allchive.server.domain.domains.content.repository;
 
-import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.Tag;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -13,7 +12,7 @@ import java.util.List;
 import static allchive.server.domain.domains.content.domain.QTag.tag;
 
 @RequiredArgsConstructor
-public class TagCustomRespositoryImpl implements TagCustomRepository {
+public class TagCustomRepositoryImpl implements TagCustomRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
@@ -30,10 +29,7 @@ public class TagCustomRespositoryImpl implements TagCustomRepository {
     }
 
     private BooleanExpression usedAtNotNull() {
-//        return tag.usedAt.after(LocalDateTime.of(2000,1,1,0,0,1));
-//        return tag.usedAt.ne(LocalDateTime.of(2000,1,1,0,0,0));
-//        return null;
-        return tag.usedAt.gt(LocalDateTime.of(2000, 1, 1, 0, 0, 0));
+        return tag.usedAt.isNotNull();
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {
