@@ -2,6 +2,7 @@ package allchive.server.api.auth.service;
 
 
 import allchive.server.api.auth.model.dto.response.OauthLoginLinkResponse;
+import allchive.server.api.auth.service.helper.AppleOAuthHelper;
 import allchive.server.api.auth.service.helper.KakaoOauthHelper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.error.exception.InvalidOauthProviderException;
@@ -12,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OauthLinkUseCase {
     private final KakaoOauthHelper kakaoOauthHelper;
+    private final AppleOAuthHelper appleOAuthHelper;
 
-    public OauthLoginLinkResponse getOauthLinkTest(OauthProvider provider) {
+    public OauthLoginLinkResponse getOauthLinkDev(OauthProvider provider) {
         switch (provider) {
             case KAKAO:
-                return new OauthLoginLinkResponse(kakaoOauthHelper.getKaKaoOauthLinkTest());
+                return new OauthLoginLinkResponse(kakaoOauthHelper.getKaKaoOauthLinkDev());
+            case APPLE:
+                return new OauthLoginLinkResponse(appleOAuthHelper.getAppleOauthLinkDev());
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }
@@ -26,6 +30,8 @@ public class OauthLinkUseCase {
         switch (provider) {
             case KAKAO:
                 return new OauthLoginLinkResponse(kakaoOauthHelper.getKaKaoOauthLink(referer));
+            case APPLE:
+                return new OauthLoginLinkResponse(appleOAuthHelper.getAppleOAuthLink(referer));
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }

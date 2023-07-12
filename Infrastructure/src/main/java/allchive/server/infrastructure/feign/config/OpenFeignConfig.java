@@ -1,7 +1,7 @@
 package allchive.server.infrastructure.feign.config;
 
 
-import allchive.server.infrastructure.oauth.kakao.BaseFeignClientClass;
+import allchive.server.infrastructure.oauth.BaseFeignClientClass;
 import feign.Logger;
 import feign.Retryer;
 import java.util.concurrent.TimeUnit;

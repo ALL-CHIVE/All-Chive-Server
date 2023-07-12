@@ -34,7 +34,7 @@ public class KakaoOauthHelper {
                         referer + "kakao/callback");
     }
 
-    public String getKaKaoOauthLinkTest() {
+    public String getKaKaoOauthLinkDev() {
         return kakaoOauthProperties.getBaseUrl()
                 + String.format(
                         KAKAO_OAUTH_QUERY_STRING,
@@ -47,12 +47,12 @@ public class KakaoOauthHelper {
         // TODO : 프론트 콜백 URL 알아내면 바꾸기
         return kakaoOauthClient.kakaoAuth(
                 kakaoOauthProperties.getClientId(),
-                referer + "/kakao/callback",
+                referer + "kakao/callback",
                 code,
                 kakaoOauthProperties.getClientSecret());
     }
 
-    public KakaoTokenResponse getKakaoOauthTokenTest(String code) {
+    public KakaoTokenResponse getKakaoOauthTokenDev(String code) {
         return kakaoOauthClient.kakaoAuth(
                 kakaoOauthProperties.getClientId(),
                 kakaoOauthProperties.getRedirectUrl(),
@@ -61,7 +61,7 @@ public class KakaoOauthHelper {
     }
 
     /** idtoken 분석 * */
-    public OauthInfo getOauthInfoByIdToken(String idToken) {
+    public OauthInfo getKakaoOauthInfoByIdToken(String idToken) {
         OIDCDecodePayload oidcDecodePayload = getOIDCDecodePayload(idToken);
         return OauthInfo.of(OauthProvider.KAKAO, oidcDecodePayload.getSub());
     }
@@ -77,7 +77,7 @@ public class KakaoOauthHelper {
     }
 
     /** kakao측 회원 탈퇴 * */
-    public void withdrawOauthUser(String oid) {
+    public void withdrawKakaoOauthUser(String oid) {
         String kakaoAdminKey = kakaoOauthProperties.getAdminKey();
         KakaoUnlinkTarget unlinkKaKaoTarget = KakaoUnlinkTarget.from(oid);
         String header = "KakaoAK " + kakaoAdminKey;
