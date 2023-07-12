@@ -1,5 +1,6 @@
 package allchive.server.api.tag.model.mapper;
 
+import allchive.server.api.tag.model.dto.request.CreateTagRequest;
 import allchive.server.api.tag.model.dto.response.AllTagResponse;
 import allchive.server.api.tag.model.dto.response.TagResponse;
 import allchive.server.core.annotation.Mapper;
@@ -13,5 +14,9 @@ public class TagMapper {
         List<TagResponse> tagResponseList = tagList.stream()
                 .map(TagResponse::from).toList();
         return AllTagResponse.from(tagResponseList);
+    }
+
+    public Tag toEntity(CreateTagRequest request, Long userId) {
+        return Tag.of(request.getName(), userId);
     }
 }

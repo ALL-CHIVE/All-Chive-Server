@@ -13,11 +13,15 @@ import java.util.List;
 public class TagAdaptor {
     private final TagRepository tagRepository;
 
-    public List<Tag> findAllByUserIdOrderByUsedAtDesc(Long userId) {
-        return tagRepository.findAllByUserIdOrderByUsedAtDesc(userId);
-    }
-
     public List<Tag> findAllByUserIdOrderByCreatedAtDesc(Long userId) {
         return tagRepository.findAllByUserIdOrderByCreatedAtDesc(userId);
+    }
+
+    public void save(Tag tag) {
+        tagRepository.save(tag);
+    }
+
+    public List<Tag> queryTagByUserIdOrderByUsedAt(Long userId) {
+        return tagRepository.queryTagByUserIdOrderByUsedAt(userId);
     }
 }
