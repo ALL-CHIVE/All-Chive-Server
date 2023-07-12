@@ -34,7 +34,7 @@ public class ContentController {
         return getContentUseCase.execute(contentId);
     }
 
-    @Operation(summary = "컨텐츠 내용을 가져옵니다.")
+    @Operation(summary = "컨텐츠를 삭제합니다.")
     @DeleteMapping(value = "/{contentId}")
     public void deleteContent(@PathVariable Long contentId) {
         deleteContentUseCase.execute(contentId);
