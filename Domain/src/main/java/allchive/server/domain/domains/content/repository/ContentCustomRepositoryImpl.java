@@ -30,8 +30,21 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
         return SliceUtil.toSlice(archivings, pageable);
     }
 
+    @Override
+    public List<Content> queryContentInArchivingIds(List<Long> archivingIds) {
+        return queryFactory
+                .selectFrom(content)
+                .where(archivingIdIn(archivingIds))
+                .orderBy(createdAtDesc())
+                .fetch();
+    }
+
     private BooleanExpression archivingIdEq(Long archivingId) {
         return content.archivingId.eq(archivingId);
+    }
+
+    private BooleanExpression archivingIdIn(List<Long> archivingIds) {
+        return content.archivingId.in(archivingIds);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

@@ -24,7 +24,7 @@ public class DeleteArchivingUseCase {
     public void execute(Long archivingId) {
         Long userId = SecurityUtil.getCurrentUserId();
         archivingValidator.verifyUser(userId, archivingId);
-        archivingDomainService.deleteById(archivingId);
+        archivingDomainService.softDeleteById(archivingId);
         Recycle recycle =
                 recycleMapper.toArchivingRecycleEntity(userId, archivingId, RecycleType.ARCHIVING);
         recycleDomainService.save(recycle);

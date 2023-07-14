@@ -5,6 +5,7 @@ import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
 import allchive.server.domain.domains.content.repository.ContentRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -30,5 +31,21 @@ public class ContentAdaptor {
 
     public void deleteById(Long contentId) {
         contentRepository.deleteById(contentId);
+    }
+
+    public List<Content> findAllByIdIn(List<Long> contentIdList) {
+        return contentRepository.findAllByIdIn(contentIdList);
+    }
+
+    public void saveAll(List<Content> contentList) {
+        contentRepository.saveAll(contentList);
+    }
+
+    public void deleteAllById(List<Long> contentIds) {
+        contentRepository.deleteAllById(contentIds);
+    }
+
+    public List<Content> findAllByArchivingIds(List<Long> archivingIds) {
+        return contentRepository.queryContentInArchivingIds(archivingIds);
     }
 }

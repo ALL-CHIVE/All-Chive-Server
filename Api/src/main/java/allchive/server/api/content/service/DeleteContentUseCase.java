@@ -28,7 +28,7 @@ public class DeleteContentUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         Content content = contentAdaptor.findById(contentId);
         archivingValidator.validateArchivingUser(content.getArchivingId(), userId);
-        contentDomainService.deleteById(contentId);
+        contentDomainService.softDeleteById(contentId);
         Recycle recycle =
                 recycleMapper.toContentRecycleEntity(userId, contentId, RecycleType.CONTENT);
         recycleDomainService.save(recycle);

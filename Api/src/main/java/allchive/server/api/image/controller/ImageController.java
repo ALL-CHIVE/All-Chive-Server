@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "6. [image]")
+@Tag(name = "a. [image]")
 public class ImageController {
     private final S3PresignedUrlService s3PresignedUrlService;
 

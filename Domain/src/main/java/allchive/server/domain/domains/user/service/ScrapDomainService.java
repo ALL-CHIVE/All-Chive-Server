@@ -6,6 +6,7 @@ import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.exception.exceptions.ScrapNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @DomainService
@@ -24,5 +25,9 @@ public class ScrapDomainService {
 
     public void save(Scrap scrap) {
         scrapAdaptor.save(scrap);
+    }
+
+    public void deleteAllByArchivingIdIn(List<Long> archivingIds) {
+        scrapAdaptor.deleteAllByArchivingIdIn(archivingIds);
     }
 }
