@@ -7,9 +7,8 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.exception.exceptions.AlreadyPinnedArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
 import allchive.server.domain.domains.archiving.exception.exceptions.NotPinnedArchivingException;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Validator
 @RequiredArgsConstructor

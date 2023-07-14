@@ -5,11 +5,10 @@ import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
 import allchive.server.domain.domains.content.repository.ContentRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-
-import java.util.List;
 
 @Adaptor
 @RequiredArgsConstructor

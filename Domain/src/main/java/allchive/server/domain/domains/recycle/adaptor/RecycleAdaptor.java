@@ -4,9 +4,8 @@ package allchive.server.domain.domains.recycle.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.repository.RecycleRepository;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -17,9 +16,10 @@ public class RecycleAdaptor {
         recycleRepository.save(recycle);
     }
 
-    public List<Recycle> queryRecycleByUserIdInArchivingIdListAndContentIdList(List<Long> archivingIds, List<Long> contentIds, Long userId) {
-        return recycleRepository
-                .queryRecycleByUserIdInArchivingIdListAndContentIdList(archivingIds, contentIds, userId);
+    public List<Recycle> queryRecycleByUserIdInArchivingIdListAndContentIdList(
+            List<Long> archivingIds, List<Long> contentIds, Long userId) {
+        return recycleRepository.queryRecycleByUserIdInArchivingIdListAndContentIdList(
+                archivingIds, contentIds, userId);
     }
 
     public void deleteAll(List<Recycle> recycleList) {

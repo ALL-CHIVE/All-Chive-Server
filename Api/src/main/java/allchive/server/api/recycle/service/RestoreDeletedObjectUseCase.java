@@ -1,5 +1,6 @@
 package allchive.server.api.recycle.service;
 
+
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.dto.request.RestoreDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
@@ -30,7 +31,7 @@ public class RestoreDeletedObjectUseCase {
         contentValidator.validateExistInIdList(request.getContentIds());
         archivingDomainService.restoreInIdList(request.getArchivingIds());
         contentDomainService.restoreInIdList(request.getContentIds());
-        recycleDomainService
-                .deleteAllByUserIdAndArchivingIdOrUserIdAndContentId(request.getArchivingIds(), request.getContentIds(), userId);
+        recycleDomainService.deleteAllByUserIdAndArchivingIdOrUserIdAndContentId(
+                request.getArchivingIds(), request.getContentIds(), userId);
     }
 }

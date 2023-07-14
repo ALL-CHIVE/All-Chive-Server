@@ -1,5 +1,6 @@
 package allchive.server.api.recycle.controller;
 
+
 import allchive.server.api.recycle.model.dto.request.RestoreDeletedObjectRequest;
 import allchive.server.api.recycle.model.dto.response.DeletedObjectResponse;
 import allchive.server.api.recycle.service.GetDeletedObjectUseCase;
@@ -30,5 +31,4 @@ public class RecycleController {
     public DeletedObjectResponse getDeletedObject() {
         return getDeletedObjectUseCase.execute();
     }
-
 }

@@ -4,9 +4,8 @@ package allchive.server.domain.domains.content.service;
 import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @DomainService
 @RequiredArgsConstructor

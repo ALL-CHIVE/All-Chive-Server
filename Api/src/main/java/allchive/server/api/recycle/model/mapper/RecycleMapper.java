@@ -11,9 +11,8 @@ import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Mapper
 @RequiredArgsConstructor
@@ -28,13 +27,23 @@ public class RecycleMapper {
         return Recycle.of(type, null, archivingId, userId);
     }
 
-    public DeletedObjectResponse toDeletedObjectResponse(List<Archiving> archivingList, Long userId, List<Content> contents, List<ContentTagGroup> contentTagGroups) {
-        List<ArchivingResponse> archivingResponses = archivingList.stream()
-                .map(archiving -> ArchivingResponse.of(archiving,  archiving.getPinUserId().contains(userId)))
-                .toList();
-        List<ContentResponse> contentResponses = contents.stream()
-                .map(content -> contentMapper.toContentResponse(content, contentTagGroups))
-                .toList();
+    public DeletedObjectResponse toDeletedObjectResponse(
+            List<Archiving> archivingList,
+            Long userId,
+            List<Content> contents,
+            List<ContentTagGroup> contentTagGroups) {
+        List<ArchivingResponse> archivingResponses =
+                archivingList.stream()
+                        .map(
+                                archiving ->
+                                        ArchivingResponse.of(
+                                                archiving,
+                                                archiving.getPinUserId().contains(userId)))
+                        .toList();
+        List<ContentResponse> contentResponses =
+                contents.stream()
+                        .map(content -> contentMapper.toContentResponse(content, contentTagGroups))
+                        .toList();
         return DeletedObjectResponse.of(archivingResponses, contentResponses);
     }
 }
