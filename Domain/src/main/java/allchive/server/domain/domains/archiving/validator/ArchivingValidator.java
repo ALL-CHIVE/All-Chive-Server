@@ -3,10 +3,13 @@ package allchive.server.domain.domains.archiving.validator;
 
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
+import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.exception.exceptions.AlreadyPinnedArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
 import allchive.server.domain.domains.archiving.exception.exceptions.NotPinnedArchivingException;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Validator
 @RequiredArgsConstructor
@@ -45,5 +48,12 @@ public class ArchivingValidator {
 
     public void validateArchivingUser(Long archivingId, Long userId) {
         archivingAdaptor.findById(archivingId).validateUser(userId);
+    }
+
+    public void validateExistInIdList(List<Long> archivingIdList) {
+        List<Archiving> archivingList = archivingAdaptor.findAllByIdIn(archivingIdList);
+        if (archivingList.size() != archivingIdList.size()) {
+            throw ArchivingNotFoundException.EXCEPTION;
+        }
     }
 }

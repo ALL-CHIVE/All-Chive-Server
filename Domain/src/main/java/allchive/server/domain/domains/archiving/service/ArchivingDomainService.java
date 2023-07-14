@@ -7,6 +7,8 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @DomainService
 @RequiredArgsConstructor
 public class ArchivingDomainService {
@@ -46,5 +48,11 @@ public class ArchivingDomainService {
         Archiving archiving = archivingAdaptor.findById(archivingId);
         archiving.delete();
         archivingAdaptor.save(archiving);
+    }
+
+    public void restoreInIdList(List<Long> archivingIds) {
+        List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
+        archivings.forEach(Archiving::restore);
+        archivingAdaptor.saveAll(archivings);
     }
 }

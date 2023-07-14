@@ -64,4 +64,12 @@ public class ArchivingAdaptor {
     public List<Archiving> findAllByUserId(Long userId) {
         return archivingRepository.findAllByUserId(userId);
     }
+
+    public List<Archiving> findAllByIdIn(List<Long> archivingIdList) {
+        return archivingRepository.findAllByIdIn(archivingIdList);
+    }
+
+    public void saveAll(List<Archiving> archivings) {
+        archivingRepository.saveAll(archivings);
+    }
 }

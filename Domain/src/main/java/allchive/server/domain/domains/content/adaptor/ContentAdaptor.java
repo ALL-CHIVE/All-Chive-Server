@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import java.util.List;
+
 @Adaptor
 @RequiredArgsConstructor
 public class ContentAdaptor {
@@ -30,5 +32,13 @@ public class ContentAdaptor {
 
     public void deleteById(Long contentId) {
         contentRepository.deleteById(contentId);
+    }
+
+    public List<Content> findAllByIdIn(List<Long> contentIdList) {
+        return contentRepository.findAllByIdIn(contentIdList);
+    }
+
+    public void saveAll(List<Content> contentList) {
+        contentRepository.saveAll(contentList);
     }
 }
