@@ -71,4 +71,8 @@ public class Content extends BaseTimeEntity {
     public void delete() {
         this.deleteStatus = Boolean.TRUE;
     }
+
+    public void restore() {
+        this.deleteStatus = Boolean.FALSE;
+    }
 }

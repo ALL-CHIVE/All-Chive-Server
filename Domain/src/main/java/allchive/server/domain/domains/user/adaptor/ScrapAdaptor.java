@@ -29,4 +29,8 @@ public class ScrapAdaptor {
     public void save(Scrap scrap) {
         scrapRepository.save(scrap);
     }
+
+    public void deleteAllByArchivingIdIn(List<Long> archivingIds) {
+        scrapRepository.deleteAllByArchivingIdIn(archivingIds);
+    }
 }

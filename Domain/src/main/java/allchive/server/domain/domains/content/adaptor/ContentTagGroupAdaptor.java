@@ -29,4 +29,8 @@ public class ContentTagGroupAdaptor {
     public void saveAll(List<ContentTagGroup> contentTagGroupList) {
         contentTagGroupRepository.saveAll(contentTagGroupList);
     }
+
+    public void deleteAllByContentIn(List<Content> contents) {
+        contentTagGroupRepository.deleteAllByContentIn(contents);
+    }
 }

@@ -5,6 +5,7 @@ import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @DomainService
@@ -42,9 +43,19 @@ public class ArchivingDomainService {
         archiving.updateScrapCnt(pin ? 1 : -1);
     }
 
-    public void deleteById(Long archivingId) {
+    public void softDeleteById(Long archivingId) {
         Archiving archiving = archivingAdaptor.findById(archivingId);
         archiving.delete();
         archivingAdaptor.save(archiving);
+    }
+
+    public void restoreInIdList(List<Long> archivingIds) {
+        List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
+        archivings.forEach(Archiving::restore);
+        archivingAdaptor.saveAll(archivings);
+    }
+
+    public void deleteAllById(List<Long> archivingIds) {
+        archivingAdaptor.deleteAllById(archivingIds);
     }
 }

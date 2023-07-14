@@ -5,7 +5,7 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
-import allchive.server.domain.domains.content.service.ContentTagGroupdDomainService;
+import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
 import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeleteTagUseCase {
     private final TagValidator tagValidator;
     private final TagAdaptor tagAdaptor;
-    private final ContentTagGroupdDomainService contentTagGroupdDomainService;
+    private final ContentTagGroupDomainService contentTagGroupDomainService;
     private final TagDomainService tagDomainService;
 
     @Transactional
@@ -24,7 +24,7 @@ public class DeleteTagUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         tagValidator.verifyUser(tagId, userId);
         Tag tag = tagAdaptor.findById(tagId);
-        contentTagGroupdDomainService.deleteById(tag);
+        contentTagGroupDomainService.deleteByTag(tag);
         tagDomainService.deleteById(tagId);
     }
 }
