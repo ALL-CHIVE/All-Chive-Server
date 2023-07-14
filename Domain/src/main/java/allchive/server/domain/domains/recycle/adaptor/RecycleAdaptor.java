@@ -4,6 +4,8 @@ package allchive.server.domain.domains.recycle.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.repository.RecycleRepository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -28,5 +30,9 @@ public class RecycleAdaptor {
 
     public List<Recycle> findAllByUserId(Long userId) {
         return recycleRepository.findAllByUserId(userId);
+    }
+
+    public List<Recycle> findAllByDeletedAtBefore(LocalDateTime deleteStandard) {
+        return recycleRepository.findAllByDeletedAtBefore(deleteStandard);
     }
 }

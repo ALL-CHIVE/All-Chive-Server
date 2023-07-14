@@ -23,4 +23,8 @@ public class RecycleDomainService {
                         archivingIds, contentIds, userId);
         recycleAdaptor.deleteAll(recycleList);
     }
+
+    public void deleteAll(List<Recycle> recycles) {
+        recycleAdaptor.deleteAll(recycles);
+    }
 }
