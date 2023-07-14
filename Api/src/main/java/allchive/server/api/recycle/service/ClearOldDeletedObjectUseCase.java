@@ -1,6 +1,6 @@
 package allchive.server.api.recycle.service;
 
-import allchive.server.api.config.security.SecurityUtil;
+
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
@@ -12,14 +12,13 @@ import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @UseCase
