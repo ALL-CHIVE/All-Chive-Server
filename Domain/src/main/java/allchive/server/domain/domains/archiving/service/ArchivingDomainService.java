@@ -43,7 +43,7 @@ public class ArchivingDomainService {
         archiving.updateScrapCnt(pin ? 1 : -1);
     }
 
-    public void deleteById(Long archivingId) {
+    public void softDeleteById(Long archivingId) {
         Archiving archiving = archivingAdaptor.findById(archivingId);
         archiving.delete();
         archivingAdaptor.save(archiving);
@@ -53,5 +53,9 @@ public class ArchivingDomainService {
         List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
         archivings.forEach(Archiving::restore);
         archivingAdaptor.saveAll(archivings);
+    }
+
+    public void deleteAllById(List<Long> archivingIds) {
+        archivingAdaptor.deleteAllById(archivingIds);
     }
 }

@@ -11,7 +11,7 @@ import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.service.ContentDomainService;
-import allchive.server.domain.domains.content.service.ContentTagGroupdDomainService;
+import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +25,8 @@ public class CreateContentUseCase {
     private final ContentDomainService contentDomainService;
     private final TagValidator tagValidator;
     private final TagAdaptor tagAdaptor;
-    private final ContentTagGroupdDomainService contentTagGroupdDomainService;
+    private final ContentTagGroupDomainService contentTagGroupDomainService;
 
-    // TODO : tag 만들면 연결
     @Transactional
     public void execute(CreateContentRequest request) {
         archivingValidator.validateExistArchiving(request.getArchivingId());
@@ -38,7 +37,7 @@ public class CreateContentUseCase {
         Content content = contentMapper.toEntity(request);
         List<ContentTagGroup> contentTagGroupList =
                 contentMapper.toContentTagGroupEntityList(content, tags);
-        contentTagGroupdDomainService.saveAll(contentTagGroupList);
+        contentTagGroupDomainService.saveAll(contentTagGroupList);
         contentDomainService.save(content);
     }
 }

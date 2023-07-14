@@ -40,4 +40,12 @@ public class ContentAdaptor {
     public void saveAll(List<Content> contentList) {
         contentRepository.saveAll(contentList);
     }
+
+    public void deleteAllById(List<Long> contentIds) {
+        contentRepository.deleteAllById(contentIds);
+    }
+
+    public List<Content> findAllByArchivingIds(List<Long> archivingIds) {
+        return contentRepository.queryContentInArchivingIds(archivingIds);
+    }
 }

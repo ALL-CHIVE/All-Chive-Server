@@ -16,7 +16,7 @@ public class ContentDomainService {
         contentAdaptor.save(content);
     }
 
-    public void deleteById(Long contentId) {
+    public void softDeleteById(Long contentId) {
         Content content = contentAdaptor.findById(contentId);
         content.delete();
         save(content);
@@ -26,5 +26,9 @@ public class ContentDomainService {
         List<Content> contentList = contentAdaptor.findAllByIdIn(contentIds);
         contentList.forEach(Content::restore);
         contentAdaptor.saveAll(contentList);
+    }
+
+    public void deleteAllById(List<Long> contentIds) {
+        contentAdaptor.deleteAllById(contentIds);
     }
 }

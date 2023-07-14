@@ -6,6 +6,7 @@ import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.exception.exceptions.AlreadyPinnedArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
+import allchive.server.domain.domains.archiving.exception.exceptions.NoAuthurityUpdateArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.NotPinnedArchivingException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +55,15 @@ public class ArchivingValidator {
         if (archivingList.size() != archivingIdList.size()) {
             throw ArchivingNotFoundException.EXCEPTION;
         }
+    }
+
+    public void verifyUserInIdList(Long userId, List<Long> archivingIds) {
+        List<Archiving> archivingList = archivingAdaptor.findAllByIdIn(archivingIds);
+        archivingList.forEach(
+                archiving -> {
+                    if (!archiving.getUserId().equals(userId)) {
+                        throw NoAuthurityUpdateArchivingException.EXCEPTION;
+                    }
+                });
     }
 }
