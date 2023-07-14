@@ -1,7 +1,7 @@
 package allchive.server.api.recycle.service;
 
 import allchive.server.api.config.security.SecurityUtil;
-import allchive.server.api.recycle.model.dto.request.RestoreObjectRequest;
+import allchive.server.api.recycle.model.dto.request.RestoreDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
-public class RestoreObjectUseCase {
+public class RestoreDeletedObjectUseCase {
     private final RecycleValidator recycleValidator;
     private final ArchivingValidator archivingValidator;
     private final ContentValidator contentValidator;
@@ -23,7 +23,7 @@ public class RestoreObjectUseCase {
     private final RecycleDomainService recycleDomainService;
 
     @Transactional
-    public void execute(RestoreObjectRequest request) {
+    public void execute(RestoreDeletedObjectRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
         recycleValidator.validateExist(request.getArchivingIds(), request.getContentIds(), userId);
         archivingValidator.validateExistInIdList(request.getArchivingIds());

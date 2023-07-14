@@ -72,4 +72,8 @@ public class ArchivingAdaptor {
     public void saveAll(List<Archiving> archivings) {
         archivingRepository.saveAll(archivings);
     }
+
+    public List<Archiving> findAllByUserIdAndDeleted(Long userId) {
+        return archivingRepository.findAllByUserIdAndDeleteStatus(userId, true);
+    }
 }

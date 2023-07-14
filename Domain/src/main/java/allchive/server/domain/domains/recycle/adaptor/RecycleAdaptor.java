@@ -25,4 +25,8 @@ public class RecycleAdaptor {
     public void deleteAll(List<Recycle> recycleList) {
         recycleRepository.deleteAll(recycleList);
     }
+
+    public List<Recycle> findAllByUserId(Long userId) {
+        return recycleRepository.findAllByUserId(userId);
+    }
 }

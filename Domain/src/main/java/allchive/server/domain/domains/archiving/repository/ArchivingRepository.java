@@ -10,4 +10,6 @@ public interface ArchivingRepository
     List<Archiving> findAllByUserId(Long userId);
 
     List<Archiving> findAllByIdIn(List<Long> ids);
+
+    List<Archiving> findAllByUserIdAndDeleteStatus(Long userId, boolean deleteStatus);
 }

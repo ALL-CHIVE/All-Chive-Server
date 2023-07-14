@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class RestoreObjectRequest {
+public class RestoreDeletedObjectRequest {
     @ArraySchema(schema = @Schema(description = "복구할 아카이빙 id", type = "int",
             defaultValue = "1"))
     private List<Long> archivingIds;
