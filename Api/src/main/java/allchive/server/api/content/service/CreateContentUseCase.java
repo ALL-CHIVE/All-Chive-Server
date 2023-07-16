@@ -29,7 +29,7 @@ public class CreateContentUseCase {
 
     @Transactional
     public void execute(CreateContentRequest request) {
-        archivingValidator.validateExistArchiving(request.getArchivingId());
+        archivingValidator.validateExistById(request.getArchivingId());
         Long userId = SecurityUtil.getCurrentUserId();
         archivingValidator.validateArchivingUser(request.getArchivingId(), userId);
         tagValidator.validateExistTagsAndUser(request.getTagIds(), userId);

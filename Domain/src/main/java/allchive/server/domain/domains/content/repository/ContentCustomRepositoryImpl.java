@@ -39,12 +39,23 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
                 .fetch();
     }
 
+    @Override
+    public boolean queryContentExistById(Long id) {
+        Integer fetchOne =
+                queryFactory.selectOne().from(content).where(idEq(id)).fetchFirst(); // limit 1
+        return fetchOne != null;
+    }
+
     private BooleanExpression archivingIdEq(Long archivingId) {
         return content.archivingId.eq(archivingId);
     }
 
     private BooleanExpression archivingIdIn(List<Long> archivingIds) {
         return content.archivingId.in(archivingIds);
+    }
+
+    private BooleanExpression idEq(Long id) {
+        return content.id.eq(id);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

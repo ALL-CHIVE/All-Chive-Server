@@ -17,7 +17,7 @@ public class UpdateArchivingPinUseCase {
     @Transactional
     public void execute(Long archivingId, Boolean cancel) {
         Long userId = SecurityUtil.getCurrentUserId();
-        archivingValidator.validateExistArchiving(archivingId);
+        archivingValidator.validateExistById(archivingId);
         archivingValidator.validateDeleteStatus(archivingId, userId);
         if (cancel) {
             archivingValidator.validateNotPinStatus(archivingId, userId);

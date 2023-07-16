@@ -10,4 +10,6 @@ public interface ContentCustomRepository {
     Slice<Content> querySliceContentByArchivingId(Long archivingId, Pageable pageable);
 
     List<Content> queryContentInArchivingIds(List<Long> archivingIds);
+
+    boolean queryContentExistById(Long id);
 }

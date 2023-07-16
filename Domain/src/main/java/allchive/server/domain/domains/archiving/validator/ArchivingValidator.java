@@ -28,7 +28,7 @@ public class ArchivingValidator {
         archivingAdaptor.findById(archivingId).validateDeleteStatus(userId);
     }
 
-    public void validateExistArchiving(Long archivingId) {
+    public void validateExistById(Long archivingId) {
         if (!archivingAdaptor.queryArchivingExist(archivingId)) {
             throw ArchivingNotFoundException.EXCEPTION;
         }

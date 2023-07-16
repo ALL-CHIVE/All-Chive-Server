@@ -18,5 +18,5 @@ public interface ArchivingCustomRepository {
 
     List<Archiving> queryArchivingByUserId(Long userId);
 
-    boolean queryArchivingExist(Long archivingId);
+    boolean queryArchivingExistById(Long archivingId);
 }
