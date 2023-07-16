@@ -14,4 +14,8 @@ public class BlockDomainService {
     public void save(Block block) {
         blockAdaptor.save(block);
     }
+
+    public void deleteByBlockFromAndBlockUser(Long blockFrom, Long blockUser) {
+        blockAdaptor.deleteByBlockFromAndBlockUser(blockFrom, blockUser);
+    }
 }

@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BlockRepository extends JpaRepository<Block, Long>, BlockCustomRepository {
     List<Block> findAllByBlockFrom(Long userId);
+
+    void deleteByBlockFromAndBlockUser(Long blockFrom, Long blockUser);
 }

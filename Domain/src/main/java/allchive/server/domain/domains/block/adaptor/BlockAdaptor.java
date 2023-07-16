@@ -23,4 +23,8 @@ public class BlockAdaptor {
     public void save(Block block) {
         blockRepository.save(block);
     }
+
+    public void deleteByBlockFromAndBlockUser(Long blockFrom, Long blockUser) {
+        blockRepository.deleteByBlockFromAndBlockUser(blockFrom, blockUser);
+    }
 }
