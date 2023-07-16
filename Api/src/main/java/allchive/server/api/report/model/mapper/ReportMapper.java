@@ -11,20 +11,22 @@ public class ReportMapper {
     public Report toEntity(CreateReportRequest request, ReportObjectType type, Long userId) {
         Report report = null;
         switch (type) {
-            case CONTENT -> report = Report.of(
-                    type,
-                    request.getReason(),
-                    request.getReportedType(),
-                    request.getId(),
-                    null,
-                    userId);
-            case ARCHIVING -> report = Report.of(
-                    type,
-                    request.getReason(),
-                    request.getReportedType(),
-                    null,
-                    request.getId(),
-                    userId);
+            case CONTENT -> report =
+                    Report.of(
+                            type,
+                            request.getReason(),
+                            request.getReportedType(),
+                            request.getId(),
+                            null,
+                            userId);
+            case ARCHIVING -> report =
+                    Report.of(
+                            type,
+                            request.getReason(),
+                            request.getReportedType(),
+                            null,
+                            request.getId(),
+                            userId);
         }
         return report;
     }

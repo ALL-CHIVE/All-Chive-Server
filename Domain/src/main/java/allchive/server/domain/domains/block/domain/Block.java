@@ -5,6 +5,7 @@ import allchive.server.domain.common.model.BaseTimeEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +23,14 @@ public class Block extends BaseTimeEntity {
 
     // Block 당한 유저
     private Long blockUser;
+
+    @Builder
+    private Block(Long blockFrom, Long blockUser) {
+        this.blockFrom = blockFrom;
+        this.blockUser = blockUser;
+    }
+
+    public static Block of(Long blockFrom, Long blockUser) {
+        return Block.builder().blockFrom(blockFrom).blockUser(blockUser).build();
+    }
 }
