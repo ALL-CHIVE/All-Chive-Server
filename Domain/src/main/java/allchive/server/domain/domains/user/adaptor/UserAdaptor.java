@@ -8,6 +8,8 @@ import allchive.server.domain.domains.user.exception.exceptions.UserNotFoundExce
 import allchive.server.domain.domains.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Adaptor
 @RequiredArgsConstructor
 public class UserAdaptor {
@@ -33,5 +35,9 @@ public class UserAdaptor {
 
     public Boolean existsByNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    public List<User> findAllByIdIn(List<Long> userIds) {
+        return userRepository.findAllByIdIn(userIds);
     }
 }
