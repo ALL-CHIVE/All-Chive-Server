@@ -58,7 +58,7 @@ public class ArchivingAdaptor {
     }
 
     public boolean queryArchivingExist(Long archivingId) {
-        return archivingRepository.queryArchivingExist(archivingId);
+        return archivingRepository.queryArchivingExistById(archivingId);
     }
 
     public List<Archiving> findAllByUserId(Long userId) {

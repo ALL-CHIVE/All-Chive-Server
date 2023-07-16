@@ -86,7 +86,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public boolean queryArchivingExist(Long archivingId) {
+    public boolean queryArchivingExistById(Long archivingId) {
         Archiving fetchOne =
                 queryFactory.selectFrom(archiving).where(archivingIdEq(archivingId)).fetchFirst();
         return fetchOne != null;

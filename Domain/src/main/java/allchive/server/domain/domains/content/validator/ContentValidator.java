@@ -30,4 +30,10 @@ public class ContentValidator {
                         .toList();
         archivingValidator.verifyUserInIdList(userId, archivingIds);
     }
+
+    public void validateExistById(Long contentId) {
+        if (!contentAdaptor.queryContentExistById(contentId)) {
+            throw ContentNotFoundException.EXCEPTION;
+        }
+    }
 }

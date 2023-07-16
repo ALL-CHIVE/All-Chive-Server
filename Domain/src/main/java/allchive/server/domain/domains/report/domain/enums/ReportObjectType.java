@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ReportType {
+public enum ReportObjectType {
     CONTENT("content"),
     ARCHIVING("archiving");
 

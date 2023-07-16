@@ -48,4 +48,8 @@ public class ContentAdaptor {
     public List<Content> findAllByArchivingIds(List<Long> archivingIds) {
         return contentRepository.queryContentInArchivingIds(archivingIds);
     }
+
+    public boolean queryContentExistById(Long contentId) {
+        return contentRepository.queryContentExistById(contentId);
+    }
 }

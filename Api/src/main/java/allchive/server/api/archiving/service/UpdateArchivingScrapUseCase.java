@@ -24,7 +24,7 @@ public class UpdateArchivingScrapUseCase {
 
     @Transactional
     public void execute(Long archivingId, Boolean cancel) {
-        archivingValidator.validateExistArchiving(archivingId);
+        archivingValidator.validateExistById(archivingId);
         Long userId = SecurityUtil.getCurrentUserId();
         archivingValidator.validateDeleteStatus(archivingId, userId);
         User user = userAdaptor.queryUserById(userId);
