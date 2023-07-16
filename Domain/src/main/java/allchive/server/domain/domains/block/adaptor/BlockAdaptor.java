@@ -15,4 +15,12 @@ public class BlockAdaptor {
     public List<Block> findByBlockFrom(Long userId) {
         return blockRepository.findAllByBlockFrom(userId);
     }
+
+    public boolean queryBlockExistByBlockFromAndBlockUser(Long blockFrom, Long blockUser) {
+        return blockRepository.queryBlockExistByBlockFromAndBlockUser(blockFrom, blockUser);
+    }
+
+    public void save(Block block) {
+        blockRepository.save(block);
+    }
 }
