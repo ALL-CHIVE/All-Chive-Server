@@ -2,8 +2,10 @@ package allchive.server.api.search.controller;
 
 
 import allchive.server.api.search.model.dto.request.SearchRequest;
+import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.enums.ArchivingType;
+import allchive.server.api.search.service.GetLatestSearchListUseCase;
 import allchive.server.api.search.service.SearchArchivingUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,13 +23,20 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "9. [search]")
 public class SearchController {
     private final SearchArchivingUseCase searchArchivingUseCase;
+    private final GetLatestSearchListUseCase getLatestSearchListUseCase;
 
-    @Operation(summary = "아카이빙을 생성합니다.")
+    @Operation(summary = "검색어를 검색합니다.")
     @PostMapping()
-    public SearchResponse createArchiving(
+    public SearchResponse searchArchiving(
             @ParameterObject @PageableDefault(size = 10) Pageable pageable,
             @RequestParam("type") ArchivingType type,
             @RequestBody SearchRequest request) {
         return searchArchivingUseCase.execute(pageable, type, request);
+    }
+
+    @Operation(summary = "최근 검색어 목록을 가져옵니다.", description = "5개만 드릴게요")
+    @GetMapping()
+    public SearchListResponse getLatestSearchList() {
+        return getLatestSearchListUseCase.execute();
     }
 }
