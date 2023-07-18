@@ -1,5 +1,6 @@
 package allchive.server.api.block.model.vo;
 
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,9 +20,6 @@ public class BlockUserVo {
     }
 
     public static BlockUserVo of(String nickname, Long id) {
-        return BlockUserVo.builder()
-                .nickname(nickname)
-                .id(id)
-                .build();
+        return BlockUserVo.builder().nickname(nickname).id(id).build();
     }
 }

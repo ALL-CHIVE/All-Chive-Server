@@ -92,6 +92,39 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         return fetchOne != null;
     }
 
+    @Override
+    public Slice<Archiving> querySliceArchivingByUserIdAndKeywords(
+            Long userId, String keyword, Pageable pageable) {
+        List<Archiving> archivings =
+                queryFactory
+                        .selectFrom(archiving)
+                        .where(userIdEq(userId), titleContain(keyword))
+                        .orderBy(createdAtDesc())
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize() + 1)
+                        .fetch();
+        return SliceUtil.toSlice(archivings, pageable);
+    }
+
+    @Override
+    public Slice<Archiving> querySliceArchivingByKeywordExceptBlock(
+            List<Long> archivingIdList, List<Long> blockList, String keyword, Pageable pageable) {
+        List<Archiving> archivings =
+                queryFactory
+                        .select(archiving)
+                        .from(archiving)
+                        .where(
+                                userIdNotIn(blockList),
+                                publicStatusTrue(),
+                                deleteStatusFalse(),
+                                titleContain(keyword))
+                        .orderBy(scrabListDesc(archivingIdList), scrapCntDesc(), createdAtDesc())
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize() + 1)
+                        .fetch();
+        return SliceUtil.toSlice(archivings, pageable);
+    }
+
     private BooleanExpression userIdNotIn(List<Long> blockList) {
         return archiving.userId.notIn(blockList);
     }
@@ -121,6 +154,10 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     private BooleanExpression archivingIdEq(Long archivingId) {
         return archiving.id.eq(archivingId);
+    }
+
+    private BooleanExpression titleContain(String keyword) {
+        return archiving.title.contains(keyword);
     }
 
     private OrderSpecifier<Long> scrabListDesc(List<Long> archivingIdList) {

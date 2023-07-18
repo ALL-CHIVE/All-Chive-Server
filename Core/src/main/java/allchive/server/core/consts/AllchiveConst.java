@@ -37,4 +37,7 @@ public class AllchiveConst {
     public static final String[] SwaggerPatterns = {
         "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
     };
+
+    public static final String SEARCH_KEY = "ARCHIVING_TITLE";
+    public static final String ASTERISK = "*";
 }

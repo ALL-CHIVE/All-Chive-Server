@@ -19,4 +19,10 @@ public interface ArchivingCustomRepository {
     List<Archiving> queryArchivingByUserId(Long userId);
 
     boolean queryArchivingExistById(Long archivingId);
+
+    Slice<Archiving> querySliceArchivingByUserIdAndKeywords(
+            Long userId, String keyword, Pageable pageable);
+
+    Slice<Archiving> querySliceArchivingByKeywordExceptBlock(
+            List<Long> archivingIdList, List<Long> blockList, String keyword, Pageable pageable);
 }
