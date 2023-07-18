@@ -92,4 +92,8 @@ public class ArchivingAdaptor {
         return archivingRepository.querySliceArchivingByKeywordExceptBlock(
                 archivingIdList, blockList, keyword, pageable);
     }
+
+    public List<Archiving> findAllByPublicStatus(Boolean publicStatus) {
+        return archivingRepository.findAllByPublicStatus(publicStatus);
+    }
 }

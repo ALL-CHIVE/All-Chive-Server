@@ -6,7 +6,6 @@ import static jodd.util.StringPool.ASTERISK;
 import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
