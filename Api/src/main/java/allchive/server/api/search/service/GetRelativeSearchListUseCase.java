@@ -12,12 +12,14 @@ import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.*;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
 public class GetRelativeSearchListUseCase {
     private final RedisTemplate<String, String> redisTemplate;
 
+    @Transactional
     public SearchListResponse execute(SearchRequest request) {
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         List<String> autoCompleteList = new ArrayList<>();
