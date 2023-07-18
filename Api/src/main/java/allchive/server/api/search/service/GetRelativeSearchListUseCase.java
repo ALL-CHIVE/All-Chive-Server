@@ -8,37 +8,32 @@ import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.core.annotation.UseCase;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.core.*;
 
 @UseCase
 @RequiredArgsConstructor
 public class GetRelativeSearchListUseCase {
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public SearchListResponse execute(SearchRequest request) {
-        HashOperations<String, String, Long> hashOperations = redisTemplate.opsForHash();
-        ScanOptions scanOptions = getScanOptions(request.getKeyword());
-        Cursor<Entry<String, Long>> cursor = hashOperations.scan(SEARCH_KEY, scanOptions);
-        return SearchListResponse.from(getRelationList(cursor));
-    }
-
-    private ScanOptions getScanOptions(String keyword) {
-        return ScanOptions.scanOptions().match(keyword + ASTERISK).build();
-    }
-
-    private List<String> getRelationList(Cursor<Entry<String, Long>> cursor) {
-        List<String> searchList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            if (cursor.hasNext()) {
-                Entry<String, Long> entry = cursor.next();
-                searchList.add(entry.getKey());
-            }
+        ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
+        List<String> autoCompleteList = new ArrayList<>();
+        Long rank = zSetOperations.rank(SEARCH_KEY, request.getKeyword());
+        if (rank != null) {
+            Set<String> rangeList = zSetOperations.range(SEARCH_KEY, rank, rank + 1000);
+            autoCompleteList = getAutoCompleteList(rangeList, request.getKeyword());
         }
-        return searchList;
+        return SearchListResponse.from(autoCompleteList);
+    }
+
+    private List<String> getAutoCompleteList(Set<String> rangeList, String keyword) {
+        return rangeList.stream()
+                .filter(value -> value.endsWith(ASTERISK) && value.startsWith(keyword))
+                .map(value -> StringUtils.removeEnd(value, ASTERISK))
+                .limit(5)
+                .toList();
     }
 }
