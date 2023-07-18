@@ -5,6 +5,7 @@ import allchive.server.api.auth.model.dto.request.RegisterRequest;
 import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
 import allchive.server.api.auth.service.helper.OauthHelper;
 import allchive.server.api.auth.service.helper.TokenGenerateHelper;
+import allchive.server.api.common.util.UrlUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
@@ -25,7 +26,7 @@ public class OauthRegisterUseCase {
         final User user =
                 userDomainService.registerUser(
                         registerRequest.getNickname(),
-                        registerRequest.getProfileImgUrl(),
+                        UrlUtil.convertUrlToKey(registerRequest.getProfileImgUrl()),
                         registerRequest.getCategories(),
                         oauthInfo);
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
