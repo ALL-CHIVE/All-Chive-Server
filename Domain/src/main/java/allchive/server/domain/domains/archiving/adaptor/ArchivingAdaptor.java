@@ -80,4 +80,20 @@ public class ArchivingAdaptor {
     public void deleteAllById(List<Long> archivingIds) {
         archivingRepository.deleteAllById(archivingIds);
     }
+
+    public Slice<Archiving> querySliceArchivingByUserIdAndKeywords(
+            Long userId, String keyword, Pageable pageable) {
+        return archivingRepository.querySliceArchivingByUserIdAndKeywords(
+                userId, keyword, pageable);
+    }
+
+    public Slice<Archiving> querySliceArchivingByKeywordExceptBlock(
+            List<Long> archivingIdList, List<Long> blockList, String keyword, Pageable pageable) {
+        return archivingRepository.querySliceArchivingByKeywordExceptBlock(
+                archivingIdList, blockList, keyword, pageable);
+    }
+
+    public List<Archiving> findAllByPublicStatus(Boolean publicStatus) {
+        return archivingRepository.findAllByPublicStatus(publicStatus);
+    }
 }
