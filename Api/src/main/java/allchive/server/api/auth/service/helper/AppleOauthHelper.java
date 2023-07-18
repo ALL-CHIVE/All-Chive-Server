@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Helper
 @RequiredArgsConstructor
-public class AppleOAuthHelper {
+public class AppleOauthHelper {
     private final AppleOAuthProperties appleOAuthProperties;
     private final AppleOAuthClient appleOAuthClient;
     private final AppleOIDCClient appleOIDCClient;
@@ -76,11 +76,10 @@ public class AppleOAuthHelper {
     }
 
     /** apple측 회원 탈퇴 * */
-    //    public void withdrawAppleOauthUser(String appleOAuthAccessToken) {
-    //        appleOAuthClient.revoke(
-    //                appleOAuthProperties.getClientId(), appleOAuthAccessToken,
-    // this.getClientSecret());
-    //    }
+    public void withdrawAppleOauthUser(String appleOAuthAccessToken) {
+        appleOAuthClient.revoke(
+                appleOAuthProperties.getClientId(), appleOAuthAccessToken, this.getClientSecret());
+    }
 
     /** client secret 가져오기 * */
     private String getClientSecret() {

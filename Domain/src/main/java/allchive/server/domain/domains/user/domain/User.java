@@ -50,17 +50,27 @@ public class User extends BaseTimeEntity {
     private List<Category> categories = new ArrayList<>();
 
     @Builder
-    private User(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
+    private User(
+            String nickname,
+            String profileImgUrl,
+            List<Category> categoryList,
+            OauthInfo oauthInfo) {
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
+        this.categories = categoryList;
         this.oauthInfo = oauthInfo;
         this.lastLoginAt = LocalDateTime.now();
     }
 
-    public static User of(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
+    public static User of(
+            String nickname,
+            String profileImgUrl,
+            List<Category> categoryList,
+            OauthInfo oauthInfo) {
         return User.builder()
                 .nickname(nickname)
                 .profileImgUrl(profileImgUrl)
+                .categoryList(categoryList)
                 .oauthInfo(oauthInfo)
                 .build();
     }

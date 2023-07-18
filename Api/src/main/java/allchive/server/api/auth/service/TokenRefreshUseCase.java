@@ -22,7 +22,7 @@ public class TokenRefreshUseCase {
     public OauthRegisterResponse execute(String refreshToken) {
         RefreshTokenEntity oldToken = refreshTokenAdaptor.findTokenByRefreshToken(refreshToken);
         Long userId = jwtTokenProvider.parseRefreshToken(oldToken.getRefreshToken());
-        User user = userAdaptor.queryUserById(userId);
+        User user = userAdaptor.findUserById(userId);
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
     }
 }

@@ -24,8 +24,11 @@ public class AuthController {
 
     @Operation(summary = "회원탈퇴를 합니다.")
     @DeleteMapping("/withdrawal/{provider}")
-    public void withDrawUser(@PathVariable OauthProvider provider) {
-        withdrawUserUseCase.execute(provider);
+    public void withDrawUser(
+            @PathVariable OauthProvider provider,
+            @RequestParam(required = false, name = "appleAccessToken", value = "")
+                    String appleAccessToken) {
+        withdrawUserUseCase.execute(provider, appleAccessToken);
     }
 
     @Operation(summary = "로그아웃을 합니다.")
