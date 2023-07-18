@@ -11,6 +11,12 @@ services:
       - TZ=Asia/Seoul
     expose:
       - 8080
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: "all-chive-dev"
+        awslogs-region: "ap-northeast-2"
+        awslogs-stream: "server"
 
   nginx:
     depends_on:
