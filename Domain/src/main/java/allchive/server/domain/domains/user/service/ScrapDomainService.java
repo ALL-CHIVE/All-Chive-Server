@@ -30,4 +30,8 @@ public class ScrapDomainService {
     public void deleteAllByArchivingIdIn(List<Long> archivingIds) {
         scrapAdaptor.deleteAllByArchivingIdIn(archivingIds);
     }
+
+    public void deleteAllByUser(User user) {
+        scrapAdaptor.deleteAllByUser(user);
+    }
 }

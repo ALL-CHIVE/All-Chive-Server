@@ -36,4 +36,12 @@ public class TagAdaptor {
     public List<Tag> queryTagInTagIdList(List<Long> tagIds) {
         return tagRepository.queryTagInTagIdList(tagIds);
     }
+
+    public List<Tag> findAllByUserId(Long userId) {
+        return tagRepository.findAllByUserId(userId);
+    }
+
+    public void deleteAll(List<Tag> tagList) {
+        tagRepository.deleteAll(tagList);
+    }
 }

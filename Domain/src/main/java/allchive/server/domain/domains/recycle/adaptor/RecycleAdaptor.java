@@ -34,4 +34,8 @@ public class RecycleAdaptor {
     public List<Recycle> findAllByDeletedAtBefore(LocalDateTime deleteStandard) {
         return recycleRepository.findAllByDeletedAtBefore(deleteStandard);
     }
+
+    public void deleteAllByUserId(Long userId) {
+        recycleRepository.deleteAllByUserId(userId);
+    }
 }

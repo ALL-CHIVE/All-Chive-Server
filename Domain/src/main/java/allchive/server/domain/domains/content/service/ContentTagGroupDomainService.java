@@ -25,4 +25,8 @@ public class ContentTagGroupDomainService {
     public void deleteByContentIn(List<Content> contents) {
         contentTagGroupAdaptor.deleteAllByContentIn(contents);
     }
+
+    public void deleteAllByTagIn(List<Tag> tagList) {
+        contentTagGroupAdaptor.deleteAllByTagIn(tagList);
+    }
 }

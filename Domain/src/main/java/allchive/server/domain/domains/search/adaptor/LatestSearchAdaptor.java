@@ -23,4 +23,8 @@ public class LatestSearchAdaptor {
     public void save(LatestSearch newSearch) {
         latestSearchRepository.save(newSearch);
     }
+
+    public void deleteAllByUserId(Long userId) {
+        latestSearchRepository.deleteAllByUserId(userId);
+    }
 }

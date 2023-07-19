@@ -13,4 +13,6 @@ public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     Optional<Scrap> findAllByUserAndArchivingId(User user, Long archivingId);
 
     void deleteAllByArchivingIdIn(List<Long> archivingId);
+
+    void deleteAllByUser(User user);
 }

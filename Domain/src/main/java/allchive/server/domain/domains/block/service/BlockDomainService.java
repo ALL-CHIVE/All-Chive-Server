@@ -18,4 +18,8 @@ public class BlockDomainService {
     public void deleteByBlockFromAndBlockUser(Long blockFrom, Long blockUser) {
         blockAdaptor.deleteByBlockFromAndBlockUser(blockFrom, blockUser);
     }
+
+    public void queryDeleteBlockByBlockFromOrBlockUser(Long userId) {
+        blockAdaptor.queryDeleteBlockByBlockFromOrBlockUser(userId);
+    }
 }

@@ -27,7 +27,7 @@ public class UpdateArchivingScrapUseCase {
         archivingValidator.validateExistById(archivingId);
         Long userId = SecurityUtil.getCurrentUserId();
         archivingValidator.validateDeleteStatus(archivingId, userId);
-        User user = userAdaptor.queryUserById(userId);
+        User user = userAdaptor.findUserById(userId);
         if (cancel) {
             scrapDomainService.deleteScrapByUserAndArchivingId(user, archivingId);
             archivingDomainService.updateScrapCount(archivingId, -1);

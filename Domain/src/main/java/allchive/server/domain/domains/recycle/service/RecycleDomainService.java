@@ -27,4 +27,8 @@ public class RecycleDomainService {
     public void deleteAll(List<Recycle> recycles) {
         recycleAdaptor.deleteAll(recycles);
     }
+
+    public void deleteAllByUserId(Long userId) {
+        recycleAdaptor.deleteAllByUserId(userId);
+    }
 }

@@ -2,11 +2,13 @@ package allchive.server.domain.domains.user.service;
 
 
 import allchive.server.core.annotation.DomainService;
+import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.exception.exceptions.DuplicatedNicknameException;
 import allchive.server.domain.domains.user.validator.UserValidator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +23,13 @@ public class UserDomainService {
     }
 
     @Transactional
-    public User registerUser(String nickname, String profileImgUrl, OauthInfo oauthInfo) {
+    public User registerUser(
+            String nickname,
+            String profileImgUrl,
+            List<Category> categoryList,
+            OauthInfo oauthInfo) {
         userValidator.validUserCanRegister(oauthInfo);
-        final User newUser = User.of(nickname, profileImgUrl, oauthInfo);
+        final User newUser = User.of(nickname, profileImgUrl, categoryList, oauthInfo);
         userAdaptor.save(newUser);
         return newUser;
     }
@@ -37,13 +43,13 @@ public class UserDomainService {
 
     @Transactional
     public void deleteUserById(Long userId) {
-        User user = userAdaptor.queryUserById(userId);
+        User user = userAdaptor.findUserById(userId);
         user.withdrawUser();
     }
 
     public void updateUserInfo(
             Long userId, String name, String email, String nickname, String imgUrl) {
-        User user = userAdaptor.queryUserById(userId);
+        User user = userAdaptor.findUserById(userId);
         user.updateInfo(name, email, nickname, imgUrl);
     }
 

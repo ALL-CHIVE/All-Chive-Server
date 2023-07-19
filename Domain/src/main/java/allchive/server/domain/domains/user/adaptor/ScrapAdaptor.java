@@ -33,4 +33,8 @@ public class ScrapAdaptor {
     public void deleteAllByArchivingIdIn(List<Long> archivingIds) {
         scrapRepository.deleteAllByArchivingIdIn(archivingIds);
     }
+
+    public void deleteAllByUser(User user) {
+        scrapRepository.deleteAllByUser(user);
+    }
 }

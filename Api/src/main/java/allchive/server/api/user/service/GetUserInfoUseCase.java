@@ -20,7 +20,7 @@ public class GetUserInfoUseCase {
     public GetUserInfoResponse execute() {
         Long userId = SecurityUtil.getCurrentUserId();
         userValidator.validateUserStatusNormal(userId);
-        User user = userAdaptor.queryUserById(userId);
+        User user = userAdaptor.findUserById(userId);
         return GetUserInfoResponse.from(user);
     }
 }
