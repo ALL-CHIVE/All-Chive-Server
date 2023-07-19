@@ -8,7 +8,7 @@ import allchive.server.domain.domains.report.domain.enums.ReportObjectType;
 
 @Mapper
 public class ReportMapper {
-    public Report toEntity(CreateReportRequest request, ReportObjectType type, Long userId) {
+    public Report toEntity(CreateReportRequest request, ReportObjectType type, Long userId, Long reportedUserId) {
         Report report = null;
         switch (type) {
             case CONTENT -> report =
@@ -18,7 +18,8 @@ public class ReportMapper {
                             request.getReportedType(),
                             request.getId(),
                             null,
-                            userId);
+                            userId,
+                            reportedUserId);
             case ARCHIVING -> report =
                     Report.of(
                             type,
@@ -26,7 +27,8 @@ public class ReportMapper {
                             request.getReportedType(),
                             null,
                             request.getId(),
-                            userId);
+                            userId,
+                            reportedUserId);
         }
         return report;
     }

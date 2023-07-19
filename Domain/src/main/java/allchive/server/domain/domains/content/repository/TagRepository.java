@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TagRepository extends JpaRepository<Tag, Long>, TagCustomRepository {
     List<Tag> findAllByUserIdOrderByCreatedAtDesc(Long userId);
+
+    List<Tag> findAllByUserId(Long userId);
 }

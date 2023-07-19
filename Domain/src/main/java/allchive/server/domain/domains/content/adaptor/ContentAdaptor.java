@@ -52,4 +52,8 @@ public class ContentAdaptor {
     public boolean queryContentExistById(Long contentId) {
         return contentRepository.queryContentExistById(contentId);
     }
+
+    public void deleteAllByArchivingIdIn(List<Long> archivingId) {
+        contentRepository.deleteAllByArchivingIdIn(archivingId);
+    }
 }

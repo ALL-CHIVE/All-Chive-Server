@@ -10,4 +10,6 @@ public interface RecycleRepository extends JpaRepository<Recycle, Long>, Recycle
     List<Recycle> findAllByUserId(Long userId);
 
     List<Recycle> findAllByDeletedAtBefore(LocalDateTime time);
+
+    void deleteAllByUserId(Long userId);
 }

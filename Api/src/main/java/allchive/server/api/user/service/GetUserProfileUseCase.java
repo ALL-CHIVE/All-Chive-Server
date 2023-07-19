@@ -26,7 +26,7 @@ public class GetUserProfileUseCase {
     public GetUserProfileResponse execute() {
         Long userId = SecurityUtil.getCurrentUserId();
         userValidator.validateUserStatusNormal(userId);
-        User user = userAdaptor.queryUserById(userId);
+        User user = userAdaptor.findUserById(userId);
         List<Archiving> archivingList = archivingAdaptor.findAllByUserId(userId);
         return userMapper.toGetUserProfileResponse(archivingList, user);
     }

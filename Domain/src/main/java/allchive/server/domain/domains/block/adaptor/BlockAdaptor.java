@@ -27,4 +27,8 @@ public class BlockAdaptor {
     public void deleteByBlockFromAndBlockUser(Long blockFrom, Long blockUser) {
         blockRepository.deleteByBlockFromAndBlockUser(blockFrom, blockUser);
     }
+
+    public void queryDeleteBlockByBlockFromOrBlockUser(Long userId) {
+        blockRepository.queryDeleteBlockByBlockFromOrBlockUser(userId);
+    }
 }
