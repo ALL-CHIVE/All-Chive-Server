@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ContentRepository extends JpaRepository<Content, Long>, ContentCustomRepository {
     List<Content> findAllByIdIn(List<Long> contentIdList);
+
+    void deleteAllByArchivingIdIn(List<Long> archivingId);
 }

@@ -30,6 +30,7 @@ public class Report extends BaseTimeEntity {
     private Long contentId;
     private Long archivingId;
     private Long userId; // 신고한 유저
+    private Long reportedUserId; // 신고 당한 유저 id
 
     @Builder
     private Report(
@@ -38,13 +39,15 @@ public class Report extends BaseTimeEntity {
             ReportedType reportedType,
             Long contentId,
             Long archivingId,
-            Long userId) {
+            Long userId,
+            Long reportedUserId) {
         this.reportObjectTypeType = reportObjectTypeType;
         this.reason = reason;
         this.reportedType = reportedType;
         this.contentId = contentId;
         this.archivingId = archivingId;
         this.userId = userId;
+        this.reportedUserId = reportedUserId;
     }
 
     public static Report of(
@@ -53,7 +56,8 @@ public class Report extends BaseTimeEntity {
             ReportedType reportedType,
             Long contentId,
             Long archivingId,
-            Long userId) {
+            Long userId,
+            Long reportedUserId) {
         return Report.builder()
                 .reportObjectTypeType(reportObjectTypeType)
                 .reason(reason)
@@ -61,6 +65,7 @@ public class Report extends BaseTimeEntity {
                 .contentId(contentId)
                 .archivingId(archivingId)
                 .userId(userId)
+                .reportedUserId(reportedUserId)
                 .build();
     }
 }

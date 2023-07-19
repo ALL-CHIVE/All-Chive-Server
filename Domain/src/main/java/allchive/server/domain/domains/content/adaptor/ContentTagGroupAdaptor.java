@@ -33,4 +33,8 @@ public class ContentTagGroupAdaptor {
     public void deleteAllByContentIn(List<Content> contents) {
         contentTagGroupRepository.deleteAllByContentIn(contents);
     }
+
+    public void deleteAllByTagIn(List<Tag> tagList) {
+        contentTagGroupRepository.deleteAllByTagIn(tagList);
+    }
 }

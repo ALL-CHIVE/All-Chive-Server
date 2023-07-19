@@ -6,6 +6,8 @@ import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @DomainService
 @RequiredArgsConstructor
 public class TagDomainService {
@@ -23,5 +25,9 @@ public class TagDomainService {
 
     public void deleteById(Long tagId) {
         tagAdaptor.deleteById(tagId);
+    }
+
+    public void deleteAll(List<Tag> tagList) {
+        tagAdaptor.deleteAll(tagList);
     }
 }

@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LatestSearchRepository extends JpaRepository<LatestSearch, Long> {
     List<LatestSearch> findAllByUserIdOrderByCreatedAt(Long userId);
+
+    void deleteAllByUserId(Long userId);
 }

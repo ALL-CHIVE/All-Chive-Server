@@ -31,4 +31,8 @@ public class ContentDomainService {
     public void deleteAllById(List<Long> contentIds) {
         contentAdaptor.deleteAllById(contentIds);
     }
+
+    public void deleteAllByArchivingIdIn(List<Long> archivingId) {
+        contentAdaptor.deleteAllByArchivingIdIn(archivingId);
+    }
 }

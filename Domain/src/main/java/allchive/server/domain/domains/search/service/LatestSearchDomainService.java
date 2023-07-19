@@ -18,4 +18,8 @@ public class LatestSearchDomainService {
     public void save(LatestSearch newSearch) {
         latestSearchAdaptor.save(newSearch);
     }
+
+    public void deleteAllByUserId(Long userId) {
+        latestSearchAdaptor.deleteAllByUserId(userId);
+    }
 }

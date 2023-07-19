@@ -22,4 +22,8 @@ public class ReportAdaptor {
     public Boolean queryReportExistByUserIdAndArchivingId(Long userId, Long archivingId) {
         return reportRepository.queryReportExistByUserIdAndArchivingId(userId, archivingId);
     }
+
+    public void deleteAllByReportedUserId(Long userId) {
+        reportRepository.deleteAllByReportedUserId(userId);
+    }
 }

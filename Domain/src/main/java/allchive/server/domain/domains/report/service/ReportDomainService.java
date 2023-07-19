@@ -14,4 +14,8 @@ public class ReportDomainService {
     public void save(Report report) {
         reportAdaptor.save(report);
     }
+
+    public void deleteAllByReportedUserId(Long userId) {
+        reportAdaptor.deleteAllByReportedUserId(userId);
+    }
 }

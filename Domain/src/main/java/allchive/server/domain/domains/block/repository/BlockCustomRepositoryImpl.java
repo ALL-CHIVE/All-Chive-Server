@@ -21,11 +21,22 @@ public class BlockCustomRepositoryImpl implements BlockCustomRepository {
         return fetchOne != null;
     }
 
+    @Override
+    public void queryDeleteBlockByBlockFromOrBlockUser(Long userId) {
+        queryFactory
+                        .delete(block)
+                        .where(blockUserEqOrBlockFromEq(userId));
+    }
+
     private BooleanExpression blockFromEq(Long blockFrom) {
         return block.blockFrom.eq(blockFrom);
     }
 
     private BooleanExpression blockUserEq(Long blockUser) {
         return block.blockUser.eq(blockUser);
+    }
+
+    private BooleanExpression blockUserEqOrBlockFromEq(Long userId) {
+        return blockFromEq(userId).or(blockUserEq(userId));
     }
 }
