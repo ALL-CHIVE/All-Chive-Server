@@ -43,7 +43,7 @@ public class GetDeletedObjectUseCase {
                         .toList();
         List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
         List<Content> contents = contentAdaptor.findAllByIdIn(contentIds);
-        List<ContentTagGroup> contentTagGroups = contentTagGroupAdaptor.queryContentIn(contents);
+        List<ContentTagGroup> contentTagGroups = contentTagGroupAdaptor.queryContentTagGroupByContentIn(contents);
         return recycleMapper.toDeletedObjectResponse(
                 archivings, userId, contents, contentTagGroups);
     }

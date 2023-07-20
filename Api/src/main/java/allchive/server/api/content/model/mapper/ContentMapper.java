@@ -36,12 +36,12 @@ public class ContentMapper {
     }
 
     public ContentTagResponse toContentTagResponse(
-            Content content, List<ContentTagGroup> contentTagGroupList) {
+            Content content, List<ContentTagGroup> contentTagGroupList, Boolean isMine) {
         List<TagResponse> tagResponseList =
                 contentTagGroupList.stream()
                         .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))
                         .toList();
-        return ContentTagResponse.of(content, tagResponseList);
+        return ContentTagResponse.of(content, tagResponseList, isMine);
     }
 
     public List<ContentTagGroup> toContentTagGroupEntityList(Content content, List<Tag> tags) {
