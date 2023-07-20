@@ -27,10 +27,14 @@ public class DeleteContentUseCase {
     public void execute(Long contentId) {
         Long userId = SecurityUtil.getCurrentUserId();
         Content content = contentAdaptor.findById(contentId);
-        archivingValidator.validateArchivingUser(content.getArchivingId(), userId);
+        validateExecution(content.getArchivingId(), userId);
         contentDomainService.softDeleteById(contentId);
         Recycle recycle =
                 recycleMapper.toContentRecycleEntity(userId, contentId, RecycleType.CONTENT);
         recycleDomainService.save(recycle);
+    }
+
+    private void validateExecution(Long archivingId, Long userId) {
+        archivingValidator.validateArchivingUser(archivingId, userId);
     }
 }
