@@ -19,7 +19,7 @@ public class TagValidator {
     }
 
     public void validateExistTagsAndUser(List<Long> tagIds, Long userId) {
-        List<Tag> tags = tagAdaptor.queryTagInTagIdList(tagIds);
+        List<Tag> tags = tagAdaptor.queryTagByTagIdIn(tagIds);
         if (tagIds.size() != tags.size()) {
             throw TagNotFoundException.EXCEPTION;
         }

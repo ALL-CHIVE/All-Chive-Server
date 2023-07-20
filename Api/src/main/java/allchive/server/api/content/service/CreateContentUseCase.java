@@ -29,15 +29,20 @@ public class CreateContentUseCase {
 
     @Transactional
     public void execute(CreateContentRequest request) {
-        archivingValidator.validateExistById(request.getArchivingId());
-        Long userId = SecurityUtil.getCurrentUserId();
-        archivingValidator.validateArchivingUser(request.getArchivingId(), userId);
-        tagValidator.validateExistTagsAndUser(request.getTagIds(), userId);
-        List<Tag> tags = tagAdaptor.queryTagInTagIdList(request.getTagIds());
+        validateExecution(request);
+        List<Tag> tags = tagAdaptor.queryTagByTagIdIn(request.getTagIds());
         Content content = contentMapper.toEntity(request);
         List<ContentTagGroup> contentTagGroupList =
                 contentMapper.toContentTagGroupEntityList(content, tags);
         contentTagGroupDomainService.saveAll(contentTagGroupList);
         contentDomainService.save(content);
+    }
+
+    private void validateExecution(CreateContentRequest request) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        archivingValidator.validateExistById(request.getArchivingId());
+        archivingValidator.validateArchivingUser(request.getArchivingId(), userId);
+        tagValidator.validateExistTagsAndUser(request.getTagIds(), userId);
+
     }
 }

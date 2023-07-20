@@ -24,7 +24,7 @@ public class TagCustomRepositoryImpl implements TagCustomRepository {
     }
 
     @Override
-    public List<Tag> queryTagInTagIdList(List<Long> tagIds) {
+    public List<Tag> queryTagByTagIdIn(List<Long> tagIds) {
         return queryFactory.selectFrom(tag).where(tagIdIn(tagIds)).fetch();
     }
 
