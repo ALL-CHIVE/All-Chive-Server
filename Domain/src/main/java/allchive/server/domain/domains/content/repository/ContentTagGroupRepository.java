@@ -16,4 +16,6 @@ public interface ContentTagGroupRepository
     void deleteAllByContentIn(List<Content> contents);
 
     void deleteAllByTagIn(List<Tag> tagList);
+
+    void deleteAllByContent(Content content);
 }

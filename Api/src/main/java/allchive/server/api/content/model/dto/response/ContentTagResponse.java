@@ -23,6 +23,9 @@ public class ContentTagResponse {
     @Schema(description = "컨텐츠 종류")
     private ContentType contentType;
 
+    @Schema(description = "메모")
+    private String contentMemo;
+
     @Schema(defaultValue = "컨텐츠 링크", description = "컨텐츠 링크")
     private String link;
 
@@ -39,33 +42,42 @@ public class ContentTagResponse {
 
     private List<TagResponse> tagList;
 
+    private Boolean isMine;
+
     @Builder
     private ContentTagResponse(
             Long contentId,
             String contentTitle,
             ContentType contentType,
+            String contentMemo,
             String link,
             String imgUrl,
             LocalDateTime contentCreatedAt,
-            List<TagResponse> tagList) {
+            List<TagResponse> tagList,
+            Boolean isMine) {
         this.contentId = contentId;
         this.contentTitle = contentTitle;
         this.contentType = contentType;
+        this.contentMemo = contentMemo;
         this.link = link;
         this.imgUrl = imgUrl;
         this.contentCreatedAt = contentCreatedAt;
         this.tagList = tagList;
+        this.isMine = isMine;
     }
 
-    public static ContentTagResponse of(Content content, List<TagResponse> tagList) {
+    public static ContentTagResponse of(
+            Content content, List<TagResponse> tagList, Boolean isMine) {
         return ContentTagResponse.builder()
                 .contentId(content.getId())
                 .contentTitle(content.getTitle())
                 .contentType(content.getContentType())
+                .contentMemo(content.getMemo())
                 .link(content.getLinkUrl())
                 .imgUrl(UrlUtil.toAssetUrl(content.getImageUrl()))
                 .contentCreatedAt(content.getCreatedAt())
                 .tagList(tagList)
+                .isMine(isMine)
                 .build();
     }
 }
