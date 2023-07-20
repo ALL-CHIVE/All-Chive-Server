@@ -4,9 +4,6 @@ package allchive.server.api.content.service;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.mapper.RecycleMapper;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
-import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
-import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.recycle.domain.Recycle;
@@ -39,6 +36,5 @@ public class DeleteContentUseCase {
         Recycle recycle =
                 recycleMapper.toContentRecycleEntity(userId, contentId, RecycleType.CONTENT);
         recycleDomainService.save(recycle);
-
     }
 }

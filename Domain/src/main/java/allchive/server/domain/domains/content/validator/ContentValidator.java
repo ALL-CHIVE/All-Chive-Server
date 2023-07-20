@@ -4,13 +4,11 @@ package allchive.server.domain.domains.content.validator;
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
-import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
-import java.util.List;
-
 import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateContentException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @Validator

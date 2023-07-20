@@ -45,8 +45,8 @@ public class ContentController {
 
     @Operation(summary = "컨텐츠를 수정합니다.")
     @PatchMapping(value = "/{contentId}")
-    public void updateContent(@PathVariable Long contentId,
-                              @RequestBody UpdateContentRequest request) {
+    public void updateContent(
+            @PathVariable Long contentId, @RequestBody UpdateContentRequest request) {
         updateContentUseCase.execute(contentId, request);
     }
 }

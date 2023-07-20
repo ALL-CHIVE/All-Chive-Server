@@ -40,7 +40,6 @@ public class CreateContentUseCase {
         archivingValidator.validateExistById(request.getArchivingId());
         archivingValidator.validateArchivingUser(request.getArchivingId(), userId);
         tagValidator.validateExistTagsAndUser(request.getTagIds(), userId);
-
     }
 
     private void createContentTagGroup(Content content, List<Long> tagIds) {

@@ -66,7 +66,8 @@ public class ContentTagResponse {
         this.isMine = isMine;
     }
 
-    public static ContentTagResponse of(Content content, List<TagResponse> tagList, Boolean isMine) {
+    public static ContentTagResponse of(
+            Content content, List<TagResponse> tagList, Boolean isMine) {
         return ContentTagResponse.builder()
                 .contentId(content.getId())
                 .contentTitle(content.getTitle())
