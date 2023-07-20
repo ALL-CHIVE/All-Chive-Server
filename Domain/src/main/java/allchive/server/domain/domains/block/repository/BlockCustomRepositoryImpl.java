@@ -23,9 +23,7 @@ public class BlockCustomRepositoryImpl implements BlockCustomRepository {
 
     @Override
     public void queryDeleteBlockByBlockFromOrBlockUser(Long userId) {
-        queryFactory
-                        .delete(block)
-                        .where(blockUserEqOrBlockFromEq(userId));
+        queryFactory.delete(block).where(blockUserEqOrBlockFromEq(userId));
     }
 
     private BooleanExpression blockFromEq(Long blockFrom) {
