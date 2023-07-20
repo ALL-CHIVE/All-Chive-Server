@@ -48,9 +48,9 @@ public class ArchivingAdaptor {
         return archivingRepository.querySliceArchivingByUserId(userId, category, pageable);
     }
 
-    public Slice<Archiving> querySliceArchivingIn(
+    public Slice<Archiving> querySliceArchivingByIdIn(
             List<Long> archivingIdList, Category category, Pageable pageable) {
-        return archivingRepository.querySliceArchivingIn(archivingIdList, category, pageable);
+        return archivingRepository.querySliceArchivingByIdIn(archivingIdList, category, pageable);
     }
 
     public List<Archiving> queryArchivingByUserId(Long userId) {

@@ -21,8 +21,7 @@ public class UpdateArchivingUseCase {
 
     @Transactional
     public void execute(Long archivingId, UpdateArchivingRequest request) {
-        Long userId = SecurityUtil.getCurrentUserId();
-        archivingValidator.verifyUser(userId, archivingId);
+        validateExecution(archivingId);
         Archiving archiving = archivingAdaptor.findById(archivingId);
         archivingDomainService.updateArchiving(
                 archiving,
@@ -30,5 +29,10 @@ public class UpdateArchivingUseCase {
                 UrlUtil.convertUrlToKey(request.getImageUrl()),
                 request.isPublicStatus(),
                 request.getCategory());
+    }
+
+    private void validateExecution(Long archivingId) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        archivingValidator.verifyUser(userId, archivingId);
     }
 }
