@@ -6,5 +6,7 @@ import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import java.util.List;
 
 public interface ContentTagGroupCustomRepository {
-    public List<ContentTagGroup> queryContentTagGroupIn(List<Content> contentList);
+    public List<ContentTagGroup> queryContentTagGroupByContentIn(List<Content> contentList);
+
+    List<ContentTagGroup> queryContentTagGroupByContentWithTag(Content content);
 }

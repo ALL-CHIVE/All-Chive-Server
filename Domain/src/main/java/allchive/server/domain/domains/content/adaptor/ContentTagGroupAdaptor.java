@@ -14,12 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class ContentTagGroupAdaptor {
     private final ContentTagGroupRepository contentTagGroupRepository;
 
-    public List<ContentTagGroup> queryContentIn(List<Content> contentList) {
-        return contentTagGroupRepository.queryContentTagGroupIn(contentList);
-    }
-
-    public List<ContentTagGroup> findAllByContent(Content content) {
-        return contentTagGroupRepository.findAllByContent(content);
+    public List<ContentTagGroup> queryContentTagGroupByContentIn(List<Content> contentList) {
+        return contentTagGroupRepository.queryContentTagGroupByContentIn(contentList);
     }
 
     public void deleteByTag(Tag tag) {
@@ -36,5 +32,13 @@ public class ContentTagGroupAdaptor {
 
     public void deleteAllByTagIn(List<Tag> tagList) {
         contentTagGroupRepository.deleteAllByTagIn(tagList);
+    }
+
+    public List<ContentTagGroup> queryContentTagGroupByContentWithTag(Content content) {
+        return contentTagGroupRepository.queryContentTagGroupByContentWithTag(content);
+    }
+
+    public void deleteAllByContent(Content content) {
+        contentTagGroupRepository.deleteAllByContent(content);
     }
 }

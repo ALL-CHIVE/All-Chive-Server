@@ -2,7 +2,7 @@ package allchive.server.domain.domains.content.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateException;
+import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateTagException;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.AccessLevel;
@@ -37,7 +37,7 @@ public class Tag extends BaseTimeEntity {
 
     public void validateUser(Long userId) {
         if (!this.userId.equals(userId)) {
-            throw NoAuthorityUpdateException.EXCEPTION;
+            throw NoAuthorityUpdateTagException.EXCEPTION;
         }
     }
 

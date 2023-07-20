@@ -38,7 +38,7 @@ public class GetArchivingContentsUseCase {
         Slice<Content> contentList =
                 contentAdaptor.querySliceContentByArchivingId(archivingId, pageable);
         List<ContentTagGroup> contentTagGroupList =
-                contentTagGroupAdaptor.queryContentIn(contentList.getContent());
+                contentTagGroupAdaptor.queryContentTagGroupByContentIn(contentList.getContent());
         Slice<ContentResponse> contentResponseSlice =
                 contentList.map(
                         content -> contentMapper.toContentResponse(content, contentTagGroupList));

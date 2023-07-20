@@ -17,18 +17,33 @@ public class ContentTagGroupCustomRepositoryImpl implements ContentTagGroupCusto
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<ContentTagGroup> queryContentTagGroupIn(List<Content> contentList) {
+    public List<ContentTagGroup> queryContentTagGroupByContentIn(List<Content> contentList) {
         return queryFactory
                 .selectFrom(contentTagGroup)
                 .join(contentTagGroup.tag, tag)
                 .fetchJoin()
-                .where(archivingIdEq(contentList))
+                .where(contentIdIn(contentList))
                 .orderBy(createdAtDesc())
                 .fetch();
     }
 
-    private BooleanExpression archivingIdEq(List<Content> contentList) {
+    @Override
+    public List<ContentTagGroup> queryContentTagGroupByContentWithTag(Content content) {
+        return queryFactory
+                .selectFrom(contentTagGroup)
+                .join(contentTagGroup.tag, tag)
+                .fetchJoin()
+                .where(contentEq(content))
+                .orderBy(createdAtDesc())
+                .fetch();
+    }
+
+    private BooleanExpression contentIdIn(List<Content> contentList) {
         return contentTagGroup.content.in(contentList);
+    }
+
+    private BooleanExpression contentEq(Content content) {
+        return contentTagGroup.content.eq(content);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {
