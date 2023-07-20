@@ -37,4 +37,8 @@ public class ContentTagGroupAdaptor {
     public List<ContentTagGroup> queryContentTagGroupByContentWithTag(Content content) {
         return contentTagGroupRepository.queryContentTagGroupByContentWithTag(content);
     }
+
+    public void deleteAllByContent(Content content) {
+        contentTagGroupRepository.deleteAllByContent(content);
+    }
 }
