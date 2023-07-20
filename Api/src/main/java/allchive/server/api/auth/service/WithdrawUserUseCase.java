@@ -8,7 +8,6 @@ import allchive.server.core.error.exception.InvalidOauthProviderException;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.block.service.BlockDomainService;
-import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.service.ContentDomainService;
@@ -23,9 +22,8 @@ import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.domain.domains.user.service.UserDomainService;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
@@ -60,7 +58,6 @@ public class WithdrawUserUseCase {
             case APPLE -> oauthHelper.withdraw(provider, null, appleAccessToken);
             default -> throw InvalidOauthProviderException.EXCEPTION;
         }
-
     }
 
     private void withdrawService(Long userId, User user) {
