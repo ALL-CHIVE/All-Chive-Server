@@ -23,7 +23,7 @@ public class UserValidator {
     }
 
     public void validateUserStatusNormal(Long userId) {
-        if (!userAdaptor.findUserById(userId).getUserState().equals(UserState.NORMAL)) {
+        if (!userAdaptor.findById(userId).getUserState().equals(UserState.NORMAL)) {
             throw ForbiddenUserException.EXCEPTION;
         }
     }

@@ -15,7 +15,7 @@ public class ScrapValidator {
     private final ScrapAdaptor scrapAdaptor;
 
     public void validateExistScrap(Long userId, Long archivingId) {
-        User user = userAdaptor.findUserById(userId);
+        User user = userAdaptor.findById(userId);
         if (isScrapExist(user, archivingId)) {
             throw AlreadyExistScrapException.EXCEPTION;
         }

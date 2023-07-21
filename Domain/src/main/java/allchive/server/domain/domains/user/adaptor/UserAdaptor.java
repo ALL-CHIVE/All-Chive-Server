@@ -15,10 +15,10 @@ public class UserAdaptor {
     private final UserRepository userRepository;
 
     public Boolean exist(OauthInfo oauthInfo) {
-        return userRepository.findByOauthInfo(oauthInfo).isPresent();
+        return userRepository.existsByOauthInfo(oauthInfo);
     }
 
-    public User queryUserByOauthInfo(OauthInfo oauthInfo) {
+    public User findByOauthInfo(OauthInfo oauthInfo) {
         return userRepository
                 .findByOauthInfo(oauthInfo)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
@@ -28,7 +28,7 @@ public class UserAdaptor {
         userRepository.save(user);
     }
 
-    public User findUserById(Long userId) {
+    public User findById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 

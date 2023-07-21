@@ -30,10 +30,6 @@ public class ArchivingAdaptor {
                 .orElseThrow(() -> ArchivingNotFoundException.EXCEPTION);
     }
 
-    public void deleteById(Long archivingId) {
-        archivingRepository.deleteById(archivingId);
-    }
-
     public Slice<Archiving> querySliceArchivingExceptBlock(
             List<Long> archivingIdList,
             List<Long> blockList,
@@ -71,10 +67,6 @@ public class ArchivingAdaptor {
 
     public void saveAll(List<Archiving> archivings) {
         archivingRepository.saveAll(archivings);
-    }
-
-    public List<Archiving> findAllByUserIdAndDeleted(Long userId) {
-        return archivingRepository.findAllByUserIdAndDeleteStatus(userId, true);
     }
 
     public void deleteAllById(List<Long> archivingIds) {
