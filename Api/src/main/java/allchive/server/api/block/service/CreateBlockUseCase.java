@@ -28,6 +28,6 @@ public class CreateBlockUseCase {
         blockValidator.validateNotMyself(userId, request.getUserId());
         Block block = blockMapper.toEntity(userId, request.getUserId());
         blockDomainService.save(block);
-        return BlockResponse.from(userAdaptor.findUserById(request.getUserId()).getNickname());
+        return BlockResponse.from(userAdaptor.findById(request.getUserId()).getNickname());
     }
 }

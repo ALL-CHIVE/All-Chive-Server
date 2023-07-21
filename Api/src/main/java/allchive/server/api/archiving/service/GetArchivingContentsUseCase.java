@@ -32,16 +32,34 @@ public class GetArchivingContentsUseCase {
     @Transactional(readOnly = true)
     public ArchivingContentsResponse execute(Long archivingId, Pageable pageable) {
         Long userId = SecurityUtil.getCurrentUserId();
+        validateExecution(archivingId, userId);
+        Archiving archiving = archivingAdaptor.findById(archivingId);
+        Slice<ContentResponse> contentResponseSlice =
+                getContentResponseSlice(archivingId, pageable);
+        return ArchivingContentsResponse.of(
+                SliceResponse.of(contentResponseSlice),
+                archiving,
+                calculateIsMine(archiving, userId));
+    }
+
+    private void validateExecution(Long archivingId, Long userId) {
         archivingValidator.validatePublicStatus(archivingId, userId);
         archivingValidator.validateDeleteStatus(archivingId, userId);
-        Archiving archiving = archivingAdaptor.findById(archivingId);
+    }
+
+    private Slice<ContentResponse> getContentResponseSlice(Long archivingId, Pageable pageable) {
         Slice<Content> contentList =
                 contentAdaptor.querySliceContentByArchivingId(archivingId, pageable);
         List<ContentTagGroup> contentTagGroupList =
                 contentTagGroupAdaptor.queryContentTagGroupByContentIn(contentList.getContent());
-        Slice<ContentResponse> contentResponseSlice =
-                contentList.map(
-                        content -> contentMapper.toContentResponse(content, contentTagGroupList));
-        return ArchivingContentsResponse.of(SliceResponse.of(contentResponseSlice), archiving);
+        return contentList.map(
+                content -> contentMapper.toContentResponse(content, contentTagGroupList));
+    }
+
+    private Boolean calculateIsMine(Archiving archiving, Long userId) {
+        if (archiving.getUserId().equals(userId)) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }

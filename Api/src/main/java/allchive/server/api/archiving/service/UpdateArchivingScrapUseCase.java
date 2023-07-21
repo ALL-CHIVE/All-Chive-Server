@@ -24,18 +24,24 @@ public class UpdateArchivingScrapUseCase {
 
     @Transactional
     public void execute(Long archivingId, Boolean cancel) {
-        archivingValidator.validateExistById(archivingId);
         Long userId = SecurityUtil.getCurrentUserId();
-        archivingValidator.validateDeleteStatus(archivingId, userId);
-        User user = userAdaptor.findUserById(userId);
+        validateExecution(archivingId, userId, cancel);
+        User user = userAdaptor.findById(userId);
         if (cancel) {
             scrapDomainService.deleteScrapByUserAndArchivingId(user, archivingId);
             archivingDomainService.updateScrapCount(archivingId, -1);
         } else {
-            scrapValidator.validateExistScrap(user, archivingId);
             Scrap scrap = Scrap.of(user, archivingId);
             scrapDomainService.save(scrap);
             archivingDomainService.updateScrapCount(archivingId, 1);
+        }
+    }
+
+    private void validateExecution(Long archivingId, Long userId, Boolean cancel) {
+        archivingValidator.validateExistById(archivingId);
+        archivingValidator.validateDeleteStatus(archivingId, userId);
+        if (!cancel) {
+            scrapValidator.validateExistScrap(userId, archivingId);
         }
     }
 }

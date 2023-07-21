@@ -31,7 +31,7 @@ public class S3PresignedUrlService {
         GeneratePresignedUrlRequest generatePresignedUrlRequest =
                 getGeneratePreSignedUrlRequest(fileName);
         String url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest).toString();
-        return ImageUrlDto.of(url, fileName);
+        return ImageUrlDto.of(url);
     }
 
     private String generateFileName(Long id, PresignedType presignedType) {

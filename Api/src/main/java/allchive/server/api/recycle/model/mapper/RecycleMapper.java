@@ -23,8 +23,8 @@ public class RecycleMapper {
         return Recycle.of(type, contentId, null, userId);
     }
 
-    public Recycle toArchivingRecycleEntity(Long userId, Long archivingId, RecycleType type) {
-        return Recycle.of(type, null, archivingId, userId);
+    public Recycle toArchivingRecycleEntity(Long userId, Long archivingId) {
+        return Recycle.of(RecycleType.ARCHIVING, null, archivingId, userId);
     }
 
     public DeletedObjectResponse toDeletedObjectResponse(

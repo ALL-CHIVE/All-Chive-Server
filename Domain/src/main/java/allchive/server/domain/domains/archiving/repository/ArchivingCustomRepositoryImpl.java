@@ -58,7 +58,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingIn(
+    public Slice<Archiving> querySliceArchivingByIdIn(
             List<Long> archivingIdList, Category category, Pageable pageable) {
         List<Archiving> archivings =
                 queryFactory

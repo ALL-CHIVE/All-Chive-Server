@@ -45,7 +45,7 @@ public class WithdrawUserUseCase {
 
     public void execute(OauthProvider provider, String appleAccessToken) {
         Long userId = SecurityUtil.getCurrentUserId();
-        User user = userAdaptor.findUserById(userId);
+        User user = userAdaptor.findById(userId);
         // oauth쪽 탈퇴
         withdrawOauth(provider, appleAccessToken, user);
         // 우리쪽 탈퇴
