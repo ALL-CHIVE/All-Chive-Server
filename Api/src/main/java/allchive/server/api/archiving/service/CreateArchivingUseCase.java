@@ -20,6 +20,6 @@ public class CreateArchivingUseCase {
     public void execute(CreateArchivingRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
         final Archiving archiving = archivingMapper.toEntity(request, userId);
-        archivingDomainService.createArchiving(archiving);
+        archivingDomainService.save(archiving);
     }
 }

@@ -28,7 +28,7 @@ public class GetScrapArchivingUseCase {
                 scrapAdaptor.findAllByUserId(userId).stream().map(Scrap::getArchivingId).toList();
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingIn(archivingIdList, category, pageable)
+                        .querySliceArchivingByIdIn(archivingIdList, category, pageable)
                         .map(
                                 archiving ->
                                         ArchivingResponse.of(

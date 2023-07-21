@@ -23,6 +23,6 @@ public class DeleteBlockUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         blockValidator.validateExist(userId, request.getUserId());
         blockDomainService.deleteByBlockFromAndBlockUser(userId, request.getUserId());
-        return BlockResponse.from(userAdaptor.findUserById(request.getUserId()).getNickname());
+        return BlockResponse.from(userAdaptor.findById(request.getUserId()).getNickname());
     }
 }

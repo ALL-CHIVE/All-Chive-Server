@@ -36,20 +36,20 @@ public class UserDomainService {
 
     @Transactional
     public User loginUser(OauthInfo oauthInfo) {
-        User user = userAdaptor.queryUserByOauthInfo(oauthInfo);
+        User user = userAdaptor.findByOauthInfo(oauthInfo);
         user.login();
         return user;
     }
 
     @Transactional
     public void deleteUserById(Long userId) {
-        User user = userAdaptor.findUserById(userId);
+        User user = userAdaptor.findById(userId);
         user.withdrawUser();
     }
 
     public void updateUserInfo(
             Long userId, String name, String email, String nickname, String imgUrl) {
-        User user = userAdaptor.findUserById(userId);
+        User user = userAdaptor.findById(userId);
         user.updateInfo(name, email, nickname, imgUrl);
     }
 

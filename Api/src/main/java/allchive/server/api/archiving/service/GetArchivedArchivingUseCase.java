@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 @RequiredArgsConstructor
 public class GetArchivedArchivingUseCase {
-    // TODO : 이거 네이밍 한번 수정해야함
     private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional(readOnly = true)

@@ -7,15 +7,13 @@ import lombok.Getter;
 @Getter
 public class ImageUrlDto {
     private String url;
-    private String key;
 
     @Builder
-    private ImageUrlDto(String url, String key) {
+    private ImageUrlDto(String url) {
         this.url = url;
-        this.key = key;
     }
 
-    public static ImageUrlDto of(String url, String key) {
-        return ImageUrlDto.builder().key(key).url(url).build();
+    public static ImageUrlDto of(String url) {
+        return ImageUrlDto.builder().url(url).build();
     }
 }

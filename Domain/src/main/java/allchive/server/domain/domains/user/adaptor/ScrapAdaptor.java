@@ -4,9 +4,9 @@ package allchive.server.domain.domains.user.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
 import allchive.server.domain.domains.user.domain.User;
+import allchive.server.domain.domains.user.exception.exceptions.ScrapNotFoundException;
 import allchive.server.domain.domains.user.repository.ScrapRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -18,8 +18,10 @@ public class ScrapAdaptor {
         return scrapRepository.findAllByUserId(userId);
     }
 
-    public Optional<Scrap> findByUserAndArchivingId(User user, Long archivingId) {
-        return scrapRepository.findAllByUserAndArchivingId(user, archivingId);
+    public Scrap findByUserAndArchivingId(User user, Long archivingId) {
+        return scrapRepository
+                .findAllByUserAndArchivingId(user, archivingId)
+                .orElseThrow(() -> ScrapNotFoundException.EXCEPTION);
     }
 
     public void delete(Scrap scrap) {

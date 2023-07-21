@@ -13,7 +13,7 @@ public interface ArchivingCustomRepository {
 
     Slice<Archiving> querySliceArchivingByUserId(Long userId, Category category, Pageable pageable);
 
-    Slice<Archiving> querySliceArchivingIn(
+    Slice<Archiving> querySliceArchivingByIdIn(
             List<Long> archivingIdList, Category category, Pageable pageable);
 
     List<Archiving> queryArchivingByUserId(Long userId);

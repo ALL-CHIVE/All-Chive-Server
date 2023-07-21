@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class ArchivingDomainService {
     private final ArchivingAdaptor archivingAdaptor;
 
-    public void createArchiving(Archiving archiving) {
+    public void save(Archiving archiving) {
         archivingAdaptor.save(archiving);
     }
 
