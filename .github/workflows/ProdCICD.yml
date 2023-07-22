@@ -2,7 +2,7 @@ name: PROD CI/CD
 
 on:
   push:
-    branches: prod
+    branches: main
 
 env:
   PROFILE_PROD: prod
