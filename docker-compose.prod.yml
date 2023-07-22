@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  server:
+    image: sanghoonjeong/allchive-prod:latest
+    container_name: server
+    hostname: server
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Seoul
+    expose:
+      - 8080
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: "all-chive-prod"
+        awslogs-region: "ap-northeast-2"
+        awslogs-stream: "server"
+
+  nginx:
+    depends_on:
+      - server
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: './nginx'
+    ports:
+      - "80:80"
