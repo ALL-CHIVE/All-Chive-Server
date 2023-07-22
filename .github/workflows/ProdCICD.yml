@@ -1,11 +1,11 @@
-name: DEV CI/CD
+name: PROD CI/CD
 
 on:
   push:
-    branches: dev
+    branches: prod
 
 env:
-  PROFILE_DEV: dev
+  PROFILE_PROD: prod
 
 permissions:
   contents: read
@@ -33,8 +33,8 @@ jobs:
       - name: Docker build
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}:latest
 
       - name: Get Public IP
         id: publicip
@@ -45,35 +45,35 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_DEV_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_DEV_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Add GitHub IP to AWS
         run: |
-          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_DEV_SG_ID }} --protocol tcp --port ${{ secrets.EC2_SSH_PORT }} --cidr ${{ steps.publicip.outputs.ip  }}/32
+          aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_PROD_SG_ID }} --protocol tcp --port ${{ secrets.EC2_SSH_PORT }} --cidr ${{ steps.publicip.outputs.ip  }}/32
 
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_DEV_HOST }}
-          username: ${{ secrets.EC2_DEV_USERNAME }}
-          key: ${{ secrets.EC2_DEV_KEY }}
+          host: ${{ secrets.EC2_PROD_HOST }}
+          username: ${{ secrets.EC2_PROD_USERNAME }}
+          key: ${{ secrets.EC2_PROD_KEY }}
           port: ${{ secrets.EC2_SSH_PORT }}
           timeout: 60s
           script: |
-            cd allchive-dev
+            cd allchive-prod
             
             sudo touch .env
-            echo "${{ secrets.ENV_DEV_VARS }}" | sudo tee .env > /dev/null
+            echo "${{ secrets.ENV_PROD_VARS }}" | sudo tee .env > /dev/null
             
             sudo docker stop $(sudo docker ps -a -q)
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}:latest
-            sudo docker-compose -f ~/allchive-dev/docker-compose.yml --env-file ~/allchive-dev/.env up --build -d
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}:latest
+            sudo docker-compose -f ~/allchive-prod/docker-compose.yml --env-file ~/allchive-prod/.env up --build -d
             sudo docker system prune --all -f
 
       - name: Remove IP FROM security group
         run: |
-          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_DEV_SG_ID }} --protocol tcp --port ${{ secrets.EC2_SSH_PORT }} --cidr ${{ steps.publicip.outputs.ip  }}/32
+          aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_PROD_SG_ID }} --protocol tcp --port ${{ secrets.EC2_SSH_PORT }} --cidr ${{ steps.publicip.outputs.ip  }}/32
