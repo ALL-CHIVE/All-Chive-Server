@@ -6,6 +6,8 @@ import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import java.util.List;
+
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import lombok.RequiredArgsConstructor;
 
 @DomainService
@@ -57,5 +59,14 @@ public class ArchivingDomainService {
 
     public void deleteAllById(List<Long> archivingIds) {
         archivingAdaptor.deleteAllById(archivingIds);
+    }
+
+    public void updateContentCnt(Long archivingId, ContentType contentType) {
+        Archiving archiving = archivingAdaptor.findById(archivingId);
+        if (contentType.equals(ContentType.IMAGE)) {
+            archiving.updateImgCnt(1);
+        } else {
+            archiving.updateLinkCnt(1);
+        }
     }
 }

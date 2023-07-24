@@ -116,4 +116,12 @@ public class Archiving extends BaseTimeEntity {
     public void restore() {
         this.deleteStatus = Boolean.FALSE;
     }
+
+    public void updateImgCnt(int i) {
+        this.imgCnt += i;
+    }
+
+    public void updateLinkCnt(int i) {
+        this.linkCnt += i;
+    }
 }
