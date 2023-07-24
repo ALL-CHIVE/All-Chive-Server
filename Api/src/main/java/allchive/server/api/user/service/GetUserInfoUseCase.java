@@ -19,8 +19,12 @@ public class GetUserInfoUseCase {
     @Transactional(readOnly = true)
     public GetUserInfoResponse execute() {
         Long userId = SecurityUtil.getCurrentUserId();
-        userValidator.validateUserStatusNormal(userId);
+        validateExecution(userId);
         User user = userAdaptor.findById(userId);
         return GetUserInfoResponse.from(user);
+    }
+
+    private void validateExecution(Long userId) {
+        userValidator.validateUserStatusNormal(userId);
     }
 }

@@ -17,6 +17,6 @@ public class UserMapper {
             imgCount += archiving.getImgCnt();
             publicArchivingCount += archiving.getPublicStatus() ? 1 : 0;
         }
-        return GetUserProfileResponse.of(user, linkCount, imgCount, publicArchivingCount);
+        return GetUserProfileResponse.of(user, linkCount, imgCount, publicArchivingCount, archivingList.size());
     }
 }
