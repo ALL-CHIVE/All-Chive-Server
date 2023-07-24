@@ -44,8 +44,7 @@ public class ArchivingController {
 
     @Operation(summary = "아카이빙 정보 수정시 보여줄 정보를 가져옵니다.")
     @GetMapping(value = "/{archivingId}")
-    public ArchivingResponse getArchiving(
-            @PathVariable("archivingId") Long archivingId) {
+    public ArchivingResponse getArchiving(@PathVariable("archivingId") Long archivingId) {
         return getArchivingInfoUseCase.execute(archivingId);
     }
 
