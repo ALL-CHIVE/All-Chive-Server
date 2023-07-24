@@ -8,6 +8,9 @@ import lombok.Getter;
 
 @Getter
 public class TitleContentCntVo {
+    @Schema(description = "아카이빙 고유 아이디")
+    private Long archivingId;
+
     @Schema(defaultValue = "아카이빙 제목", description = "아카이빙 제목")
     private String title;
 
@@ -15,13 +18,15 @@ public class TitleContentCntVo {
     private Long contentCnt;
 
     @Builder
-    private TitleContentCntVo(String title, Long contentCnt) {
+    private TitleContentCntVo(Long archivingId, String title, Long contentCnt) {
+        this.archivingId = archivingId;
         this.title = title;
         this.contentCnt = contentCnt;
     }
 
     public static TitleContentCntVo from(Archiving archiving) {
         return TitleContentCntVo.builder()
+                .archivingId(archiving.getId())
                 .contentCnt(archiving.getImgCnt() + archiving.getScrapCnt())
                 .title(archiving.getTitle())
                 .build();

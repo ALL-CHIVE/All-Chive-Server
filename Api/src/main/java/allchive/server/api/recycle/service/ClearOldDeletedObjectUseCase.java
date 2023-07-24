@@ -33,6 +33,7 @@ public class ClearOldDeletedObjectUseCase {
     private final RecycleDomainService recycleDomainService;
 
     /** 삭제 후 30일 지난 항목 제거 스케쥴러 매일 02:30에 수행 */
+    // TODO: s3 asset 삭제
     @Scheduled(cron = "0 30 2 * * *")
     @Transactional
     public void executeSchedule() {
