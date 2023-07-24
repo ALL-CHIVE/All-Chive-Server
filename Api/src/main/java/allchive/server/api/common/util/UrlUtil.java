@@ -16,6 +16,9 @@ public class UrlUtil {
     }
 
     public static String toAssetUrl(String key) {
+        if (key.equals("")) {
+            return "";
+        }
         if (springEnvironmentHelper.isProdProfile()) {
             return PROD_ASSET_URL + key;
         }
@@ -23,6 +26,9 @@ public class UrlUtil {
     }
 
     public static String convertUrlToKey(String url) {
+        if (url.equals("")) {
+            return "";
+        }
         if (validateUrl(url)) {
             return url.split("/", 4)[3];
         }

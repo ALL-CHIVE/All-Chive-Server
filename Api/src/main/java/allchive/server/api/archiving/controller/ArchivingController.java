@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class ArchivingController {
     private final CreateArchivingUseCase createArchivingUseCase;
     private final UpdateArchivingUseCase updateArchivingUseCase;
+    private final GetArchivingInfoUseCase getArchivingInfoUseCase;
     private final DeleteArchivingUseCase deleteArchivingUseCase;
     private final GetArchivingUseCase getArchivingUseCase;
     private final GetArchivedArchivingUseCase getArchivedArchivingUseCase;
@@ -39,6 +40,13 @@ public class ArchivingController {
     @PostMapping()
     public void createArchiving(@RequestBody CreateArchivingRequest createArchivingRequest) {
         createArchivingUseCase.execute(createArchivingRequest);
+    }
+
+    @Operation(summary = "아카이빙 정보 수정시 보여줄 정보를 가져옵니다.")
+    @GetMapping(value = "/{archivingId}")
+    public ArchivingResponse getArchiving(
+            @PathVariable("archivingId") Long archivingId) {
+        return getArchivingInfoUseCase.execute(archivingId);
     }
 
     @Operation(summary = "아카이빙을 수정합니다.")
