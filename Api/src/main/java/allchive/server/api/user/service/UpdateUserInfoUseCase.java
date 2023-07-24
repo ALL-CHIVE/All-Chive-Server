@@ -19,9 +19,13 @@ public class UpdateUserInfoUseCase {
     @Transactional
     public void execute(UpdateUserInfoRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
-        userValidator.validateUserStatusNormal(userId);
+        validateExecution(userId);
         String imgKey = UrlUtil.convertUrlToKey(request.getImgUrl());
         userDomainService.updateUserInfo(
                 userId, request.getName(), request.getEmail(), request.getNickname(), imgKey);
+    }
+
+    private void validateExecution(Long userId) {
+        userValidator.validateUserStatusNormal(userId);
     }
 }

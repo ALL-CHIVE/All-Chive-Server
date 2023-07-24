@@ -25,9 +25,13 @@ public class GetUserProfileUseCase {
     @Transactional(readOnly = true)
     public GetUserProfileResponse execute() {
         Long userId = SecurityUtil.getCurrentUserId();
-        userValidator.validateUserStatusNormal(userId);
+        validateExecution(userId);
         User user = userAdaptor.findById(userId);
         List<Archiving> archivingList = archivingAdaptor.findAllByUserId(userId);
         return userMapper.toGetUserProfileResponse(archivingList, user);
+    }
+
+    private void validateExecution(Long userId) {
+        userValidator.validateUserStatusNormal(userId);
     }
 }
