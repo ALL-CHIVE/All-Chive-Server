@@ -4,6 +4,7 @@ package allchive.server.api.search.controller;
 import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
+import allchive.server.api.search.model.dto.response.SearchVoListResponse;
 import allchive.server.api.search.model.enums.ArchivingType;
 import allchive.server.api.search.service.DeleteLatestSearchUseCase;
 import allchive.server.api.search.service.GetLatestSearchListUseCase;
@@ -40,7 +41,7 @@ public class SearchController {
 
     @Operation(summary = "최근 검색어 목록을 가져옵니다.", description = "5개만 드릴게요")
     @GetMapping(value = "/latest")
-    public SearchListResponse getLatestSearchList() {
+    public SearchVoListResponse getLatestSearchList() {
         return getLatestSearchListUseCase.execute();
     }
 
