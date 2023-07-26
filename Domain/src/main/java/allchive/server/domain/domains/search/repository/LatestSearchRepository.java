@@ -3,7 +3,6 @@ package allchive.server.domain.domains.search.repository;
 
 import allchive.server.domain.domains.search.domain.LatestSearch;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LatestSearchRepository extends JpaRepository<LatestSearch, Long> {
@@ -11,7 +10,7 @@ public interface LatestSearchRepository extends JpaRepository<LatestSearch, Long
 
     void deleteAllByUserId(Long userId);
 
-    Optional<LatestSearch> findByIdAndUserId(Long latestSearchId, Long userId);
+    List<LatestSearch> findAllByIdIn(List<Long> ids);
 
-    void deleteByIdAndUserId(Long latestSearchId, Long userId);
+    void deleteAllByIdIn(List<Long> ids);
 }

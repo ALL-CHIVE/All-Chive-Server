@@ -3,7 +3,6 @@ package allchive.server.domain.domains.search.adaptor;
 
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.search.domain.LatestSearch;
-import allchive.server.domain.domains.search.exception.exceptions.LatestSearchNotFoundException;
 import allchive.server.domain.domains.search.repository.LatestSearchRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +28,11 @@ public class LatestSearchAdaptor {
         latestSearchRepository.deleteAllByUserId(userId);
     }
 
-    public LatestSearch findByIdAndUserId(Long latestSearchId, Long userId) {
-        return latestSearchRepository
-                .findByIdAndUserId(latestSearchId, userId)
-                .orElseThrow(() -> LatestSearchNotFoundException.EXCEPTION);
+    public List<LatestSearch> findAllByIdIn(List<Long> ids) {
+        return latestSearchRepository.findAllByIdIn(ids);
     }
 
-    public void deleteByIdAndUserId(Long latestSearchId, Long userId) {
-        latestSearchRepository.deleteByIdAndUserId(latestSearchId, userId);
+    public void deleteAllByIdIn(List<Long> ids) {
+        latestSearchRepository.deleteAllByIdIn(ids);
     }
 }

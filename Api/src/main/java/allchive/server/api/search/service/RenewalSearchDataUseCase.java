@@ -6,6 +6,8 @@ import static allchive.server.core.consts.AllchiveConst.SEARCH_KEY;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
+import allchive.server.domain.domains.content.adaptor.TagAdaptor;
+import allchive.server.domain.domains.content.domain.Tag;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 @Slf4j
 @RequiredArgsConstructor
-public class RenewalTitleDataUseCase {
+public class RenewalSearchDataUseCase {
     private final ArchivingAdaptor archivingAdaptor;
+    private final TagAdaptor tagAdaptor;
     private final RedisTemplate<String, String> redisTemplate;
 
     @Scheduled(cron = "0 0 3 * * *")
@@ -36,6 +39,24 @@ public class RenewalTitleDataUseCase {
 
     private void renewalData() {
         redisTemplate.delete(SEARCH_KEY);
+        renewalArchiving();
+        renewalTag();
+    }
+
+    private void renewalTag() {
+        Set<Tag> tags = new HashSet<>(tagAdaptor.findAll());
+        tags.forEach(
+                tag -> {
+                    redisTemplate.opsForZSet().add(SEARCH_KEY, tag.getName().trim() + ASTERISK, 0);
+                    for (int index = 0; index <= tag.getName().length(); index++) {
+                        redisTemplate
+                                .opsForZSet()
+                                .add(SEARCH_KEY, tag.getName().trim().substring(0, index), 0);
+                    }
+                });
+    }
+
+    private void renewalArchiving() {
         Set<Archiving> archivings =
                 new HashSet<>(archivingAdaptor.findAllByPublicStatus(Boolean.TRUE));
         archivings.forEach(

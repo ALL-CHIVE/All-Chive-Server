@@ -44,4 +44,12 @@ public class TagAdaptor {
     public void deleteAll(List<Tag> tagList) {
         tagRepository.deleteAll(tagList);
     }
+
+    public List<Tag> findAllByUserIdAndName(Long userId, String word) {
+        return tagRepository.findAllByUserIdAndName(userId, word);
+    }
+
+    public List<Tag> findAll() {
+        return tagRepository.findAll();
+    }
 }

@@ -1,7 +1,7 @@
 package allchive.server.api.search.controller;
 
 
-import allchive.server.api.search.model.dto.request.SearchRequest;
+import allchive.server.api.search.model.dto.request.DeleteLatestSearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.dto.response.SearchVoListResponse;
@@ -26,7 +26,7 @@ public class SearchController {
     private final GetLatestSearchListUseCase getLatestSearchListUseCase;
     private final GetRelativeSearchListUseCase getRelativeSearchListUseCase;
     private final DeleteLatestSearchUseCase deleteLatestSearchUseCase;
-    private final RenewalTitleDataUseCase renewalTitleDataUseCase;
+    private final RenewalSearchDataUseCase renewalSearchDataUseCase;
 
     @Operation(summary = "검색어를 검색합니다.")
     @GetMapping
@@ -44,9 +44,9 @@ public class SearchController {
     }
 
     @Operation(summary = "최근 검색어를 삭제합니다.")
-    @DeleteMapping(value = "/latest/{latestId}")
-    public void deleteLatestSearch(@PathVariable("latestId") Long latestId) {
-        deleteLatestSearchUseCase.execute(latestId);
+    @DeleteMapping(value = "/latest")
+    public void deleteLatestSearch(@RequestBody DeleteLatestSearchRequest request) {
+        deleteLatestSearchUseCase.execute(request);
     }
 
     @Operation(summary = "검색어 자동 완성")
@@ -57,7 +57,7 @@ public class SearchController {
 
     @Operation(summary = "자동 완성 데이터 강제 리뉴얼", deprecated = true)
     @GetMapping(value = "/relation/force")
-    public void forceRenewalTitleData() {
-        renewalTitleDataUseCase.executeForce();
+    public void forceRenewalSearchData() {
+        renewalSearchDataUseCase.executeForce();
     }
 }

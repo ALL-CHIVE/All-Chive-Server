@@ -3,7 +3,6 @@ package allchive.server.api.search.service;
 import static allchive.server.core.consts.AllchiveConst.SEARCH_KEY;
 import static jodd.util.StringPool.ASTERISK;
 
-import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.core.annotation.UseCase;
 import java.util.ArrayList;
