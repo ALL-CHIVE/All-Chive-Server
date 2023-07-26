@@ -50,9 +50,9 @@ public class SearchController {
     }
 
     @Operation(summary = "검색어 자동 완성")
-    @PostMapping(value = "/relation")
-    public SearchListResponse getRelativeSearchList(@RequestBody SearchRequest request) {
-        return getRelativeSearchListUseCase.execute(request);
+    @GetMapping(value = "/relation")
+    public SearchListResponse getRelativeSearchList(@RequestParam("word") String word) {
+        return getRelativeSearchListUseCase.execute(word);
     }
 
     @Operation(summary = "자동 완성 데이터 강제 리뉴얼", deprecated = true)

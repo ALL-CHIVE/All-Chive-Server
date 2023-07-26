@@ -20,13 +20,13 @@ public class GetRelativeSearchListUseCase {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
-    public SearchListResponse execute(SearchRequest request) {
+    public SearchListResponse execute(String word) {
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         List<String> autoCompleteList = new ArrayList<>();
-        Long rank = zSetOperations.rank(SEARCH_KEY, request.getKeyword());
+        Long rank = zSetOperations.rank(SEARCH_KEY, word);
         if (rank != null) {
             Set<String> rangeList = zSetOperations.range(SEARCH_KEY, rank, rank + 1000);
-            autoCompleteList = getAutoCompleteList(rangeList, request.getKeyword());
+            autoCompleteList = getAutoCompleteList(rangeList, word);
         }
         return SearchListResponse.from(autoCompleteList);
     }
