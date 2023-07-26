@@ -25,7 +25,7 @@ public class GetRelativeSearchListUseCase {
         List<String> autoCompleteList = new ArrayList<>();
         Long rank = zSetOperations.rank(SEARCH_KEY, request.getKeyword());
         if (rank != null) {
-            Set<String> rangeList = zSetOperations.range(SEARCH_KEY, rank, rank + 100);
+            Set<String> rangeList = zSetOperations.range(SEARCH_KEY, rank, rank + 1000);
             autoCompleteList = getAutoCompleteList(rangeList, request.getKeyword());
         }
         return SearchListResponse.from(autoCompleteList);
