@@ -31,12 +31,12 @@ public class SearchController {
     private final DeleteLatestSearchUseCase deleteLatestSearchUseCase;
 
     @Operation(summary = "검색어를 검색합니다.")
-    @PostMapping
+    @GetMapping
     public SearchResponse searchArchiving(
             @ParameterObject @PageableDefault(size = 10) Pageable pageable,
             @RequestParam("type") ArchivingType type,
-            @RequestBody SearchRequest request) {
-        return searchArchivingUseCase.execute(pageable, type, request);
+            @RequestParam("word") String word) {
+        return searchArchivingUseCase.execute(pageable, type, word);
     }
 
     @Operation(summary = "최근 검색어 목록을 가져옵니다.", description = "5개만 드릴게요")
