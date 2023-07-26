@@ -43,11 +43,11 @@ public class WithdrawUserUseCase {
     private final ReportDomainService reportDomainService;
     private final UserDomainService userDomainService;
 
-    public void execute(OauthProvider provider, String appleAccessToken) {
+    public void execute(String appleAccessToken) {
         Long userId = SecurityUtil.getCurrentUserId();
         User user = userAdaptor.findById(userId);
         // oauth쪽 탈퇴
-        withdrawOauth(provider, appleAccessToken, user);
+        withdrawOauth(user.getOauthInfo().getProvider(), appleAccessToken, user);
         // 우리쪽 탈퇴
         withdrawService(userId, user);
     }
