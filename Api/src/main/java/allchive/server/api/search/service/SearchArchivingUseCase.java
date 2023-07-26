@@ -21,15 +21,12 @@ import allchive.server.domain.domains.user.domain.Scrap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-@Slf4j
 @RequiredArgsConstructor
 public class SearchArchivingUseCase {
     private final ArchivingAdaptor archivingAdaptor;
@@ -67,7 +64,6 @@ public class SearchArchivingUseCase {
 
     private Set<Long> getTagArchivingIds(Long userId, String word) {
         List<Tag> tags = tagAdaptor.findAllByUserIdAndName(userId, word);
-        tags.forEach(tag -> log.info(tag.getName()));
         return contentTagGroupAdaptor.queryContentTagGroupByTagInWithContent(tags).stream()
                 .map(contentTagGroup -> contentTagGroup.getContent().getArchivingId())
                 .collect(Collectors.toSet());
@@ -85,14 +81,18 @@ public class SearchArchivingUseCase {
     }
 
     private boolean isExistSearchKeyword(List<LatestSearch> searches, String keyword) {
-        return !searches.stream().filter(search -> search.getKeyword().equals(keyword)).toList().isEmpty();
+        return !searches.stream()
+                .filter(search -> search.getKeyword().equals(keyword))
+                .toList()
+                .isEmpty();
     }
 
     private SliceResponse<ArchivingResponse> getMyArchivings(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(userId, keyword, pageable, tagArchivingIds)
+                        .querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+                                userId, keyword, pageable, tagArchivingIds)
                         .map(archiving -> ArchivingResponse.of(archiving, Boolean.FALSE));
         return SliceResponse.of(archivingSlices);
     }

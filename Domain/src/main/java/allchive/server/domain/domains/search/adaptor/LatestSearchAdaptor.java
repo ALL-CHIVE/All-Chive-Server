@@ -3,7 +3,6 @@ package allchive.server.domain.domains.search.adaptor;
 
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.search.domain.LatestSearch;
-import allchive.server.domain.domains.search.exception.exceptions.LatestSearchNotFoundException;
 import allchive.server.domain.domains.search.repository.LatestSearchRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

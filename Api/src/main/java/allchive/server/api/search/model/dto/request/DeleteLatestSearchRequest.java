@@ -1,9 +1,9 @@
 package allchive.server.api.search.model.dto.request;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 public class DeleteLatestSearchRequest {

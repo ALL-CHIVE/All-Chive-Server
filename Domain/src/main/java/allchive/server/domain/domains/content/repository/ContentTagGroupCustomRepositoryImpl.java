@@ -1,8 +1,8 @@
 package allchive.server.domain.domains.content.repository;
 
+import static allchive.server.domain.domains.content.domain.QContent.content;
 import static allchive.server.domain.domains.content.domain.QContentTagGroup.contentTagGroup;
 import static allchive.server.domain.domains.content.domain.QTag.tag;
-import static allchive.server.domain.domains.content.domain.QContent.content;
 
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;

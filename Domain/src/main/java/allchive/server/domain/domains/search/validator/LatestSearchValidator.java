@@ -6,9 +6,8 @@ import allchive.server.domain.domains.search.adaptor.LatestSearchAdaptor;
 import allchive.server.domain.domains.search.domain.LatestSearch;
 import allchive.server.domain.domains.search.exception.exceptions.LatestSearchNotFoundException;
 import allchive.server.domain.domains.search.exception.exceptions.NoAuthorityUpdateLatestSearchException;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Validator
 @RequiredArgsConstructor
@@ -24,10 +23,11 @@ public class LatestSearchValidator {
 
     public void verifyUserByIdIn(List<Long> ids, Long userId) {
         List<LatestSearch> searches = latestSearchAdaptor.findAllByIdIn(ids);
-        searches.forEach(search -> {
-            if (!search.getUserId().equals(userId)) {
-                throw NoAuthorityUpdateLatestSearchException.EXCEPTION;
-            }
-        });
+        searches.forEach(
+                search -> {
+                    if (!search.getUserId().equals(userId)) {
+                        throw NoAuthorityUpdateLatestSearchException.EXCEPTION;
+                    }
+                });
     }
 }

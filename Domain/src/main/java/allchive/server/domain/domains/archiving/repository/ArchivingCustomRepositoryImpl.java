@@ -13,7 +13,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -110,7 +109,11 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     @Override
     public Slice<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
-            List<Long> archivingIdList, List<Long> blockList, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
+            List<Long> archivingIdList,
+            List<Long> blockList,
+            String keyword,
+            Pageable pageable,
+            Set<Long> tagArchivingIds) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -120,7 +123,11 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 publicStatusTrue(),
                                 deleteStatusFalse(),
                                 titleContainOrIdIn(keyword, tagArchivingIds))
-                        .orderBy(idIn(tagArchivingIds), scrabListDesc(archivingIdList), scrapCntDesc(), createdAtDesc())
+                        .orderBy(
+                                idIn(tagArchivingIds),
+                                scrabListDesc(archivingIdList),
+                                scrapCntDesc(),
+                                createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
                         .fetch();

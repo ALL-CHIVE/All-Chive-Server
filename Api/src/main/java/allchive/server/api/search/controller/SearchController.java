@@ -2,7 +2,6 @@ package allchive.server.api.search.controller;
 
 
 import allchive.server.api.search.model.dto.request.DeleteLatestSearchRequest;
-import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.dto.response.SearchVoListResponse;
