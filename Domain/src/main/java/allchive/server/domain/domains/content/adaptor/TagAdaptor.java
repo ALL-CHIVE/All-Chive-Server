@@ -48,4 +48,8 @@ public class TagAdaptor {
     public List<Tag> findAllByUserIdAndName(Long userId, String word) {
         return tagRepository.findAllByUserIdAndName(userId, word);
     }
+
+    public List<Tag> findAll() {
+        return tagRepository.findAll();
+    }
 }

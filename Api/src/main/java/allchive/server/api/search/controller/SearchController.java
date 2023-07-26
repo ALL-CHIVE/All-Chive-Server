@@ -26,7 +26,7 @@ public class SearchController {
     private final GetLatestSearchListUseCase getLatestSearchListUseCase;
     private final GetRelativeSearchListUseCase getRelativeSearchListUseCase;
     private final DeleteLatestSearchUseCase deleteLatestSearchUseCase;
-    private final RenewalTitleDataUseCase renewalTitleDataUseCase;
+    private final RenewalSearchDataUseCase renewalSearchDataUseCase;
 
     @Operation(summary = "검색어를 검색합니다.")
     @GetMapping
@@ -57,7 +57,7 @@ public class SearchController {
 
     @Operation(summary = "자동 완성 데이터 강제 리뉴얼", deprecated = true)
     @GetMapping(value = "/relation/force")
-    public void forceRenewalTitleData() {
-        renewalTitleDataUseCase.executeForce();
+    public void forceRenewalSearchData() {
+        renewalSearchDataUseCase.executeForce();
     }
 }
