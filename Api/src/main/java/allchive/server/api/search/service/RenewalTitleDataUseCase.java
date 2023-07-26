@@ -43,12 +43,12 @@ public class RenewalTitleDataUseCase {
                     redisTemplate
                             .opsForZSet()
                             .add(SEARCH_KEY, archiving.getTitle().trim() + ASTERISK, 0);
-                    for (int index = 1; index < archiving.getTitle().length(); index++) {
+                    for (int index = 0; index <= archiving.getTitle().length(); index++) {
                         redisTemplate
                                 .opsForZSet()
                                 .add(
                                         SEARCH_KEY,
-                                        archiving.getTitle().trim().substring(0, index - 1),
+                                        archiving.getTitle().trim().substring(0, index),
                                         0);
                     }
                 });
