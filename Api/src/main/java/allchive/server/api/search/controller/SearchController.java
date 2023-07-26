@@ -6,10 +6,7 @@ import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.dto.response.SearchVoListResponse;
 import allchive.server.api.search.model.enums.ArchivingType;
-import allchive.server.api.search.service.DeleteLatestSearchUseCase;
-import allchive.server.api.search.service.GetLatestSearchListUseCase;
-import allchive.server.api.search.service.GetRelativeSearchListUseCase;
-import allchive.server.api.search.service.SearchArchivingUseCase;
+import allchive.server.api.search.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +26,7 @@ public class SearchController {
     private final GetLatestSearchListUseCase getLatestSearchListUseCase;
     private final GetRelativeSearchListUseCase getRelativeSearchListUseCase;
     private final DeleteLatestSearchUseCase deleteLatestSearchUseCase;
+    private final RenewalTitleDataUseCase renewalTitleDataUseCase;
 
     @Operation(summary = "검색어를 검색합니다.")
     @GetMapping
@@ -55,5 +53,11 @@ public class SearchController {
     @PostMapping(value = "/relation")
     public SearchListResponse getRelativeSearchList(@RequestBody SearchRequest request) {
         return getRelativeSearchListUseCase.execute(request);
+    }
+
+    @Operation(summary = "자동 완성 데이터 강제 리뉴얼", deprecated = true)
+    @GetMapping(value = "/relation/force")
+    public void forceRenewalTitleData() {
+        renewalTitleDataUseCase.executeForce();
     }
 }
