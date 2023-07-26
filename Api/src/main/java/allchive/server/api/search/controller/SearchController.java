@@ -5,6 +5,7 @@ import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.enums.ArchivingType;
+import allchive.server.api.search.service.DeleteLatestSearchUseCase;
 import allchive.server.api.search.service.GetLatestSearchListUseCase;
 import allchive.server.api.search.service.GetRelativeSearchListUseCase;
 import allchive.server.api.search.service.SearchArchivingUseCase;
@@ -26,6 +27,7 @@ public class SearchController {
     private final SearchArchivingUseCase searchArchivingUseCase;
     private final GetLatestSearchListUseCase getLatestSearchListUseCase;
     private final GetRelativeSearchListUseCase getRelativeSearchListUseCase;
+    private final DeleteLatestSearchUseCase deleteLatestSearchUseCase;
 
     @Operation(summary = "검색어를 검색합니다.")
     @PostMapping
@@ -40,6 +42,12 @@ public class SearchController {
     @GetMapping(value = "/latest")
     public SearchListResponse getLatestSearchList() {
         return getLatestSearchListUseCase.execute();
+    }
+
+    @Operation(summary = "최근 검색어를 삭제합니다.")
+    @DeleteMapping(value = "/latest/{latestId}")
+    public void deleteLatestSearch(@PathVariable("latestId") Long latestId) {
+        deleteLatestSearchUseCase.execute(latestId);
     }
 
     @Operation(summary = "검색어 자동 완성")
