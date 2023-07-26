@@ -56,11 +56,17 @@ public class SearchArchivingUseCase {
 
     private void renewalLatestSearch(Long userId, String keyword) {
         List<LatestSearch> searches = latestSearchAdaptor.findAllByUserIdOrderByCreatedAt(userId);
-        if (searches.size() == 5) {
-            latestSearchDomainService.delete(searches.get(0));
+        if (!isExistSearchKeyword(searches, keyword)) {
+            if (searches.size() == 5) {
+                latestSearchDomainService.delete(searches.get(0));
+            }
+            LatestSearch newSearch = LatestSearch.of(keyword, userId);
+            latestSearchDomainService.save(newSearch);
         }
-        LatestSearch newSearch = LatestSearch.of(keyword, userId);
-        latestSearchDomainService.save(newSearch);
+    }
+
+    private boolean isExistSearchKeyword(List<LatestSearch> searches, String keyword) {
+        return !searches.stream().filter(search -> search.getKeyword().equals(keyword)).toList().isEmpty();
     }
 
     private SliceResponse<ArchivingResponse> getMyArchivings(
