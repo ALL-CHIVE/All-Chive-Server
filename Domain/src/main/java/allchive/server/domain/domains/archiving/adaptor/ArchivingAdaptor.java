@@ -8,6 +8,8 @@ import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
 import allchive.server.domain.domains.archiving.repository.ArchivingRepository;
 import java.util.List;
+import java.util.Set;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -73,16 +75,16 @@ public class ArchivingAdaptor {
         archivingRepository.deleteAllById(archivingIds);
     }
 
-    public Slice<Archiving> querySliceArchivingByUserIdAndKeywords(
-            Long userId, String keyword, Pageable pageable) {
-        return archivingRepository.querySliceArchivingByUserIdAndKeywords(
-                userId, keyword, pageable);
+    public Slice<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+            Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
+        return archivingRepository.querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+                userId, keyword, pageable, tagArchivingIds);
     }
 
-    public Slice<Archiving> querySliceArchivingByKeywordExceptBlock(
-            List<Long> archivingIdList, List<Long> blockList, String keyword, Pageable pageable) {
-        return archivingRepository.querySliceArchivingByKeywordExceptBlock(
-                archivingIdList, blockList, keyword, pageable);
+    public Slice<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
+            List<Long> archivingIdList, List<Long> blockList, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
+        return archivingRepository.querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
+                archivingIdList, blockList, keyword, pageable, tagArchivingIds);
     }
 
     public List<Archiving> findAllByPublicStatus(Boolean publicStatus) {

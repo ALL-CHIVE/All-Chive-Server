@@ -2,9 +2,11 @@ package allchive.server.domain.domains.content.repository;
 
 import static allchive.server.domain.domains.content.domain.QContentTagGroup.contentTagGroup;
 import static allchive.server.domain.domains.content.domain.QTag.tag;
+import static allchive.server.domain.domains.content.domain.QContent.content;
 
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
+import allchive.server.domain.domains.content.domain.Tag;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -38,12 +40,27 @@ public class ContentTagGroupCustomRepositoryImpl implements ContentTagGroupCusto
                 .fetch();
     }
 
+    @Override
+    public List<ContentTagGroup> queryContentTagGroupByTagInWithContent(List<Tag> tags) {
+        return queryFactory
+                .selectFrom(contentTagGroup)
+                .join(contentTagGroup.content, content)
+                .fetchJoin()
+                .where(tagIn(tags))
+                .orderBy(createdAtDesc())
+                .fetch();
+    }
+
     private BooleanExpression contentIdIn(List<Content> contentList) {
         return contentTagGroup.content.in(contentList);
     }
 
     private BooleanExpression contentEq(Content content) {
         return contentTagGroup.content.eq(content);
+    }
+
+    private BooleanExpression tagIn(List<Tag> tagList) {
+        return contentTagGroup.tag.in(tagList);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

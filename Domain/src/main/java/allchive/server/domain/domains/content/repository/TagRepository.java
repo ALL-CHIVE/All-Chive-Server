@@ -9,4 +9,6 @@ public interface TagRepository extends JpaRepository<Tag, Long>, TagCustomReposi
     List<Tag> findAllByUserIdOrderByCreatedAtDesc(Long userId);
 
     List<Tag> findAllByUserId(Long userId);
+
+    List<Tag> findAllByUserIdAndName(Long userId, String name);
 }
