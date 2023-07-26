@@ -6,6 +6,8 @@ import allchive.server.domain.domains.search.adaptor.LatestSearchAdaptor;
 import allchive.server.domain.domains.search.domain.LatestSearch;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @DomainService
 @RequiredArgsConstructor
 public class LatestSearchDomainService {
@@ -21,5 +23,9 @@ public class LatestSearchDomainService {
 
     public void deleteAllByUserId(Long userId) {
         latestSearchAdaptor.deleteAllByUserId(userId);
+    }
+
+    public void deleteAllByIdIn(List<Long> ids) {
+        latestSearchAdaptor.deleteAllByIdIn(ids);
     }
 }

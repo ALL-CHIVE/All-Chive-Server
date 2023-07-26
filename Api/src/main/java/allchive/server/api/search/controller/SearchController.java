@@ -1,6 +1,7 @@
 package allchive.server.api.search.controller;
 
 
+import allchive.server.api.search.model.dto.request.DeleteLatestSearchRequest;
 import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchResponse;
@@ -44,9 +45,9 @@ public class SearchController {
     }
 
     @Operation(summary = "최근 검색어를 삭제합니다.")
-    @DeleteMapping(value = "/latest/{latestId}")
-    public void deleteLatestSearch(@PathVariable("latestId") Long latestId) {
-        deleteLatestSearchUseCase.execute(latestId);
+    @DeleteMapping(value = "/latest")
+    public void deleteLatestSearch(@RequestBody DeleteLatestSearchRequest request) {
+        deleteLatestSearchUseCase.execute(request);
     }
 
     @Operation(summary = "검색어 자동 완성")

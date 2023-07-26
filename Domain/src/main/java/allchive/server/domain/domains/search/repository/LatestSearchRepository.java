@@ -11,7 +11,7 @@ public interface LatestSearchRepository extends JpaRepository<LatestSearch, Long
 
     void deleteAllByUserId(Long userId);
 
-    Optional<LatestSearch> findByIdAndUserId(Long latestSearchId, Long userId);
+    List<LatestSearch> findAllByIdIn(List<Long> ids);
 
-    void deleteByIdAndUserId(Long latestSearchId, Long userId);
+    void deleteAllByIdIn(List<Long> ids);
 }
