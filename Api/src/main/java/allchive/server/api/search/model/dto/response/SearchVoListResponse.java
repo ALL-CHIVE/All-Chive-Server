@@ -2,11 +2,9 @@ package allchive.server.api.search.model.dto.response;
 
 
 import allchive.server.api.search.model.vo.LatestSearchVo;
-import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class SearchVoListResponse {

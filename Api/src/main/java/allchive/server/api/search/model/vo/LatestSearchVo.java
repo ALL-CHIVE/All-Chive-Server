@@ -1,5 +1,6 @@
 package allchive.server.api.search.model.vo;
 
+
 import allchive.server.domain.domains.search.domain.LatestSearch;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;

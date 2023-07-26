@@ -2,12 +2,10 @@ package allchive.server.api.search.service;
 
 
 import allchive.server.api.config.security.SecurityUtil;
-import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.api.search.model.dto.response.SearchVoListResponse;
 import allchive.server.api.search.model.vo.LatestSearchVo;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.search.adaptor.LatestSearchAdaptor;
-import allchive.server.domain.domains.search.domain.LatestSearch;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

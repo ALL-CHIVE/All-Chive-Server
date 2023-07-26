@@ -30,7 +30,8 @@ public class LatestSearchAdaptor {
     }
 
     public LatestSearch findByIdAndUserId(Long latestSearchId, Long userId) {
-        return latestSearchRepository.findByIdAndUserId(latestSearchId, userId)
+        return latestSearchRepository
+                .findByIdAndUserId(latestSearchId, userId)
                 .orElseThrow(() -> LatestSearchNotFoundException.EXCEPTION);
     }
 

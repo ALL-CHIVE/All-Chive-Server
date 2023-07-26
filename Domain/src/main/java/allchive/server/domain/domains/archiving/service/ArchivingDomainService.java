@@ -5,9 +5,8 @@ import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
-import java.util.List;
-
 import allchive.server.domain.domains.content.domain.enums.ContentType;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @DomainService

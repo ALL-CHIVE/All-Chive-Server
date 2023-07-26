@@ -1,8 +1,8 @@
 package allchive.server.domain.domains.search.validator;
 
+
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.search.adaptor.LatestSearchAdaptor;
-import allchive.server.domain.domains.search.exception.exceptions.LatestSearchNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Validator

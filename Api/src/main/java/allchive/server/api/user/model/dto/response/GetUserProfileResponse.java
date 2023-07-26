@@ -24,12 +24,17 @@ public class GetUserProfileResponse {
     @Schema(defaultValue = "0", description = "공개 아카이브 개수")
     private int publicArchivingCount;
 
-
     @Schema(defaultValue = "0", description = "모든 아카이브 개수")
     private int archivingCount;
 
     @Builder
-    public GetUserProfileResponse(String nickname, String imgUrl, int linkCount, int imgCount, int publicArchivingCount, int archivingCount) {
+    public GetUserProfileResponse(
+            String nickname,
+            String imgUrl,
+            int linkCount,
+            int imgCount,
+            int publicArchivingCount,
+            int archivingCount) {
         this.nickname = nickname;
         this.imgUrl = imgUrl;
         this.linkCount = linkCount;

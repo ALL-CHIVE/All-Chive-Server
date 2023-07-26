@@ -1,11 +1,11 @@
 package allchive.server.domain.domains.search.exception;
 
+import static allchive.server.core.consts.AllchiveConst.*;
+
 import allchive.server.core.dto.ErrorReason;
 import allchive.server.core.error.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import static allchive.server.core.consts.AllchiveConst.*;
 
 @Getter
 @AllArgsConstructor
