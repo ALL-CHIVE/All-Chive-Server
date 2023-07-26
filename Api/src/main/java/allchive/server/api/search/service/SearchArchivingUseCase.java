@@ -4,7 +4,6 @@ package allchive.server.api.search.service;
 import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.config.security.SecurityUtil;
-import allchive.server.api.search.model.dto.request.SearchRequest;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.enums.ArchivingType;
 import allchive.server.core.annotation.UseCase;
@@ -32,23 +31,23 @@ public class SearchArchivingUseCase {
     private final LatestSearchDomainService latestSearchDomainService;
 
     @Transactional
-    public SearchResponse execute(Pageable pageable, ArchivingType type, SearchRequest request) {
+    public SearchResponse execute(Pageable pageable, ArchivingType type, String word) {
         Long userId = SecurityUtil.getCurrentUserId();
         SliceResponse<ArchivingResponse> my = null;
         SliceResponse<ArchivingResponse> community = null;
-        renewalLatestSearch(userId, request.getKeyword());
+        renewalLatestSearch(userId, word);
         switch (type) {
             case ALL -> {
-                my = getMyArchivings(userId, request.getKeyword(), pageable);
-                community = getCommunityArchivings(userId, request.getKeyword(), pageable);
+                my = getMyArchivings(userId, word, pageable);
+                community = getCommunityArchivings(userId, word, pageable);
                 return SearchResponse.forAll(my, community);
             }
             case MY -> {
-                my = getMyArchivings(userId, request.getKeyword(), pageable);
+                my = getMyArchivings(userId, word, pageable);
                 return SearchResponse.forMy(my);
             }
             case COMMUNITY -> {
-                community = getCommunityArchivings(userId, request.getKeyword(), pageable);
+                community = getCommunityArchivings(userId, word, pageable);
                 return SearchResponse.forCommunity(community);
             }
         }

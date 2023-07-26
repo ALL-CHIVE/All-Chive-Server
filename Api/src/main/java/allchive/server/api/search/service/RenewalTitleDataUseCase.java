@@ -21,12 +21,20 @@ public class RenewalTitleDataUseCase {
     private final ArchivingAdaptor archivingAdaptor;
     private final RedisTemplate<String, String> redisTemplate;
 
-    private static final int TIME_LIMIT = 1;
-
     @Scheduled(cron = "0 0 3 * * *")
     @Transactional(readOnly = true)
     public void executeSchedule() {
         log.info("renewal title scheduler on");
+        renewalData();
+        log.info("renewal title scheduler off");
+    }
+
+    @Transactional(readOnly = true)
+    public void executeForce() {
+        renewalData();
+    }
+
+    private void renewalData() {
         redisTemplate.delete(SEARCH_KEY);
         Set<Archiving> archivings =
                 new HashSet<>(archivingAdaptor.findAllByPublicStatus(Boolean.TRUE));
@@ -35,15 +43,14 @@ public class RenewalTitleDataUseCase {
                     redisTemplate
                             .opsForZSet()
                             .add(SEARCH_KEY, archiving.getTitle().trim() + ASTERISK, 0);
-                    for (int index = 1; index < archiving.getTitle().length(); index++) {
+                    for (int index = 0; index <= archiving.getTitle().length(); index++) {
                         redisTemplate
                                 .opsForZSet()
                                 .add(
                                         SEARCH_KEY,
-                                        archiving.getTitle().trim().substring(0, index - 1),
+                                        archiving.getTitle().trim().substring(0, index),
                                         0);
                     }
                 });
-        log.info("renewal title scheduler off");
     }
 }
