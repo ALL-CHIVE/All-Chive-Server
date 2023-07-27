@@ -71,8 +71,8 @@ public class AppleLoginUtil {
         log.info(authKey);
         log.info("----------------");
         byte[] content = null;
-        byte[] byteAuthKey = authKey.replace(" ", "\n").getBytes();
-        log.info(authKey.replace(" ", "\n"));
+        byte[] byteAuthKey = authKey.replace("  ", "\n").getBytes();
+        log.info(authKey.replace("  ", "\n"));
         log.info("----------------");
         try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
              InputStreamReader keyReader = new InputStreamReader(keyInputStream);
