@@ -8,9 +8,12 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.ECDSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.ECPrivateKey;
@@ -23,14 +26,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 public class AppleLoginUtil {
-    /**
-     * client_secret 생성 Apple Document URL ‣
-     * https://developer.apple.com/documentation/sign_in_with_apple/generate_and_validate_tokens
-     *
-     * @return client_secret(jwt)
-     */
     public static String createClientSecret(
-            String teamId, String clientId, String keyId, String keyPath, String authUrl) {
+            String teamId, String clientId, String keyId, String authKey, String authUrl) {
 
         JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.ES256).keyID(keyId).build();
         JWTClaimsSet claimsSet = new JWTClaimsSet();
@@ -44,7 +41,7 @@ public class AppleLoginUtil {
 
         SignedJWT jwt = new SignedJWT(header, claimsSet);
 
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(readPrivateKey(keyPath));
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(readPrivateKey(authKey));
         try {
             KeyFactory kf = KeyFactory.getInstance("EC");
             ECPrivateKey ecPrivateKey = (ECPrivateKey) kf.generatePrivate(spec);
@@ -64,14 +61,14 @@ public class AppleLoginUtil {
      *
      * @return Private Key
      */
-    private static byte[] readPrivateKey(String keyPath) {
+    private static byte[] readPrivateKey(String authKey) {
 
-        Resource resource = new ClassPathResource(keyPath);
+//        Resource resource = new ClassPathResource(authKey);
         byte[] content = null;
-
-        try (InputStream keyInputStream = resource.getInputStream();
-                InputStreamReader keyReader = new InputStreamReader(keyInputStream);
-                PemReader pemReader = new PemReader(keyReader)) {
+        byte[] byteAuthKey = authKey.getBytes();
+        try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
+             InputStreamReader keyReader = new InputStreamReader(keyInputStream);
+             PemReader pemReader = new PemReader(keyReader)) {
             PemObject pemObject = pemReader.readPemObject();
             content = pemObject.getContent();
         } catch (IOException e) {

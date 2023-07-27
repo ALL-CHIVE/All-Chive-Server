@@ -91,7 +91,7 @@ public class AppleOauthHelper {
                 appleOAuthProperties.getTeamId(),
                 appleOAuthProperties.getClientId(),
                 appleOAuthProperties.getKeyId(),
-                appleOAuthProperties.getKeyPath(),
+                appleOAuthProperties.getAuthKey(),
                 appleOAuthProperties.getBaseUrl());
     }
 }
