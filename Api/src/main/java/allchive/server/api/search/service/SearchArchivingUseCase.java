@@ -3,6 +3,7 @@ package allchive.server.api.search.service;
 
 import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
 import allchive.server.api.common.slice.SliceResponse;
+import allchive.server.api.common.util.StringParamUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.search.model.dto.response.SearchResponse;
 import allchive.server.api.search.model.enums.ArchivingType;
@@ -39,6 +40,7 @@ public class SearchArchivingUseCase {
 
     @Transactional
     public SearchResponse execute(Pageable pageable, ArchivingType type, String word) {
+        validateExecution(word);
         Long userId = SecurityUtil.getCurrentUserId();
         Set<Long> tagArchivingIds = getTagArchivingIds(userId, word);
         SliceResponse<ArchivingResponse> my;
@@ -60,6 +62,10 @@ public class SearchArchivingUseCase {
             }
         }
         return null;
+    }
+
+    private void validateExecution(String word) {
+        StringParamUtil.checkEmptyString(word);
     }
 
     private Set<Long> getTagArchivingIds(Long userId, String word) {

@@ -3,6 +3,7 @@ package allchive.server.api.search.service;
 import static allchive.server.core.consts.AllchiveConst.SEARCH_KEY;
 import static jodd.util.StringPool.ASTERISK;
 
+import allchive.server.api.common.util.StringParamUtil;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.core.annotation.UseCase;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class GetRelativeSearchListUseCase {
 
     @Transactional
     public SearchListResponse execute(String word) {
+        validateExecution(word);
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         List<String> autoCompleteList = new ArrayList<>();
         Long rank = zSetOperations.rank(SEARCH_KEY, word);
@@ -28,6 +30,10 @@ public class GetRelativeSearchListUseCase {
             autoCompleteList = getAutoCompleteList(rangeList, word);
         }
         return SearchListResponse.from(autoCompleteList);
+    }
+
+    private void validateExecution(String word) {
+        StringParamUtil.checkEmptyString(word);
     }
 
     private List<String> getAutoCompleteList(Set<String> rangeList, String keyword) {

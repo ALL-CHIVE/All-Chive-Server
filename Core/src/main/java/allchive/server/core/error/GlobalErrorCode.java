@@ -14,6 +14,7 @@ public enum GlobalErrorCode implements BaseErrorCode {
 
     /** Server 오류 * */
     HTTP_MESSAGE_NOT_READABLE(BAD_REQUEST, "GLOBAL_400_1", "잘못된 형식의 값을 입력했습니다."),
+    EMPTY_PARAM_VALUE(BAD_REQUEST, "GLOBAL_400_2", "빈 파람 값을 입력했습니다."),
     _INTERNAL_SERVER_ERROR(INTERNAL_SERVER, "GLOBAL_500_1", "서버 오류. 관리자에게 문의 부탁드립니다."),
     INVALID_OAUTH_PROVIDER(INTERNAL_SERVER, "GLOBAL_500_2", "지원하지 않는 OAuth Provider 입니다."),
 
