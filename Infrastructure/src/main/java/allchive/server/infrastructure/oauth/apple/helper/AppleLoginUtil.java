@@ -8,6 +8,7 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.ECDSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,18 +20,10 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Date;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 public class AppleLoginUtil {
-    /**
-     * client_secret 생성 Apple Document URL ‣
-     * https://developer.apple.com/documentation/sign_in_with_apple/generate_and_validate_tokens
-     *
-     * @return client_secret(jwt)
-     */
     public static String createClientSecret(
-            String teamId, String clientId, String keyId, String keyPath, String authUrl) {
+            String teamId, String clientId, String keyId, String authKey, String authUrl) {
 
         JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.ES256).keyID(keyId).build();
         JWTClaimsSet claimsSet = new JWTClaimsSet();
@@ -44,7 +37,7 @@ public class AppleLoginUtil {
 
         SignedJWT jwt = new SignedJWT(header, claimsSet);
 
-        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(readPrivateKey(keyPath));
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(readPrivateKey(authKey));
         try {
             KeyFactory kf = KeyFactory.getInstance("EC");
             ECPrivateKey ecPrivateKey = (ECPrivateKey) kf.generatePrivate(spec);
@@ -64,12 +57,10 @@ public class AppleLoginUtil {
      *
      * @return Private Key
      */
-    private static byte[] readPrivateKey(String keyPath) {
-
-        Resource resource = new ClassPathResource(keyPath);
+    private static byte[] readPrivateKey(String authKey) {
         byte[] content = null;
-
-        try (InputStream keyInputStream = resource.getInputStream();
+        byte[] byteAuthKey = authKey.replace("((()))", "\n").getBytes();
+        try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
                 InputStreamReader keyReader = new InputStreamReader(keyInputStream);
                 PemReader pemReader = new PemReader(keyReader)) {
             PemObject pemObject = pemReader.readPemObject();

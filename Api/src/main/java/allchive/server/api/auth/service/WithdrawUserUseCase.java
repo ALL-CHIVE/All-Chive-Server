@@ -24,6 +24,7 @@ import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.domain.domains.user.service.UserDomainService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -43,11 +44,12 @@ public class WithdrawUserUseCase {
     private final ReportDomainService reportDomainService;
     private final UserDomainService userDomainService;
 
-    public void execute(OauthProvider provider, String appleAccessToken) {
+    @Transactional
+    public void execute(String appleAccessToken) {
         Long userId = SecurityUtil.getCurrentUserId();
         User user = userAdaptor.findById(userId);
         // oauth쪽 탈퇴
-        withdrawOauth(provider, appleAccessToken, user);
+        withdrawOauth(user.getOauthInfo().getProvider(), appleAccessToken, user);
         // 우리쪽 탈퇴
         withdrawService(userId, user);
     }

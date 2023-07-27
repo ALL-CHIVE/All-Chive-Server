@@ -5,7 +5,6 @@ import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
 import allchive.server.api.auth.service.LogOutUserUseCase;
 import allchive.server.api.auth.service.TokenRefreshUseCase;
 import allchive.server.api.auth.service.WithdrawUserUseCase;
-import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +22,11 @@ public class AuthController {
     private final TokenRefreshUseCase tokenRefreshUseCase;
 
     @Operation(summary = "회원탈퇴를 합니다.")
-    @DeleteMapping("/withdrawal/{provider}")
+    @DeleteMapping("/withdrawal")
     public void withDrawUser(
-            @PathVariable OauthProvider provider,
             @RequestParam(required = false, name = "appleAccessToken", value = "")
                     String appleAccessToken) {
-        withdrawUserUseCase.execute(provider, appleAccessToken);
+        withdrawUserUseCase.execute(appleAccessToken);
     }
 
     @Operation(summary = "로그아웃을 합니다.")
