@@ -2,7 +2,7 @@ name: DEV CI/CD
 
 on:
   push:
-    branches: dev, refac/auth
+    branches: [ dev, refac/auth ]
 
 env:
   PROFILE_DEV: dev
