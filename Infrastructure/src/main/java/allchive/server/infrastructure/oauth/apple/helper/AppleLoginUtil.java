@@ -8,24 +8,18 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.ECDSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.ECPrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Date;
-
-import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 public class AppleLoginUtil {
     public static String createClientSecret(
@@ -67,8 +61,8 @@ public class AppleLoginUtil {
         byte[] content = null;
         byte[] byteAuthKey = authKey.replace("((()))", "\n").getBytes();
         try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
-             InputStreamReader keyReader = new InputStreamReader(keyInputStream);
-             PemReader pemReader = new PemReader(keyReader)) {
+                InputStreamReader keyReader = new InputStreamReader(keyInputStream);
+                PemReader pemReader = new PemReader(keyReader)) {
             PemObject pemObject = pemReader.readPemObject();
             content = pemObject.getContent();
         } catch (IOException e) {

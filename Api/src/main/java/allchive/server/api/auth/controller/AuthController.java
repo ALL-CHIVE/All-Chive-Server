@@ -5,7 +5,6 @@ import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
 import allchive.server.api.auth.service.LogOutUserUseCase;
 import allchive.server.api.auth.service.TokenRefreshUseCase;
 import allchive.server.api.auth.service.WithdrawUserUseCase;
-import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
