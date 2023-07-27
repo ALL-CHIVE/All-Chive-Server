@@ -24,6 +24,7 @@ import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.domain.domains.user.service.UserDomainService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -43,6 +44,7 @@ public class WithdrawUserUseCase {
     private final ReportDomainService reportDomainService;
     private final UserDomainService userDomainService;
 
+    @Transactional
     public void execute(String appleAccessToken) {
         Long userId = SecurityUtil.getCurrentUserId();
         User user = userAdaptor.findById(userId);

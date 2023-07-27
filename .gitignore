@@ -43,3 +43,4 @@ out/
 
 
 Domain/src/main/generated/**/*.java
+Core/src/main/resources/static/apple/**.p8

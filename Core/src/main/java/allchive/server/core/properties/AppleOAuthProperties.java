@@ -13,12 +13,9 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class AppleOAuthProperties {
     private String baseUrl;
     private String clientId;
-    private String appClientId;
     private String keyId;
     private String redirectUrl;
     private String teamId;
-    private String scope;
     private String keyPath;
     private String webCallbackUrl;
-    private String appstoreIssuer;
 }
