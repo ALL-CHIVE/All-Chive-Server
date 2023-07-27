@@ -20,11 +20,14 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Date;
+
+import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.util.io.pem.PemObject;
 import org.bouncycastle.util.io.pem.PemReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+@Slf4j
 public class AppleLoginUtil {
     public static String createClientSecret(
             String teamId, String clientId, String keyId, String authKey, String authUrl) {
@@ -64,8 +67,13 @@ public class AppleLoginUtil {
     private static byte[] readPrivateKey(String authKey) {
 
 //        Resource resource = new ClassPathResource(authKey);
+        log.info("----------------");
+        log.info(authKey);
+        log.info("----------------");
         byte[] content = null;
         byte[] byteAuthKey = authKey.replace(" ", "\n").getBytes();
+        log.info(authKey.replace(" ", "\n"));
+        log.info("----------------");
         try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
              InputStreamReader keyReader = new InputStreamReader(keyInputStream);
              PemReader pemReader = new PemReader(keyReader)) {
