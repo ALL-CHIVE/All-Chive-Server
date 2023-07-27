@@ -65,7 +65,7 @@ public class AppleLoginUtil {
 
 //        Resource resource = new ClassPathResource(authKey);
         byte[] content = null;
-        byte[] byteAuthKey = authKey.getBytes();
+        byte[] byteAuthKey = authKey.replace(" ", "\n").getBytes();
         try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
              InputStreamReader keyReader = new InputStreamReader(keyInputStream);
              PemReader pemReader = new PemReader(keyReader)) {
