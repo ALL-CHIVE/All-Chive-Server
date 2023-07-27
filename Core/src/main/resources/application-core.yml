@@ -21,6 +21,5 @@ oauth:
     keyId: ${APPLE_KEY_ID}
     redirectUrl: ${APPLE_REDIRECT}
     teamId: ${APPLE_TEAM_ID}
-    keyPath: ${APPLE_KEY_PATH}
     webCallbackUrl: ${APPLE_WEB_CALLBACK}
     authKey: ${APPLE_AUTH_KEY}

@@ -16,7 +16,6 @@ public class AppleOAuthProperties {
     private String keyId;
     private String redirectUrl;
     private String teamId;
-    private String keyPath;
     private String webCallbackUrl;
     private String authKey;
 }

@@ -27,7 +27,6 @@ import org.bouncycastle.util.io.pem.PemReader;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-@Slf4j
 public class AppleLoginUtil {
     public static String createClientSecret(
             String teamId, String clientId, String keyId, String authKey, String authUrl) {
@@ -65,15 +64,8 @@ public class AppleLoginUtil {
      * @return Private Key
      */
     private static byte[] readPrivateKey(String authKey) {
-
-//        Resource resource = new ClassPathResource(authKey);
-        log.info("----------------");
-        log.info(authKey);
-        log.info("----------------");
         byte[] content = null;
         byte[] byteAuthKey = authKey.replace("((()))", "\n").getBytes();
-        log.info(authKey.replace("((()))", "\n"));
-        log.info("----------------");
         try (InputStream keyInputStream = new ByteArrayInputStream(byteAuthKey);
              InputStreamReader keyReader = new InputStreamReader(keyInputStream);
              PemReader pemReader = new PemReader(keyReader)) {
