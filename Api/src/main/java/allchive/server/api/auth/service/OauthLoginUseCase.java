@@ -11,6 +11,7 @@ import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import allchive.server.domain.domains.user.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -19,16 +20,19 @@ public class OauthLoginUseCase {
     private final UserDomainService userDomainService;
     private final TokenGenerateHelper tokenGenerateHelper;
 
+    @Transactional
     public OauthSignInResponse loginWithCode(OauthProvider provider, String code, String referer) {
         final OauthTokenResponse oauthTokenResponse =
                 oauthHelper.getCredential(provider, code, referer);
         return processLoginWithIdToken(provider, oauthTokenResponse.getIdToken());
     }
 
+    @Transactional
     public OauthSignInResponse loginWithIdToken(OauthProvider provider, String idToken) {
         return processLoginWithIdToken(provider, idToken);
     }
 
+    @Transactional
     public OauthSignInResponse devLogin(OauthProvider provider, String code) {
         final OauthTokenResponse oauthTokenResponse = oauthHelper.getCredentialDev(provider, code);
         return processLoginWithIdToken(provider, oauthTokenResponse.getIdToken());

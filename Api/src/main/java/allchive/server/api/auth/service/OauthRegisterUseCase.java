@@ -13,6 +13,7 @@ import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import allchive.server.domain.domains.user.service.UserDomainService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class OauthRegisterUseCase {
     private final UserDomainService userDomainService;
     private final TokenGenerateHelper tokenGenerateHelper;
 
+    @Transactional
     public OauthRegisterResponse execute(
             OauthProvider provider,
             String idToken,
