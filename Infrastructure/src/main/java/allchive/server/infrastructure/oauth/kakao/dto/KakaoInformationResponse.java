@@ -27,8 +27,6 @@ public class KakaoInformationResponse {
     @JsonNaming(SnakeCaseStrategy.class)
     public static class KakaoAccount {
         private String email;
-        private boolean is_email_valid;
-        private boolean is_email_verified;
     }
 
     public String getId() {
@@ -40,8 +38,6 @@ public class KakaoInformationResponse {
     }
 
     public String getEmail() {
-        return kakaoAccount.is_email_valid && kakaoAccount.is_email_verified
-                ? kakaoAccount.getEmail()
-                : null;
+        return kakaoAccount.getEmail();
     }
 }
