@@ -51,10 +51,14 @@ public class User extends BaseTimeEntity {
 
     @Builder
     private User(
+            String name,
+            String email,
             String nickname,
             String profileImgUrl,
             List<Category> categoryList,
             OauthInfo oauthInfo) {
+        this.name = name;
+        this.email = email;
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
         this.categories = categoryList;
@@ -63,11 +67,15 @@ public class User extends BaseTimeEntity {
     }
 
     public static User of(
+            String name,
+            String email,
             String nickname,
             String profileImgUrl,
             List<Category> categoryList,
             OauthInfo oauthInfo) {
         return User.builder()
+                .name(name)
+                .email(email)
                 .nickname(nickname)
                 .profileImgUrl(profileImgUrl)
                 .categoryList(categoryList)

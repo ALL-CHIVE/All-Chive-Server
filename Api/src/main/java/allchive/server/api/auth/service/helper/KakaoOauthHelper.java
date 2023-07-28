@@ -1,7 +1,9 @@
 package allchive.server.api.auth.service.helper;
 
+import static allchive.server.core.consts.AllchiveConst.BEARER;
 import static allchive.server.core.consts.AllchiveConst.KAKAO_OAUTH_QUERY_STRING;
 
+import allchive.server.api.auth.model.dto.OauthUserInfoDto;
 import allchive.server.core.annotation.Helper;
 import allchive.server.core.dto.OIDCDecodePayload;
 import allchive.server.core.properties.KakaoOAuthProperties;
@@ -9,6 +11,7 @@ import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
 import allchive.server.infrastructure.oauth.kakao.client.KakaoInfoClient;
 import allchive.server.infrastructure.oauth.kakao.client.KakaoOauthClient;
+import allchive.server.infrastructure.oauth.kakao.dto.KakaoInformationResponse;
 import allchive.server.infrastructure.oauth.kakao.dto.KakaoTokenResponse;
 import allchive.server.infrastructure.oauth.kakao.dto.KakaoUnlinkTarget;
 import allchive.server.infrastructure.oauth.kakao.dto.OIDCPublicKeysResponse;
@@ -85,5 +88,12 @@ public class KakaoOauthHelper {
                 unlinkKaKaoTarget.getTargetIdType(),
                 unlinkKaKaoTarget.getAud());
         kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget);
+    }
+
+    /** 유저 정보 가져오기 * */
+    public OauthUserInfoDto getUserInfo(String oauthAccessToken) {
+        KakaoInformationResponse response =
+                kakaoInfoClient.kakaoUserInfo(BEARER + oauthAccessToken);
+        return OauthUserInfoDto.fromKakao(response);
     }
 }

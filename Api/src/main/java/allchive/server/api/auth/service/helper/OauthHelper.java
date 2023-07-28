@@ -1,6 +1,7 @@
 package allchive.server.api.auth.service.helper;
 
 
+import allchive.server.api.auth.model.dto.OauthUserInfoDto;
 import allchive.server.api.auth.model.dto.response.OauthLoginLinkResponse;
 import allchive.server.api.auth.model.dto.response.OauthTokenResponse;
 import allchive.server.core.annotation.Helper;
@@ -81,6 +82,17 @@ public class OauthHelper {
                 break;
             case APPLE:
                 appleOauthHelper.withdrawAppleOauthUser(appleAccessToken);
+                break;
+            default:
+                throw InvalidOauthProviderException.EXCEPTION;
+        }
+    }
+
+    /** 유저 정보 가져오기 * */
+    public OauthUserInfoDto getUserInfo(OauthProvider provider, String oauthAccessToken) {
+        switch (provider) {
+            case KAKAO:
+                return kakaoOauthHelper.getUserInfo(oauthAccessToken);
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
         }

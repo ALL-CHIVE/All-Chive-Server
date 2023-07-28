@@ -24,12 +24,14 @@ public class UserDomainService {
 
     @Transactional
     public User registerUser(
+            String name,
+            String email,
             String nickname,
             String profileImgUrl,
             List<Category> categoryList,
             OauthInfo oauthInfo) {
         userValidator.validUserCanRegister(oauthInfo);
-        final User newUser = User.of(nickname, profileImgUrl, categoryList, oauthInfo);
+        final User newUser = User.of(name, email, nickname, profileImgUrl, categoryList, oauthInfo);
         userAdaptor.save(newUser);
         return newUser;
     }
