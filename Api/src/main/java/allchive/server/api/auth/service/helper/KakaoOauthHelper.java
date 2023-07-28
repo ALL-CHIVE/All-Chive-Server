@@ -90,7 +90,7 @@ public class KakaoOauthHelper {
         kakaoInfoClient.unlinkUser(header, unlinkKaKaoTarget);
     }
 
-    /** 유저 정보 가져오기 **/
+    /** 유저 정보 가져오기 * */
     public OauthUserInfoDto getUserInfo(String oauthAccessToken) {
         KakaoInformationResponse response =
                 kakaoInfoClient.kakaoUserInfo(BEARER + oauthAccessToken);

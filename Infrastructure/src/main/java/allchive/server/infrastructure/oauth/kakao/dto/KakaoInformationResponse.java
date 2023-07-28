@@ -40,7 +40,8 @@ public class KakaoInformationResponse {
     }
 
     public String getEmail() {
-        return kakaoAccount.is_email_valid && kakaoAccount.is_email_verified ? kakaoAccount.getEmail() : null;
+        return kakaoAccount.is_email_valid && kakaoAccount.is_email_verified
+                ? kakaoAccount.getEmail()
+                : null;
     }
-
 }

@@ -88,7 +88,7 @@ public class OauthHelper {
         }
     }
 
-    /** 유저 정보 가져오기 **/
+    /** 유저 정보 가져오기 * */
     public OauthUserInfoDto getUserInfo(OauthProvider provider, String oauthAccessToken) {
         switch (provider) {
             case KAKAO:

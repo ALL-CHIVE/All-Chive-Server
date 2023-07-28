@@ -22,26 +22,30 @@ public class OauthRegisterUseCase {
     private final TokenGenerateHelper tokenGenerateHelper;
 
     public OauthRegisterResponse execute(
-            OauthProvider provider, String idToken, String oauthAccessToken, RegisterRequest request) {
+            OauthProvider provider,
+            String idToken,
+            String oauthAccessToken,
+            RegisterRequest request) {
         final OauthInfo oauthInfo = oauthHelper.getOauthInfo(provider, idToken);
         final OauthUserInfoDto oauthUserInfoDto = getUserInfo(provider, oauthAccessToken);
         final User user = registerUser(provider, oauthInfo, oauthUserInfoDto, request);
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
     }
 
-    private User registerUser(OauthProvider provider,
-                              OauthInfo oauthInfo,
-                              OauthUserInfoDto oauthUserInfoDto,
-                              RegisterRequest request) {
+    private User registerUser(
+            OauthProvider provider,
+            OauthInfo oauthInfo,
+            OauthUserInfoDto oauthUserInfoDto,
+            RegisterRequest request) {
         switch (provider) {
             case APPLE:
                 return userDomainService.registerUser(
-                                request.getName(),
-                                request.getEmail(),
-                                request.getNickname(),
-                                UrlUtil.convertUrlToKey(request.getProfileImgUrl()),
-                                request.getCategories(),
-                                oauthInfo);
+                        request.getName(),
+                        request.getEmail(),
+                        request.getNickname(),
+                        UrlUtil.convertUrlToKey(request.getProfileImgUrl()),
+                        request.getCategories(),
+                        oauthInfo);
             default:
                 return userDomainService.registerUser(
                         oauthUserInfoDto.getName(),
