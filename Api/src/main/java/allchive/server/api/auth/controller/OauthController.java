@@ -82,7 +82,8 @@ public class OauthController {
     public OauthRegisterResponse oauthUserRegister(
             @PathVariable("provider") OauthProvider provider,
             @RequestParam("idToken") String idToken,
+            @RequestParam("oauthAccessToken") String accessToken,
             @RequestBody RegisterRequest registerRequest) {
-        return oauthRegisterUseCase.execute(provider, idToken, registerRequest);
+        return oauthRegisterUseCase.execute(provider, idToken, accessToken, registerRequest);
     }
 }

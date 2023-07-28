@@ -26,4 +26,10 @@ public class RegisterRequest {
 
     @ArraySchema(schema = @Schema(description = "관심 주제", defaultValue = "FOOD"))
     private List<@ValidEnum(target = Category.class) Category> categories;
+
+    @Schema(defaultValue = "이름", description = "이름, 애플 회원가입용")
+    private String name;
+
+    @Schema(defaultValue = "이메일", description = "이메일, 애플 회원가입용")
+    private String email;
 }
