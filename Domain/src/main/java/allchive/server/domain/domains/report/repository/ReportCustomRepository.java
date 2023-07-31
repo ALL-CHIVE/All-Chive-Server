@@ -1,5 +1,6 @@
 package allchive.server.domain.domains.report.repository;
 
+
 import java.util.List;
 
 public interface ReportCustomRepository {

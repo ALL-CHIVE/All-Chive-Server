@@ -4,9 +4,8 @@ package allchive.server.domain.domains.report.service;
 import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.report.adaptor.ReportAdaptor;
 import allchive.server.domain.domains.report.domain.Report;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @DomainService
 @RequiredArgsConstructor
@@ -21,7 +20,8 @@ public class ReportDomainService {
         reportAdaptor.deleteAllByReportedUserId(userId);
     }
 
-    public void deleteAllByArchivingIdInOrContentIdIn(List<Long> archivingIds, List<Long> contentIds) {
+    public void deleteAllByArchivingIdInOrContentIdIn(
+            List<Long> archivingIds, List<Long> contentIds) {
         reportAdaptor.deleteAllByArchivingIdInOrContentIdIn(archivingIds, contentIds);
     }
 }

@@ -1,7 +1,6 @@
 package allchive.server.api.recycle.service;
 
 
-import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
@@ -15,11 +14,10 @@ import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.report.service.ReportDomainService;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
+import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -60,12 +58,13 @@ public class ClearOldDeletedObjectUseCase {
     }
 
     private void deleteS3Object(List<Content> contents) {
-        List<String> imageKeys = contents.stream()
-                .filter(content -> content.getContentType().equals(ContentType.IMAGE))
-                .map(Content::getImageUrl).toList();
+        List<String> imageKeys =
+                contents.stream()
+                        .filter(content -> content.getContentType().equals(ContentType.IMAGE))
+                        .map(Content::getImageUrl)
+                        .toList();
         s3DeleteObjectService.deleteS3Object(imageKeys);
     }
-
 
     private List<Long> getArchivingIds(List<Recycle> recycles) {
         return recycles.stream()
