@@ -31,21 +31,29 @@ public class GetDeletedObjectUseCase {
     public DeletedObjectResponse execute() {
         Long userId = SecurityUtil.getCurrentUserId();
         List<Recycle> recycles = recycleAdaptor.findAllByUserId(userId);
+        List<Archiving> archivings = getArchivings(recycles);
+        List<Content> contents = getContents(recycles);
+        List<ContentTagGroup> contentTagGroups =
+                contentTagGroupAdaptor.queryContentTagGroupByContentIn(contents);
+        return recycleMapper.toDeletedObjectResponse(
+                archivings, userId, contents, contentTagGroups);
+    }
+
+    private List<Archiving> getArchivings(List<Recycle> recycles) {
         List<Long> archivingIds =
                 recycles.stream()
                         .filter(recycle -> recycle.getRecycleType().equals(RecycleType.ARCHIVING))
                         .map(Recycle::getArchivingId)
                         .toList();
+        return archivingAdaptor.findAllByIdIn(archivingIds);
+    }
+
+    private List<Content> getContents(List<Recycle> recycles) {
         List<Long> contentIds =
                 recycles.stream()
                         .filter(recycle -> recycle.getRecycleType().equals(RecycleType.CONTENT))
                         .map(Recycle::getContentId)
                         .toList();
-        List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
-        List<Content> contents = contentAdaptor.findAllByIdIn(contentIds);
-        List<ContentTagGroup> contentTagGroups =
-                contentTagGroupAdaptor.queryContentTagGroupByContentIn(contents);
-        return recycleMapper.toDeletedObjectResponse(
-                archivings, userId, contents, contentTagGroups);
+        return contentAdaptor.findAllByIdIn(contentIds);
     }
 }

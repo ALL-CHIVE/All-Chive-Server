@@ -23,7 +23,7 @@ public class ContentDomainService {
         save(content);
     }
 
-    public void restoreInIdList(List<Long> contentIds) {
+    public void restoreByIdIn(List<Long> contentIds) {
         List<Content> contentList = contentAdaptor.findAllByIdIn(contentIds);
         contentList.forEach(Content::restore);
         contentAdaptor.saveAll(contentList);

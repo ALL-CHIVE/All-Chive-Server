@@ -15,7 +15,7 @@ public class RecycleCustomRepositoryImpl implements RecycleCustomRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Recycle> queryRecycleByUserIdInArchivingIdListAndContentIdList(
+    public List<Recycle> queryRecycleByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
             List<Long> archivingIds, List<Long> contentIds, Long userId) {
         return queryFactory
                 .selectFrom(recycle)

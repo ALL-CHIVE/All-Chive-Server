@@ -4,6 +4,7 @@ package allchive.server.domain.domains.report.adaptor;
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.report.domain.Report;
 import allchive.server.domain.domains.report.repository.ReportRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -25,5 +26,10 @@ public class ReportAdaptor {
 
     public void deleteAllByReportedUserId(Long userId) {
         reportRepository.deleteAllByReportedUserId(userId);
+    }
+
+    public void deleteAllByArchivingIdInOrContentIdIn(
+            List<Long> archivingIds, List<Long> contentIds) {
+        reportRepository.queryDeleteAllByArchivingIdInOrContentIdIn(archivingIds, contentIds);
     }
 }

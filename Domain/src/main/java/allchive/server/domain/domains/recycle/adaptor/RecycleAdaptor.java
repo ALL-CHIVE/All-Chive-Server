@@ -17,9 +17,9 @@ public class RecycleAdaptor {
         recycleRepository.save(recycle);
     }
 
-    public List<Recycle> queryRecycleByUserIdInArchivingIdListAndContentIdList(
+    public List<Recycle> queryRecycleByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
             List<Long> archivingIds, List<Long> contentIds, Long userId) {
-        return recycleRepository.queryRecycleByUserIdInArchivingIdListAndContentIdList(
+        return recycleRepository.queryRecycleByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
                 archivingIds, contentIds, userId);
     }
 

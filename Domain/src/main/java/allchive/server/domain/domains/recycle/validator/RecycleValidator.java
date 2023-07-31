@@ -17,7 +17,7 @@ public class RecycleValidator {
 
     public void validateExist(List<Long> archivingIds, List<Long> contentIds, Long userId) {
         List<Recycle> recycleList =
-                recycleAdaptor.queryRecycleByUserIdInArchivingIdListAndContentIdList(
+                recycleAdaptor.queryRecycleByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
                         archivingIds, contentIds, userId);
         Long archivingCnt =
                 recycleList.stream()

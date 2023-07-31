@@ -4,7 +4,7 @@ package allchive.server.api.image.controller;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.image.model.dto.response.ImageUrlResponse;
 import allchive.server.infrastructure.s3.PresignedType;
-import allchive.server.infrastructure.s3.S3PresignedUrlService;
+import allchive.server.infrastructure.s3.service.S3PresignedUrlService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

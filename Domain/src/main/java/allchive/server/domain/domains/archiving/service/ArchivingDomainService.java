@@ -50,7 +50,7 @@ public class ArchivingDomainService {
         archivingAdaptor.save(archiving);
     }
 
-    public void restoreInIdList(List<Long> archivingIds) {
+    public void restoreByIdIn(List<Long> archivingIds) {
         List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
         archivings.forEach(Archiving::restore);
         archivingAdaptor.saveAll(archivings);
