@@ -5,6 +5,6 @@ import allchive.server.domain.domains.recycle.domain.Recycle;
 import java.util.List;
 
 public interface RecycleCustomRepository {
-    List<Recycle> queryRecycleByUserIdInArchivingIdListAndContentIdList(
+    List<Recycle> queryRecycleByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
             List<Long> archivingIds, List<Long> contentIds, Long userId);
 }

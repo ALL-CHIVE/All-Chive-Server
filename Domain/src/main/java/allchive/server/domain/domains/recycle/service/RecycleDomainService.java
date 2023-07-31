@@ -16,10 +16,10 @@ public class RecycleDomainService {
         recycleAdaptor.save(recycle);
     }
 
-    public void deleteAllByUserIdAndArchivingIdOrUserIdAndContentId(
+    public void deleteAllByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
             List<Long> archivingIds, List<Long> contentIds, Long userId) {
         List<Recycle> recycleList =
-                recycleAdaptor.queryRecycleByUserIdInArchivingIdListAndContentIdList(
+                recycleAdaptor.queryRecycleByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
                         archivingIds, contentIds, userId);
         recycleAdaptor.deleteAll(recycleList);
     }
