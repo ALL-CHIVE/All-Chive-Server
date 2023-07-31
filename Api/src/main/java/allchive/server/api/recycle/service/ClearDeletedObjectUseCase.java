@@ -6,13 +6,17 @@ import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
+import allchive.server.domain.domains.block.service.BlockDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
+import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.recycle.validator.RecycleValidator;
+import allchive.server.domain.domains.report.service.ReportDomainService;
+import allchive.server.domain.domains.search.service.LatestSearchDomainService;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +35,24 @@ public class ClearDeletedObjectUseCase {
     private final ArchivingDomainService archivingDomainService;
     private final ContentDomainService contentDomainService;
     private final RecycleDomainService recycleDomainService;
+    private final ReportDomainService reportDomainService;
 
-    // TODO: report 지우기
     @Transactional
     public void execute(ClearDeletedObjectRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
-        recycleValidator.validateExist(request.getArchivingIds(), request.getContentIds(), userId);
-        archivingValidator.verifyUserInIdList(userId, request.getArchivingIds());
-        contentValidator.verifyUserInIdList(userId, request.getContentIds());
+        validateExecution(userId, request);
         List<Content> contents = contentAdaptor.findAllByArchivingIds(request.getArchivingIds());
+        List<Long> contentsId = getContentsId(contents, request);
+        scrapDomainService.deleteAllByArchivingIdIn(request.getArchivingIds());
+        contentTagGroupDomainService.deleteByContentIn(contents);
+        contentDomainService.deleteAllById(contentsId);
+        archivingDomainService.deleteAllById(request.getArchivingIds());
+        recycleDomainService.deleteAllByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
+                request.getArchivingIds(), request.getContentIds(), userId);
+        reportDomainService.deleteAllByArchivingIdInOrContentIdIn(request.getArchivingIds(), request.getContentIds());
+    }
+
+    private List<Long> getContentsId(List<Content> contents, ClearDeletedObjectRequest request) {
         List<Long> contentsId = contents.stream().map(Content::getId).toList();
         if (!request.getContentIds().isEmpty()) {
             if (contentsId.isEmpty()) {
@@ -47,11 +60,12 @@ public class ClearDeletedObjectUseCase {
             }
             contentsId.addAll(request.getContentIds());
         }
-        scrapDomainService.deleteAllByArchivingIdIn(request.getArchivingIds());
-        contentTagGroupDomainService.deleteByContentIn(contents);
-        contentDomainService.deleteAllById(contentsId);
-        archivingDomainService.deleteAllById(request.getArchivingIds());
-        recycleDomainService.deleteAllByUserIdAndArchivingIdOrUserIdAndContentId(
-                request.getArchivingIds(), request.getContentIds(), userId);
+        return contentsId;
+    }
+
+    private void validateExecution(Long userId, ClearDeletedObjectRequest request) {
+        recycleValidator.validateExist(request.getArchivingIds(), request.getContentIds(), userId);
+        archivingValidator.verifyUserInIdList(userId, request.getArchivingIds());
+        contentValidator.verifyUserInIdList(userId, request.getContentIds());
     }
 }
