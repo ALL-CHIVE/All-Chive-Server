@@ -9,6 +9,7 @@ import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.domain.domains.block.service.BlockDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
 import allchive.server.domain.domains.content.service.TagDomainService;
@@ -20,6 +21,8 @@ import allchive.server.domain.domains.search.service.LatestSearchDomainService;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
 import java.util.ArrayList;
 import java.util.List;
+
+import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +39,7 @@ public class ClearDeletedObjectUseCase {
     private final ContentDomainService contentDomainService;
     private final RecycleDomainService recycleDomainService;
     private final ReportDomainService reportDomainService;
+    private final S3DeleteObjectService s3DeleteObjectService;
 
     @Transactional
     public void execute(ClearDeletedObjectRequest request) {
@@ -50,6 +54,14 @@ public class ClearDeletedObjectUseCase {
         recycleDomainService.deleteAllByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
                 request.getArchivingIds(), request.getContentIds(), userId);
         reportDomainService.deleteAllByArchivingIdInOrContentIdIn(request.getArchivingIds(), request.getContentIds());
+        deleteS3Object(contents);
+    }
+
+    private void deleteS3Object(List<Content> contents) {
+        List<String> imageKeys = contents.stream()
+                .filter(content -> content.getContentType().equals(ContentType.IMAGE))
+                .map(Content::getImageUrl).toList();
+        s3DeleteObjectService.deleteS3Object(imageKeys);
     }
 
     private List<Long> getContentsId(List<Content> contents, ClearDeletedObjectRequest request) {

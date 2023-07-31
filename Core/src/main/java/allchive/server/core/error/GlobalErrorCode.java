@@ -26,6 +26,9 @@ public enum GlobalErrorCode implements BaseErrorCode {
     EXPIRED_TOKEN(UNAUTHORIZED, "AUTH_401_3", "만료된 엑세스 토큰입니다"),
     EXPIRED_REFRESH_TOKEN(UNAUTHORIZED, "AUTH_403_1", "인증 시간이 만료되었습니다. 재 로그인 해주세요."),
 
+    /** s3 오류 */
+    S3_OBJECT_NOT_FOUND(BAD_REQUEST, "S3_500_1", "s3 객체가 존재하지 않습니다."),
+
     /** Feign Client 오류 */
     OTHER_SERVER_BAD_REQUEST(BAD_REQUEST, "FEIGN_400_1", "Other server bad request"),
     OTHER_SERVER_UNAUTHORIZED(BAD_REQUEST, "FEIGN_400_2", "Other server unauthorized"),

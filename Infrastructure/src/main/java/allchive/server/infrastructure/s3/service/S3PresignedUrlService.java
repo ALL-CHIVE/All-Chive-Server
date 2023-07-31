@@ -1,7 +1,9 @@
-package allchive.server.infrastructure.s3;
+package allchive.server.infrastructure.s3.service;
 
 
 import allchive.server.core.error.exception.InternalServerError;
+import allchive.server.infrastructure.s3.ImageUrlDto;
+import allchive.server.infrastructure.s3.PresignedType;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.Headers;
