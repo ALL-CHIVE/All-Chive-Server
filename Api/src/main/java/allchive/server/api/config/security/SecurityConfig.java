@@ -39,6 +39,8 @@ public class SecurityConfig {
                 .permitAll()
                 .mvcMatchers("/auth/token/refresh")
                 .permitAll()
+                .mvcMatchers("/user/image")
+                .permitAll()
                 .mvcMatchers("/**/health/**")
                 .permitAll()
                 .mvcMatchers("/example/**")
