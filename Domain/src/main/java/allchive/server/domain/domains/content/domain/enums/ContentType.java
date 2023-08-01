@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ContentType {
-    IMAGE("image"),
-    LINK("link");
+    IMAGE("IMAGE"),
+    LINK("LINK");
 
     @JsonValue private String value;
 

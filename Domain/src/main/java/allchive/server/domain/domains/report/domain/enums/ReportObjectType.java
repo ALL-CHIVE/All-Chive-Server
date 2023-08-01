@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ReportObjectType {
-    CONTENT("content"),
-    ARCHIVING("archiving");
+    CONTENT("CONTENT"),
+    ARCHIVING("ARCHIVING");
 
     @JsonValue private String value;
 

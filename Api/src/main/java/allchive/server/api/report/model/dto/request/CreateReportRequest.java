@@ -11,7 +11,7 @@ public class CreateReportRequest {
     @Schema(defaultValue = "기타기타기타기타기타", description = "사유 ('기타'에만 해당)")
     private String reason;
 
-    @Schema(defaultValue = "spam", description = "신고 종류")
+    @Schema(defaultValue = "SPAM", description = "신고 종류")
     @ValidEnum(target = ReportedType.class)
     private ReportedType reportedType;
 

@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 public class UpdateContentRequest {
-    @Schema(defaultValue = "image", description = "컨텐츠 타입")
+    @Schema(defaultValue = "IMAGE", description = "컨텐츠 타입")
     @ValidEnum(target = ContentType.class)
     private ContentType contentType;
 
