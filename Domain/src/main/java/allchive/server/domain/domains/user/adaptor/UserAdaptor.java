@@ -39,4 +39,8 @@ public class UserAdaptor {
     public List<User> findAllByIdIn(List<Long> userIds) {
         return userRepository.findAllByIdIn(userIds);
     }
+
+    public Boolean existsById(Long userId) {
+        return userRepository.existsById(userId);
+    }
 }

@@ -8,12 +8,14 @@ import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.block.service.BlockDomainService;
 import allchive.server.domain.domains.block.validator.BlockValidator;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
+import allchive.server.domain.domains.user.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
 public class DeleteBlockUseCase {
+    private final UserValidator userValidator;
     private final BlockValidator blockValidator;
     private final BlockDomainService blockDomainService;
     private final UserAdaptor userAdaptor;
@@ -21,8 +23,13 @@ public class DeleteBlockUseCase {
     @Transactional
     public BlockResponse execute(BlockRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
-        blockValidator.validateExist(userId, request.getUserId());
+        validateExecution(userId, request);
         blockDomainService.deleteByBlockFromAndBlockUser(userId, request.getUserId());
         return BlockResponse.from(userAdaptor.findById(request.getUserId()).getNickname());
+    }
+
+    private void validateExecution(Long userId, BlockRequest request) {
+        userValidator.validateExist(request.getUserId());
+        blockValidator.validateExist(userId, request.getUserId());
     }
 }
