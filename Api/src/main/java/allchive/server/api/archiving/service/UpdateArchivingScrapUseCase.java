@@ -40,8 +40,10 @@ public class UpdateArchivingScrapUseCase {
     private void validateExecution(Long archivingId, Long userId, Boolean cancel) {
         archivingValidator.validateExistById(archivingId);
         archivingValidator.validateDeleteStatus(archivingId, userId);
-        if (!cancel) {
+        if (cancel) {
             scrapValidator.validateExistScrap(userId, archivingId);
+        } else {
+            scrapValidator.validateNotExistScrap(userId, archivingId);
         }
     }
 }
