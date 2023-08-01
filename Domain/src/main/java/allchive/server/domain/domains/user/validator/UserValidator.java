@@ -7,6 +7,7 @@ import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.UserState;
 import allchive.server.domain.domains.user.exception.exceptions.AlreadySignUpUserException;
 import allchive.server.domain.domains.user.exception.exceptions.ForbiddenUserException;
+import allchive.server.domain.domains.user.exception.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Validator
@@ -25,6 +26,12 @@ public class UserValidator {
     public void validateUserStatusNormal(Long userId) {
         if (!userAdaptor.findById(userId).getUserState().equals(UserState.NORMAL)) {
             throw ForbiddenUserException.EXCEPTION;
+        }
+    }
+
+    public void validateExist(Long userId) {
+        if (!userAdaptor.existsById(userId)) {
+            throw UserNotFoundException.EXCEPTION;
         }
     }
 }
