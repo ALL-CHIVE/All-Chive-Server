@@ -39,4 +39,8 @@ public class ScrapAdaptor {
     public void deleteAllByUser(User user) {
         scrapRepository.deleteAllByUser(user);
     }
+
+    public boolean existsByUserAndArchivingId(User user, Long archivingId) {
+        return scrapRepository.existsByUserAndArchivingId(user, archivingId);
+    }
 }

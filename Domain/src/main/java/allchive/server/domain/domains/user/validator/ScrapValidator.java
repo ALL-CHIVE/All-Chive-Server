@@ -16,13 +16,13 @@ public class ScrapValidator {
 
     public void validateExistScrap(Long userId, Long archivingId) {
         User user = userAdaptor.findById(userId);
-        if (isScrapExist(user, archivingId)) {
-            throw AlreadyExistScrapException.EXCEPTION;
-        }
+        scrapAdaptor.findByUserAndArchivingId(user, archivingId);
     }
 
-    private Boolean isScrapExist(User user, Long archivingId) {
-        scrapAdaptor.findByUserAndArchivingId(user, archivingId);
-        return Boolean.TRUE;
+    public void validateNotExistScrap(Long userId, Long archivingId) {
+        User user = userAdaptor.findById(userId);
+        if (scrapAdaptor.existsByUserAndArchivingId(user, archivingId)) {
+            throw AlreadyExistScrapException.EXCEPTION;
+        }
     }
 }

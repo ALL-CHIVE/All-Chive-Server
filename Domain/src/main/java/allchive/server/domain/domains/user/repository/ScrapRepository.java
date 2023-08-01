@@ -15,4 +15,6 @@ public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     void deleteAllByArchivingIdIn(List<Long> archivingId);
 
     void deleteAllByUser(User user);
+
+    boolean existsByUserAndArchivingId(User user, Long archivingId);
 }
