@@ -30,20 +30,29 @@ public class CreateReportUseCase {
     @Transactional
     public void execute(CreateReportRequest request, ReportObjectType type) {
         Long userId = SecurityUtil.getCurrentUserId();
-        reportValidator.validateNotDuplicateReport(userId, request.getId(), type);
+        validateExecution(userId, request.getId(), type);
+        Long reportedUserId = getReportedUserId(request.getId(), type);
+        Report report = reportMapper.toEntity(request, type, userId, reportedUserId);
+        reportDomainService.save(report);
+    }
+
+    private void validateExecution(Long userId, Long objId, ReportObjectType type) {
+        reportValidator.validateNotDuplicateReport(userId, objId, type);
+    }
+
+    private Long getReportedUserId(Long objId, ReportObjectType type) {
         Long reportedUserId = 0L;
         switch (type) {
             case CONTENT -> {
-                contentValidator.validateExistById(request.getId());
-                Long archivingId = contentAdaptor.findById(request.getId()).getArchivingId();
+                contentValidator.validateExistById(objId);
+                Long archivingId = contentAdaptor.findById(objId).getArchivingId();
                 reportedUserId = archivingAdaptor.findById(archivingId).getUserId();
             }
             case ARCHIVING -> {
-                archivingValidator.validateExistById(request.getId());
-                reportedUserId = archivingAdaptor.findById(request.getId()).getUserId();
+                archivingValidator.validateExistById(objId);
+                reportedUserId = archivingAdaptor.findById(objId).getUserId();
             }
         }
-        Report report = reportMapper.toEntity(request, type, userId, reportedUserId);
-        reportDomainService.save(report);
+        return reportedUserId;
     }
 }
