@@ -16,14 +16,22 @@ public class SpringEnvironmentHelper {
     private final Environment environment;
 
     public Boolean isProdProfile() {
-        String[] activeProfiles = environment.getActiveProfiles();
-        List<String> currentProfile = Arrays.stream(activeProfiles).toList();
+        List<String> currentProfile = getCurrentProfile();
         return currentProfile.contains(PROD);
     }
 
     public Boolean isDevProfile() {
-        String[] activeProfiles = environment.getActiveProfiles();
-        List<String> currentProfile = Arrays.stream(activeProfiles).toList();
+        List<String> currentProfile = getCurrentProfile();
         return currentProfile.contains(DEV);
+    }
+
+    public Boolean isProdAndDevProfile() {
+        List<String> currentProfile = getCurrentProfile();
+        return currentProfile.contains(PROD) || currentProfile.contains(DEV);
+    }
+
+    private List<String> getCurrentProfile() {
+        String[] activeProfiles = environment.getActiveProfiles();
+        return Arrays.stream(activeProfiles).toList();
     }
 }
