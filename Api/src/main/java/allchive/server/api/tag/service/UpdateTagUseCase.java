@@ -17,8 +17,12 @@ public class UpdateTagUseCase {
 
     @Transactional
     public void execute(Long tagId, UpdateTagRequest request) {
+        validateExecution(tagId);
+        tagDomainService.updateTag(tagId, request.getName());
+    }
+
+    private void validateExecution(Long tagId) {
         Long userId = SecurityUtil.getCurrentUserId();
         tagValidator.verifyUser(tagId, userId);
-        tagDomainService.updateTag(tagId, request.getName());
     }
 }
