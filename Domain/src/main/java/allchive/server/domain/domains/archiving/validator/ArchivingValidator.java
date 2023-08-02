@@ -66,4 +66,8 @@ public class ArchivingValidator {
                     }
                 });
     }
+
+    public void validateNotDeleted(Long archivingId) {
+        archivingAdaptor.findById(archivingId).validateNotDelete();
+    }
 }
