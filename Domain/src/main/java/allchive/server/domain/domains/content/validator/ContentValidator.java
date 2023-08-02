@@ -6,8 +6,10 @@ import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
+import allchive.server.domain.domains.content.exception.exceptions.AlreadyDeletedContentException;
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
 import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateContentException;
+import allchive.server.domain.domains.content.exception.exceptions.NotPublicContentException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -50,6 +52,21 @@ public class ContentValidator {
         Long archivingUserId = archivingAdaptor.findById(archivingId).getUserId();
         if (!archivingUserId.equals(userId)) {
             throw NoAuthorityUpdateContentException.EXCEPTION;
+        }
+    }
+
+    public void validateNotDelete(Long contentId) {
+        if (contentAdaptor.findById(contentId).isDeleteStatus()) {
+            throw AlreadyDeletedContentException.EXCEPTION;
+        }
+    }
+
+    public void validatePublic(Long contentId, Long userId) {
+        Content content = contentAdaptor.findById(contentId);
+        Archiving archiving = archivingAdaptor.findById(content.getArchivingId());
+        if (archiving.getPublicStatus().equals(Boolean.FALSE)
+                && !archiving.getUserId().equals(userId)) {
+            throw NotPublicContentException.EXCEPTION;
         }
     }
 }

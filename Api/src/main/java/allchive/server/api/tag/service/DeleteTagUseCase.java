@@ -21,10 +21,14 @@ public class DeleteTagUseCase {
 
     @Transactional
     public void execute(Long tagId) {
-        Long userId = SecurityUtil.getCurrentUserId();
-        tagValidator.verifyUser(tagId, userId);
+        validateExecution(tagId);
         Tag tag = tagAdaptor.findById(tagId);
         contentTagGroupDomainService.deleteByTag(tag);
         tagDomainService.deleteById(tagId);
+    }
+
+    private void validateExecution(Long tagId) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        tagValidator.verifyUser(tagId, userId);
     }
 }

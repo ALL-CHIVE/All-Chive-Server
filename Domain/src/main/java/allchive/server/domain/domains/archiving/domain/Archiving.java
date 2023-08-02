@@ -124,4 +124,10 @@ public class Archiving extends BaseTimeEntity {
     public void updateLinkCnt(int i) {
         this.linkCnt += i;
     }
+
+    public void validateNotDelete() {
+        if (this.deleteStatus.equals(Boolean.TRUE)) {
+            throw DeletedArchivingException.EXCEPTION;
+        }
+    }
 }

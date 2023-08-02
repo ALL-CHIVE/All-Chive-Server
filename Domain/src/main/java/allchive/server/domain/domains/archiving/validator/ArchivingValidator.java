@@ -46,10 +46,6 @@ public class ArchivingValidator {
         }
     }
 
-    public void validateArchivingUser(Long archivingId, Long userId) {
-        archivingAdaptor.findById(archivingId).validateUser(userId);
-    }
-
     public void validateExistInIdList(List<Long> archivingIdList) {
         List<Archiving> archivingList = archivingAdaptor.findAllByIdIn(archivingIdList);
         if (archivingList.size() != archivingIdList.size()) {
@@ -65,5 +61,9 @@ public class ArchivingValidator {
                         throw NoAuthurityUpdateArchivingException.EXCEPTION;
                     }
                 });
+    }
+
+    public void validateNotDeleted(Long archivingId) {
+        archivingAdaptor.findById(archivingId).validateNotDelete();
     }
 }

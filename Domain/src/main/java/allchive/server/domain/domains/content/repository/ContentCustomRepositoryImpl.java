@@ -22,7 +22,7 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
         List<Content> archivings =
                 queryFactory
                         .selectFrom(content)
-                        .where(archivingIdEq(archivingId))
+                        .where(archivingIdEq(archivingId), deleteStatusFalse())
                         .orderBy(createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
@@ -44,6 +44,10 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
         Integer fetchOne =
                 queryFactory.selectOne().from(content).where(idEq(id)).fetchFirst(); // limit 1
         return fetchOne != null;
+    }
+
+    private BooleanExpression deleteStatusFalse() {
+        return content.deleteStatus.eq(Boolean.FALSE);
     }
 
     private BooleanExpression archivingIdEq(Long archivingId) {

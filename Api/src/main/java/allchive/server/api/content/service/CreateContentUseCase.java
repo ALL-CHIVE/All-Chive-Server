@@ -41,7 +41,7 @@ public class CreateContentUseCase {
     private void validateExecution(CreateContentRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
         archivingValidator.validateExistById(request.getArchivingId());
-        archivingValidator.validateArchivingUser(request.getArchivingId(), userId);
+        archivingValidator.verifyUser(request.getArchivingId(), userId);
         tagValidator.validateExistTagsAndUser(request.getTagIds(), userId);
     }
 

@@ -30,5 +30,6 @@ public class DeleteArchivingUseCase {
 
     private void validateExecution(Long archivingId, Long userId) {
         archivingValidator.verifyUser(userId, archivingId);
+        archivingValidator.validateNotDeleted(archivingId);
     }
 }
