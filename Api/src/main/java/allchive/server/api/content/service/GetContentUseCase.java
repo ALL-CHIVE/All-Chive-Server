@@ -13,6 +13,8 @@ import allchive.server.domain.domains.content.adaptor.ContentTagGroupAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import java.util.List;
+
+import allchive.server.domain.domains.content.validator.ContentValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GetContentUseCase {
     private final ArchivingValidator archivingValidator;
+    private final ContentValidator contentValidator;
     private final ContentAdaptor contentAdaptor;
     private final ContentTagGroupAdaptor contentTagGroupAdaptor;
     private final ContentMapper contentMapper;
@@ -28,16 +31,16 @@ public class GetContentUseCase {
     @Transactional(readOnly = true)
     public ContentTagResponse execute(Long contentId) {
         Long userId = SecurityUtil.getCurrentUserId();
+        validateExecution(contentId, userId);
         Content content = contentAdaptor.findById(contentId);
-        validateExecution(content.getArchivingId(), userId);
         List<ContentTagGroup> contentTagGroupList =
                 contentTagGroupAdaptor.queryContentTagGroupByContentWithTag(content);
         Boolean isMine = calculateIsMine(content.getArchivingId(), userId);
         return contentMapper.toContentTagResponse(content, contentTagGroupList, isMine);
     }
 
-    private void validateExecution(Long archivingId, Long userId) {
-        archivingValidator.validatePublicStatus(archivingId, userId);
+    private void validateExecution(Long contentId, Long userId) {
+        contentValidator.validatePublic(contentId, userId);
     }
 
     private Boolean calculateIsMine(Long archivingId, Long userId) {

@@ -12,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ContentErrorCode implements BaseErrorCode {
     ALREADY_DELETED_CONTENT(NOT_FOUND, "CONTENT_400_1", "이미 삭제된 컨텐츠입니다."),
+    NOT_PUBLIC_CONTENT(NOT_FOUND, "CONTENT_400_2", "공개되지않은 컨텐츠입니다."),
     CONTENT_NOT_FOUND(NOT_FOUND, "CONTENT_404_1", "카테고리를 찾을 수 없습니다."),
 
     NO_AUTHORITY_UPDATE_CONTENT(FORBIDDEN, "TAG_403_1", "컨텐츠 수정 권한이 없습니다."),

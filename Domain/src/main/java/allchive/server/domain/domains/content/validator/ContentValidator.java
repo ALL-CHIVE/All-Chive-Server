@@ -10,6 +10,8 @@ import allchive.server.domain.domains.content.exception.exceptions.AlreadyDelete
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
 import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateContentException;
 import java.util.List;
+
+import allchive.server.domain.domains.content.exception.exceptions.NotPublicContentException;
 import lombok.RequiredArgsConstructor;
 
 @Validator
@@ -57,6 +59,14 @@ public class ContentValidator {
     public void validateNotDelete(Long contentId) {
         if (contentAdaptor.findById(contentId).isDeleteStatus()) {
             throw AlreadyDeletedContentException.EXCEPTION;
+        }
+    }
+
+    public void validatePublic(Long contentId, Long userId) {
+        Content content = contentAdaptor.findById(contentId);
+        Archiving archiving = archivingAdaptor.findById(content.getArchivingId());
+        if (archiving.getPublicStatus().equals(Boolean.FALSE) && !archiving.getUserId().equals(userId)) {
+            throw NotPublicContentException.EXCEPTION;
         }
     }
 }
