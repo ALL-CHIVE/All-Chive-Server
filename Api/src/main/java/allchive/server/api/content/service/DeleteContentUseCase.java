@@ -30,6 +30,7 @@ public class DeleteContentUseCase {
 
     private void validateExecution(Long contentId, Long userId) {
         contentValidator.verifyUser(contentId, userId);
+        contentValidator.validateNotDelete(contentId);
     }
 
     private void createRecycle(Long userId, Long contentId) {
