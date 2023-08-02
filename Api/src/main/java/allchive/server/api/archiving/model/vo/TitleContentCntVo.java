@@ -27,7 +27,7 @@ public class TitleContentCntVo {
     public static TitleContentCntVo from(Archiving archiving) {
         return TitleContentCntVo.builder()
                 .archivingId(archiving.getId())
-                .contentCnt(archiving.getImgCnt() + archiving.getScrapCnt())
+                .contentCnt(archiving.getImgCnt() + archiving.getLinkCnt())
                 .title(archiving.getTitle())
                 .build();
     }
