@@ -50,8 +50,11 @@ public class ContentMapper {
         return tags.stream().map(tag -> ContentTagGroup.of(content, tag)).toList();
     }
 
-    public ContentTagInfoResponse toContentTagInfoResponse(Archiving archiving,
-            Content content, List<ContentTagGroup> contentTagGroupList, Boolean isMine) {
+    public ContentTagInfoResponse toContentTagInfoResponse(
+            Archiving archiving,
+            Content content,
+            List<ContentTagGroup> contentTagGroupList,
+            Boolean isMine) {
         List<TagResponse> tagResponseList =
                 contentTagGroupList.stream()
                         .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))

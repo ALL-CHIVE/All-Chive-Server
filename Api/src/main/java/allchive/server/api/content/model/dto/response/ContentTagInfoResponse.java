@@ -8,11 +8,10 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Builder;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class ContentTagInfoResponse {
@@ -78,8 +77,8 @@ public class ContentTagInfoResponse {
         this.isMine = isMine;
     }
 
-    public static ContentTagInfoResponse of(Archiving archiving,
-            Content content, List<TagResponse> tagList, Boolean isMine) {
+    public static ContentTagInfoResponse of(
+            Archiving archiving, Content content, List<TagResponse> tagList, Boolean isMine) {
         return ContentTagInfoResponse.builder()
                 .archivingId(archiving.getId())
                 .archivingTitle(archiving.getTitle())
