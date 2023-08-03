@@ -2,7 +2,7 @@ package allchive.server.api.content.service;
 
 
 import allchive.server.api.config.security.SecurityUtil;
-import allchive.server.api.content.model.dto.response.ContentTagResponse;
+import allchive.server.api.content.model.dto.response.ContentTagInfoResponse;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
-public class GetContentUseCase {
+public class GetContentInfoUseCase {
     private final ContentValidator contentValidator;
     private final ContentAdaptor contentAdaptor;
     private final ContentTagGroupAdaptor contentTagGroupAdaptor;
@@ -26,22 +26,24 @@ public class GetContentUseCase {
     private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional(readOnly = true)
-    public ContentTagResponse execute(Long contentId) {
+    public ContentTagInfoResponse execute(Long contentId) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(contentId, userId);
         Content content = contentAdaptor.findById(contentId);
+        Archiving archiving = archivingAdaptor.findById(content.getArchivingId());
         List<ContentTagGroup> contentTagGroupList =
                 contentTagGroupAdaptor.queryContentTagGroupByContentWithTag(content);
-        Boolean isMine = calculateIsMine(content.getArchivingId(), userId);
-        return contentMapper.toContentTagResponse(content, contentTagGroupList, isMine);
+        Boolean isMine = calculateIsMine(archiving, userId);
+        return contentMapper.toContentTagInfoResponse(
+                archiving, content, contentTagGroupList, isMine);
     }
 
     private void validateExecution(Long contentId, Long userId) {
         contentValidator.validatePublic(contentId, userId);
+        contentValidator.verifyUser(contentId, userId);
     }
 
-    private Boolean calculateIsMine(Long archivingId, Long userId) {
-        Archiving archiving = archivingAdaptor.findById(archivingId);
+    private Boolean calculateIsMine(Archiving archiving, Long userId) {
         if (archiving.getUserId().equals(userId)) {
             return Boolean.TRUE;
         }
