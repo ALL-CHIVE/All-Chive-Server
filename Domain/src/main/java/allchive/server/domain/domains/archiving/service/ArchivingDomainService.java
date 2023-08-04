@@ -9,6 +9,9 @@ import allchive.server.domain.domains.content.domain.enums.ContentType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
+
 @DomainService
 @RequiredArgsConstructor
 public class ArchivingDomainService {
@@ -41,7 +44,7 @@ public class ArchivingDomainService {
         } else {
             archiving.deletePinUserId(userId);
         }
-        archiving.updateScrapCnt(pin ? 1 : -1);
+        archiving.updateScrapCnt(pin ? PLUS_ONE : MINUS_ONE);
     }
 
     public void softDeleteById(Long archivingId) {
