@@ -30,10 +30,11 @@ public class GetContentUseCase {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(contentId, userId);
         Content content = contentAdaptor.findById(contentId);
+        Long ownerId = archivingAdaptor.findById(content.getArchivingId()).getUserId();
         List<ContentTagGroup> contentTagGroupList =
                 contentTagGroupAdaptor.queryContentTagGroupByContentWithTag(content);
         Boolean isMine = calculateIsMine(content.getArchivingId(), userId);
-        return contentMapper.toContentTagResponse(content, contentTagGroupList, isMine);
+        return contentMapper.toContentTagResponse(content, contentTagGroupList, isMine, ownerId);
     }
 
     private void validateExecution(Long contentId, Long userId) {
