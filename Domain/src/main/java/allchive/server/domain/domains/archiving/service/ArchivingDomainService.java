@@ -60,12 +60,12 @@ public class ArchivingDomainService {
         archivingAdaptor.deleteAllById(archivingIds);
     }
 
-    public void updateContentCnt(Long archivingId, ContentType contentType) {
+    public void updateContentCnt(Long archivingId, ContentType contentType, int i) {
         Archiving archiving = archivingAdaptor.findById(archivingId);
         if (contentType.equals(ContentType.IMAGE)) {
-            archiving.updateImgCnt(1);
+            archiving.updateImgCnt(i);
         } else {
-            archiving.updateLinkCnt(1);
+            archiving.updateLinkCnt(i);
         }
     }
 }

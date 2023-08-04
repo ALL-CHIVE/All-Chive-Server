@@ -18,6 +18,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
+
 @UseCase
 @RequiredArgsConstructor
 public class CreateContentUseCase {
@@ -35,7 +37,7 @@ public class CreateContentUseCase {
         Content content = contentMapper.toEntity(request);
         createContentTagGroup(content, request.getTagIds());
         contentDomainService.save(content);
-        archivingDomainService.updateContentCnt(request.getArchivingId(), request.getContentType());
+        archivingDomainService.updateContentCnt(request.getArchivingId(), request.getContentType(), PLUS_ONE);
     }
 
     private void validateExecution(CreateContentRequest request) {
