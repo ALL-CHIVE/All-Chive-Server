@@ -4,6 +4,8 @@ package allchive.server.domain.domains.content.domain;
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import javax.persistence.*;
+
+import allchive.server.domain.domains.content.exception.exceptions.AlreadyDeletedContentException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -88,5 +90,11 @@ public class Content extends BaseTimeEntity {
         this.imageUrl = imgUrl;
         this.title = title;
         this.memo = memo;
+    }
+
+    public void validateNotDelete() {
+        if (this.isDeleteStatus()) {
+            throw AlreadyDeletedContentException.EXCEPTION;
+        }
     }
 }

@@ -56,9 +56,7 @@ public class ContentValidator {
     }
 
     public void validateNotDelete(Long contentId) {
-        if (contentAdaptor.findById(contentId).isDeleteStatus()) {
-            throw AlreadyDeletedContentException.EXCEPTION;
-        }
+        contentAdaptor.findById(contentId).validateNotDelete();
     }
 
     public void validatePublic(Long contentId, Long userId) {

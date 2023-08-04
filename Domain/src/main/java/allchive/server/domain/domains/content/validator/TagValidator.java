@@ -23,11 +23,6 @@ public class TagValidator {
         if (tagIds.size() != tags.size()) {
             throw TagNotFoundException.EXCEPTION;
         }
-        tags.forEach(
-                tag -> {
-                    if (!tag.getUserId().equals(userId)) {
-                        throw NoAuthorityUpdateTagException.EXCEPTION;
-                    }
-                });
+        tags.forEach(tag -> tag.validateUser(userId));
     }
 }
