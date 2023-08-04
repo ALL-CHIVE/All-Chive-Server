@@ -15,11 +15,14 @@ public class GetArchivingInfoUseCase {
     private final ArchivingValidator archivingValidator;
     private final ArchivingAdaptor archivingAdaptor;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ArchivingResponse execute(Long archivingId) {
-        archivingValidator.validateExistById(archivingId);
-
+        validateExecution(archivingId);
         Archiving archiving = archivingAdaptor.findById(archivingId);
         return ArchivingResponse.of(archiving, Boolean.FALSE);
+    }
+
+    private void validateExecution(Long archivingId) {
+        archivingValidator.validateExistById(archivingId);
     }
 }

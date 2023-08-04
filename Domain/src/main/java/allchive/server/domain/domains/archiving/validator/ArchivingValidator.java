@@ -4,10 +4,7 @@ package allchive.server.domain.domains.archiving.validator;
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
-import allchive.server.domain.domains.archiving.exception.exceptions.AlreadyPinnedArchivingException;
 import allchive.server.domain.domains.archiving.exception.exceptions.ArchivingNotFoundException;
-import allchive.server.domain.domains.archiving.exception.exceptions.NoAuthurityUpdateArchivingException;
-import allchive.server.domain.domains.archiving.exception.exceptions.NotPinnedArchivingException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -20,12 +17,12 @@ public class ArchivingValidator {
         archivingAdaptor.findById(archivingId).validateUser(userId);
     }
 
-    public void validatePublicStatus(Long archivingId, Long userId) {
-        archivingAdaptor.findById(archivingId).validatePublicStatus(userId);
+    public void validatePublic(Long archivingId, Long userId) {
+        archivingAdaptor.findById(archivingId).validatePublic(userId);
     }
 
-    public void validateDeleteStatus(Long archivingId, Long userId) {
-        archivingAdaptor.findById(archivingId).validateDeleteStatus(userId);
+    public void validateNotDeleteExceptUser(Long archivingId, Long userId) {
+        archivingAdaptor.findById(archivingId).validateNotDeleteExceptUser(userId);
     }
 
     public void validateExistById(Long archivingId) {
@@ -35,15 +32,11 @@ public class ArchivingValidator {
     }
 
     public void validateAlreadyPinStatus(Long archivingId, Long userId) {
-        if (archivingAdaptor.findById(archivingId).getPinUserId().contains(userId)) {
-            throw AlreadyPinnedArchivingException.EXCEPTION;
-        }
+        archivingAdaptor.findById(archivingId).validateAlreadyPinStatus(userId);
     }
 
     public void validateNotPinStatus(Long archivingId, Long userId) {
-        if (!archivingAdaptor.findById(archivingId).getPinUserId().contains(userId)) {
-            throw NotPinnedArchivingException.EXCEPTION;
-        }
+        archivingAdaptor.findById(archivingId).validateNotPinStatus(userId);
     }
 
     public void validateExistInIdList(List<Long> archivingIdList) {
@@ -55,12 +48,7 @@ public class ArchivingValidator {
 
     public void verifyUserInIdList(Long userId, List<Long> archivingIds) {
         List<Archiving> archivingList = archivingAdaptor.findAllByIdIn(archivingIds);
-        archivingList.forEach(
-                archiving -> {
-                    if (!archiving.getUserId().equals(userId)) {
-                        throw NoAuthurityUpdateArchivingException.EXCEPTION;
-                    }
-                });
+        archivingList.forEach(archiving -> archiving.validateUser(userId));
     }
 
     public void validateNotDeleted(Long archivingId) {

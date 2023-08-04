@@ -6,7 +6,6 @@ import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
-import allchive.server.domain.domains.content.exception.exceptions.AlreadyDeletedContentException;
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
 import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateContentException;
 import allchive.server.domain.domains.content.exception.exceptions.NotPublicContentException;
@@ -56,9 +55,7 @@ public class ContentValidator {
     }
 
     public void validateNotDelete(Long contentId) {
-        if (contentAdaptor.findById(contentId).isDeleteStatus()) {
-            throw AlreadyDeletedContentException.EXCEPTION;
-        }
+        contentAdaptor.findById(contentId).validateNotDelete();
     }
 
     public void validatePublic(Long contentId, Long userId) {

@@ -43,8 +43,8 @@ public class GetArchivingContentsUseCase {
     }
 
     private void validateExecution(Long archivingId, Long userId) {
-        archivingValidator.validatePublicStatus(archivingId, userId);
-        archivingValidator.validateDeleteStatus(archivingId, userId);
+        archivingValidator.validatePublic(archivingId, userId);
+        archivingValidator.validateNotDeleteExceptUser(archivingId, userId);
     }
 
     private Slice<ContentResponse> getContentResponseSlice(Long archivingId, Pageable pageable) {

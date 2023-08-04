@@ -2,6 +2,7 @@ package allchive.server.domain.domains.search.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
+import allchive.server.domain.domains.search.exception.exceptions.NoAuthorityUpdateLatestSearchException;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,5 +30,11 @@ public class LatestSearch extends BaseTimeEntity {
 
     public static LatestSearch of(String keyword, Long userId) {
         return LatestSearch.builder().keyword(keyword).userId(userId).build();
+    }
+
+    public void validateUser(Long userId) {
+        if (!this.userId.equals(userId)) {
+            throw NoAuthorityUpdateLatestSearchException.EXCEPTION;
+        }
     }
 }

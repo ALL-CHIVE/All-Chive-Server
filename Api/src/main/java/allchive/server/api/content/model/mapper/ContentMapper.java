@@ -38,12 +38,15 @@ public class ContentMapper {
     }
 
     public ContentTagResponse toContentTagResponse(
-            Content content, List<ContentTagGroup> contentTagGroupList, Boolean isMine) {
+            Content content,
+            List<ContentTagGroup> contentTagGroupList,
+            Boolean isMine,
+            Long ownerId) {
         List<TagResponse> tagResponseList =
                 contentTagGroupList.stream()
                         .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))
                         .toList();
-        return ContentTagResponse.of(content, tagResponseList, isMine);
+        return ContentTagResponse.of(content, tagResponseList, isMine, ownerId);
     }
 
     public List<ContentTagGroup> toContentTagGroupEntityList(Content content, List<Tag> tags) {

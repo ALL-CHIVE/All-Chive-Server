@@ -3,9 +3,7 @@ package allchive.server.domain.domains.archiving.domain;
 
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
-import allchive.server.domain.domains.archiving.exception.exceptions.DeletedArchivingException;
-import allchive.server.domain.domains.archiving.exception.exceptions.NoAuthurityUpdateArchivingException;
-import allchive.server.domain.domains.archiving.exception.exceptions.NotPublicArchivingException;
+import allchive.server.domain.domains.archiving.exception.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -85,13 +83,13 @@ public class Archiving extends BaseTimeEntity {
         }
     }
 
-    public void validatePublicStatus(Long userId) {
+    public void validatePublic(Long userId) {
         if (!this.publicStatus && !this.userId.equals(userId)) {
             throw NotPublicArchivingException.EXCEPTION;
         }
     }
 
-    public void validateDeleteStatus(Long userId) {
+    public void validateNotDeleteExceptUser(Long userId) {
         if (this.deleteStatus && !this.userId.equals(userId)) {
             throw DeletedArchivingException.EXCEPTION;
         }
@@ -128,6 +126,18 @@ public class Archiving extends BaseTimeEntity {
     public void validateNotDelete() {
         if (this.deleteStatus.equals(Boolean.TRUE)) {
             throw DeletedArchivingException.EXCEPTION;
+        }
+    }
+
+    public void validateAlreadyPinStatus(Long userId) {
+        if (this.pinUserId.contains(userId)) {
+            throw AlreadyPinnedArchivingException.EXCEPTION;
+        }
+    }
+
+    public void validateNotPinStatus(Long userId) {
+        if (!this.pinUserId.contains(userId)) {
+            throw NotPinnedArchivingException.EXCEPTION;
         }
     }
 }

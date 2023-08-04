@@ -42,6 +42,10 @@ public class ContentTagResponse {
 
     private List<TagResponse> tagList;
 
+    @Schema(description = "컨텐츠 소유자 고유번호")
+    private Long ownerId;
+
+    @Schema(description = "유저 소유 여부")
     private Boolean isMine;
 
     @Builder
@@ -54,6 +58,7 @@ public class ContentTagResponse {
             String imgUrl,
             LocalDateTime contentCreatedAt,
             List<TagResponse> tagList,
+            Long ownerId,
             Boolean isMine) {
         this.contentId = contentId;
         this.contentTitle = contentTitle;
@@ -63,11 +68,12 @@ public class ContentTagResponse {
         this.imgUrl = imgUrl;
         this.contentCreatedAt = contentCreatedAt;
         this.tagList = tagList;
+        this.ownerId = ownerId;
         this.isMine = isMine;
     }
 
     public static ContentTagResponse of(
-            Content content, List<TagResponse> tagList, Boolean isMine) {
+            Content content, List<TagResponse> tagList, Boolean isMine, Long ownerId) {
         return ContentTagResponse.builder()
                 .contentId(content.getId())
                 .contentTitle(content.getTitle())
@@ -77,6 +83,7 @@ public class ContentTagResponse {
                 .imgUrl(UrlUtil.toAssetUrl(content.getImageUrl()))
                 .contentCreatedAt(content.getCreatedAt())
                 .tagList(tagList)
+                .ownerId(ownerId)
                 .isMine(isMine)
                 .build();
     }

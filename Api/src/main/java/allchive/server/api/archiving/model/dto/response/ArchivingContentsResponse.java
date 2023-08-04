@@ -21,6 +21,9 @@ public class ArchivingContentsResponse {
     @Schema(description = "아카이빙의 총 컨텐츠 개수")
     private Long totalContentsCount;
 
+    @Schema(description = "아카이빙 소유자 고유번호")
+    private Long ownerId;
+
     @Schema(description = "유저 소유 여부")
     private Boolean isMine;
 
@@ -30,11 +33,13 @@ public class ArchivingContentsResponse {
             String archivingTitle,
             Long archivingId,
             Long totalContentsCount,
+            Long ownerId,
             Boolean isMine) {
         this.contents = contents;
         this.archivingTitle = archivingTitle;
         this.archivingId = archivingId;
         this.totalContentsCount = totalContentsCount;
+        this.ownerId = ownerId;
         this.isMine = isMine;
     }
 
@@ -47,6 +52,7 @@ public class ArchivingContentsResponse {
                 .archivingTitle(archiving.getTitle())
                 .totalContentsCount(archiving.getScrapCnt() + archiving.getImgCnt())
                 .contents(contentResponseSlice)
+                .ownerId(archiving.getUserId())
                 .isMine(isMine)
                 .build();
     }
