@@ -85,13 +85,13 @@ public class Archiving extends BaseTimeEntity {
         }
     }
 
-    public void validatePublicStatus(Long userId) {
+    public void validatePublic(Long userId) {
         if (!this.publicStatus && !this.userId.equals(userId)) {
             throw NotPublicArchivingException.EXCEPTION;
         }
     }
 
-    public void validateDeleteStatus(Long userId) {
+    public void validateNotDeleteExceptUser(Long userId) {
         if (this.deleteStatus && !this.userId.equals(userId)) {
             throw DeletedArchivingException.EXCEPTION;
         }

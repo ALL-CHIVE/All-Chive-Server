@@ -18,16 +18,11 @@ public class UpdateArchivingPinUseCase {
     public void execute(Long archivingId, Boolean cancel) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(archivingId, userId, cancel);
-        if (cancel) {
-            archivingDomainService.updatePin(archivingId, userId, false);
-        } else {
-            archivingDomainService.updatePin(archivingId, userId, true);
-        }
+        archivingDomainService.updatePin(archivingId, userId, !cancel);
     }
 
     private void validateExecution(Long archivingId, Long userId, Boolean cancel) {
-        archivingValidator.validateExistById(archivingId);
-        archivingValidator.validateDeleteStatus(archivingId, userId);
+        archivingValidator.validateNotDeleteExceptUser(archivingId, userId);
         if (cancel) {
             archivingValidator.validateNotPinStatus(archivingId, userId);
         } else {

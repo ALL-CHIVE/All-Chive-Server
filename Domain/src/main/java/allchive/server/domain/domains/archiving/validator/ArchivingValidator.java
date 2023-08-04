@@ -20,12 +20,12 @@ public class ArchivingValidator {
         archivingAdaptor.findById(archivingId).validateUser(userId);
     }
 
-    public void validatePublicStatus(Long archivingId, Long userId) {
-        archivingAdaptor.findById(archivingId).validatePublicStatus(userId);
+    public void validatePublic(Long archivingId, Long userId) {
+        archivingAdaptor.findById(archivingId).validatePublic(userId);
     }
 
-    public void validateDeleteStatus(Long archivingId, Long userId) {
-        archivingAdaptor.findById(archivingId).validateDeleteStatus(userId);
+    public void validateNotDeleteExceptUser(Long archivingId, Long userId) {
+        archivingAdaptor.findById(archivingId).validateNotDeleteExceptUser(userId);
     }
 
     public void validateExistById(Long archivingId) {
