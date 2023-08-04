@@ -35,15 +35,11 @@ public class ArchivingValidator {
     }
 
     public void validateAlreadyPinStatus(Long archivingId, Long userId) {
-        if (archivingAdaptor.findById(archivingId).getPinUserId().contains(userId)) {
-            throw AlreadyPinnedArchivingException.EXCEPTION;
-        }
+        archivingAdaptor.findById(archivingId).validateAlreadyPinStatus(userId);
     }
 
     public void validateNotPinStatus(Long archivingId, Long userId) {
-        if (!archivingAdaptor.findById(archivingId).getPinUserId().contains(userId)) {
-            throw NotPinnedArchivingException.EXCEPTION;
-        }
+        archivingAdaptor.findById(archivingId).validateNotPinStatus(userId);
     }
 
     public void validateExistInIdList(List<Long> archivingIdList) {
