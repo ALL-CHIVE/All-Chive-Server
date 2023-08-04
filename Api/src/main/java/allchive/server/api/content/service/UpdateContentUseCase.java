@@ -1,5 +1,7 @@
 package allchive.server.api.content.service;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.config.security.SecurityUtil;
@@ -7,7 +9,6 @@ import allchive.server.api.content.model.dto.request.UpdateContentRequest;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
-import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
@@ -22,9 +23,6 @@ import allchive.server.domain.domains.content.validator.TagValidator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
-import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
 
 @UseCase
 @RequiredArgsConstructor
@@ -57,7 +55,8 @@ public class UpdateContentUseCase {
     private void updateArchiving(Long contentId, Long newArchivingId, ContentType contentType) {
         Content content = contentAdaptor.findById(contentId);
         if (!content.getArchivingId().equals(newArchivingId)) {
-            archivingDomainService.updateContentCnt(content.getArchivingId(), content.getContentType(), MINUS_ONE);
+            archivingDomainService.updateContentCnt(
+                    content.getArchivingId(), content.getContentType(), MINUS_ONE);
             archivingDomainService.updateContentCnt(newArchivingId, contentType, PLUS_ONE);
         }
     }
