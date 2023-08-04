@@ -40,11 +40,11 @@ public class S3PresignedUrlService {
         String fileName;
         switch (presignedType) {
             case USER -> fileName = baseUrl + "/user/";
-            case CONTENT -> fileName = baseUrl + "/content/";
-            case ARCHIVING -> fileName = baseUrl + "/archiving/";
+            case CONTENT -> fileName = baseUrl + "/content/" + id.toString();
+            case ARCHIVING -> fileName = baseUrl + "/archiving/" + id.toString();
             default -> throw InternalServerError.EXCEPTION;
         }
-        return fileName + id.toString() + "/" + UUID.randomUUID();
+        return fileName + "/" + UUID.randomUUID();
     }
 
     private GeneratePresignedUrlRequest getGeneratePreSignedUrlRequest(String fileName) {

@@ -38,8 +38,7 @@ public class ImageController {
     @Operation(summary = "컨텐츠 관련 이미지 업로드 url 요청할수 있는 api 입니다.")
     @GetMapping(value = "/user/image")
     public ImageUrlResponse getUserPresignedUrl() {
-        Long userId = SecurityUtil.getCurrentUserId();
         return ImageUrlResponse.from(
-                s3PresignedUrlService.getPreSignedUrl(userId, PresignedType.USER));
+                s3PresignedUrlService.getPreSignedUrl(0L, PresignedType.USER));
     }
 }
