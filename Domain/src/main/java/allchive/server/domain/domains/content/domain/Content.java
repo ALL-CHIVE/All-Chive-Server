@@ -3,9 +3,8 @@ package allchive.server.domain.domains.content.domain;
 
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
-import javax.persistence.*;
-
 import allchive.server.domain.domains.content.exception.exceptions.AlreadyDeletedContentException;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

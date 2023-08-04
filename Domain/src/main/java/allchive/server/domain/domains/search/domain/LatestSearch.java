@@ -2,9 +2,8 @@ package allchive.server.domain.domains.search.domain;
 
 
 import allchive.server.domain.common.model.BaseTimeEntity;
-import javax.persistence.*;
-
 import allchive.server.domain.domains.search.exception.exceptions.NoAuthorityUpdateLatestSearchException;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

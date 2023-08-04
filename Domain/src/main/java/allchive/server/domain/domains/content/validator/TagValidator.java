@@ -4,7 +4,6 @@ package allchive.server.domain.domains.content.validator;
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
-import allchive.server.domain.domains.content.exception.exceptions.NoAuthorityUpdateTagException;
 import allchive.server.domain.domains.content.exception.exceptions.TagNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

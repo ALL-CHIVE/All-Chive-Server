@@ -38,7 +38,10 @@ public class ContentMapper {
     }
 
     public ContentTagResponse toContentTagResponse(
-            Content content, List<ContentTagGroup> contentTagGroupList, Boolean isMine, Long ownerId) {
+            Content content,
+            List<ContentTagGroup> contentTagGroupList,
+            Boolean isMine,
+            Long ownerId) {
         List<TagResponse> tagResponseList =
                 contentTagGroupList.stream()
                         .map(contentTagGroup -> TagResponse.from(contentTagGroup.getTag()))

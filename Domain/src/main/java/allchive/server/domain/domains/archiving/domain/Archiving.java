@@ -4,7 +4,6 @@ package allchive.server.domain.domains.archiving.domain;
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.archiving.exception.exceptions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;

@@ -4,9 +4,7 @@ package allchive.server.domain.domains.user.validator;
 import allchive.server.core.annotation.Validator;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
-import allchive.server.domain.domains.user.domain.enums.UserState;
 import allchive.server.domain.domains.user.exception.exceptions.AlreadySignUpUserException;
-import allchive.server.domain.domains.user.exception.exceptions.ForbiddenUserException;
 import allchive.server.domain.domains.user.exception.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 
