@@ -1,5 +1,6 @@
 package allchive.server.api.content.service;
 
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.content.model.dto.request.CreateContentRequest;
@@ -35,7 +36,8 @@ public class CreateContentUseCase {
         Content content = contentMapper.toEntity(request);
         createContentTagGroup(content, request.getTagIds());
         contentDomainService.save(content);
-        archivingDomainService.updateContentCnt(request.getArchivingId(), request.getContentType());
+        archivingDomainService.updateContentCnt(
+                request.getArchivingId(), request.getContentType(), PLUS_ONE);
     }
 
     private void validateExecution(CreateContentRequest request) {

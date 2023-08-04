@@ -7,6 +7,9 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.user.domain.User;
 import java.util.List;
 
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.ZERO;
+
 @Mapper
 public class UserMapper {
     public GetUserProfileResponse toGetUserProfileResponse(
@@ -15,7 +18,7 @@ public class UserMapper {
         for (Archiving archiving : archivingList) {
             linkCount += archiving.getLinkCnt();
             imgCount += archiving.getImgCnt();
-            publicArchivingCount += archiving.getPublicStatus() ? 1 : 0;
+            publicArchivingCount += archiving.getPublicStatus() ? PLUS_ONE : ZERO;
         }
         return GetUserProfileResponse.of(
                 user, linkCount, imgCount, publicArchivingCount, archivingList.size());

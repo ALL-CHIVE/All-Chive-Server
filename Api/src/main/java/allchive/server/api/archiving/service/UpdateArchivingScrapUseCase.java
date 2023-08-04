@@ -13,6 +13,9 @@ import allchive.server.domain.domains.user.validator.ScrapValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
+
 @UseCase
 @RequiredArgsConstructor
 public class UpdateArchivingScrapUseCase {
@@ -29,11 +32,11 @@ public class UpdateArchivingScrapUseCase {
         User user = userAdaptor.findById(userId);
         if (cancel) {
             scrapDomainService.deleteScrapByUserAndArchivingId(user, archivingId);
-            archivingDomainService.updateScrapCount(archivingId, -1);
+            archivingDomainService.updateScrapCount(archivingId, MINUS_ONE);
         } else {
             Scrap scrap = Scrap.of(user, archivingId);
             scrapDomainService.save(scrap);
-            archivingDomainService.updateScrapCount(archivingId, 1);
+            archivingDomainService.updateScrapCount(archivingId, PLUS_ONE);
         }
     }
 

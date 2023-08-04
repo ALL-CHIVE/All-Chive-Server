@@ -40,4 +40,8 @@ public class AllchiveConst {
 
     public static final String SEARCH_KEY = "ARCHIVING_TITLE";
     public static final String ASTERISK = "*";
+
+    public static final int PLUS_ONE = 1;
+    public static final int MINUS_ONE = -1;
+    public static final int ZERO = 0;
 }

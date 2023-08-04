@@ -1,5 +1,6 @@
 package allchive.server.domain.domains.archiving.repository;
 
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 import static allchive.server.domain.domains.archiving.domain.QArchiving.archiving;
 
 import allchive.server.domain.common.util.SliceUtil;
@@ -38,7 +39,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 deleteStatusFalse())
                         .orderBy(scrabListDesc(archivingIdList), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize() + 1)
+                        .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
         return SliceUtil.toSlice(archivings, pageable);
     }
@@ -53,7 +54,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .where(userIdEq(userId), categoryEq(category), deleteStatusFalse())
                         .orderBy(pinDesc(userId), scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize() + 1)
+                        .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
         return SliceUtil.toSlice(archivings, pageable);
     }
@@ -72,7 +73,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 deleteStatusFalse())
                         .orderBy(scrapCntDesc(), createdAtDesc())
                         .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize() + 1)
+                        .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
         return SliceUtil.toSlice(archivings, pageable);
     }
@@ -102,7 +103,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .where(userIdEq(userId), titleContainOrIdIn(keyword, tagArchivingIds))
                         .orderBy(idIn(tagArchivingIds), createdAtDesc())
                         .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize() + 1)
+                        .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
         return SliceUtil.toSlice(archivings, pageable);
     }
@@ -129,7 +130,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 scrapCntDesc(),
                                 createdAtDesc())
                         .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize() + 1)
+                        .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
         return SliceUtil.toSlice(archivings, pageable);
     }
