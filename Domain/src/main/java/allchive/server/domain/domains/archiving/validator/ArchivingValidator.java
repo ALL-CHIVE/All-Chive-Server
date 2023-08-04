@@ -56,11 +56,7 @@ public class ArchivingValidator {
     public void verifyUserInIdList(Long userId, List<Long> archivingIds) {
         List<Archiving> archivingList = archivingAdaptor.findAllByIdIn(archivingIds);
         archivingList.forEach(
-                archiving -> {
-                    if (!archiving.getUserId().equals(userId)) {
-                        throw NoAuthurityUpdateArchivingException.EXCEPTION;
-                    }
-                });
+                archiving -> archiving.validateUser(userId));
     }
 
     public void validateNotDeleted(Long archivingId) {
