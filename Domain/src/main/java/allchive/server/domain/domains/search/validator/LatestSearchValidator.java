@@ -24,10 +24,8 @@ public class LatestSearchValidator {
     public void verifyUserByIdIn(List<Long> ids, Long userId) {
         List<LatestSearch> searches = latestSearchAdaptor.findAllByIdIn(ids);
         searches.forEach(
-                search -> {
-                    if (!search.getUserId().equals(userId)) {
-                        throw NoAuthorityUpdateLatestSearchException.EXCEPTION;
-                    }
-                });
+                search ->
+                    search.validateUser(userId)
+                );
     }
 }
