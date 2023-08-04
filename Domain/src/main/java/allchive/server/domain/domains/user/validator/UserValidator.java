@@ -24,9 +24,7 @@ public class UserValidator {
     }
 
     public void validateUserStatusNormal(Long userId) {
-        if (!userAdaptor.findById(userId).getUserState().equals(UserState.NORMAL)) {
-            throw ForbiddenUserException.EXCEPTION;
-        }
+        userAdaptor.findById(userId).validateUserStateNormal();
     }
 
     public void validateExist(Long userId) {

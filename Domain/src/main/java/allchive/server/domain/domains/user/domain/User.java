@@ -112,4 +112,10 @@ public class User extends BaseTimeEntity {
         this.nickname = nickname;
         this.profileImgUrl = imgUrl;
     }
+
+    public void validateUserStateNormal() {
+        if (!this.userState.equals(UserState.NORMAL)) {
+            throw ForbiddenUserException.EXCEPTION;
+        }
+    }
 }
