@@ -1,5 +1,7 @@
 package allchive.server.api.archiving.service;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
@@ -12,9 +14,6 @@ import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.domain.domains.user.validator.ScrapValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
-import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 @UseCase
 @RequiredArgsConstructor

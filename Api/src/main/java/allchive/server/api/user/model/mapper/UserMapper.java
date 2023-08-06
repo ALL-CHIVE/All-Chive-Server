@@ -1,14 +1,13 @@
 package allchive.server.api.user.model.mapper;
 
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.ZERO;
 
 import allchive.server.api.user.model.dto.response.GetUserProfileResponse;
 import allchive.server.core.annotation.Mapper;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.user.domain.User;
 import java.util.List;
-
-import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
-import static allchive.server.core.consts.AllchiveConst.ZERO;
 
 @Mapper
 public class UserMapper {

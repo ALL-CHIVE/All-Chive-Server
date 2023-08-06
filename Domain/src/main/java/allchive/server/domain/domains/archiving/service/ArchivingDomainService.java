@@ -1,5 +1,7 @@
 package allchive.server.domain.domains.archiving.service;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
+import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 import allchive.server.core.annotation.DomainService;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
@@ -8,9 +10,6 @@ import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-
-import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
-import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 @DomainService
 @RequiredArgsConstructor

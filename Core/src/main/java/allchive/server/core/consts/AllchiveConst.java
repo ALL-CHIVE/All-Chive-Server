@@ -10,8 +10,6 @@ public class AllchiveConst {
     public static final String REFRESH_TOKEN = "REFRESH_TOKEN";
 
     public static final String KID = "kid";
-    public static final String KR_YES = "예";
-    public static final String KR_NO = "아니요";
 
     public static final String PROD = "prod";
     public static final String DEV = "dev";
@@ -44,4 +42,8 @@ public class AllchiveConst {
     public static final int PLUS_ONE = 1;
     public static final int MINUS_ONE = -1;
     public static final int ZERO = 0;
+
+    public static final Long LOCK_WAIT_TIME = 5L;
+    public static final Long LOCK_LEASE_TIME = 3L;
+    public static final String REDISSON_LOCK_PREFIX = "LOCK:";
 }
