@@ -39,17 +39,13 @@ public class ContentDomainService {
 
     public void update(
             Long contentId,
-            ContentType contentType,
             Long archivingId,
             String link,
             String memo,
             String imgUrl,
             String title) {
         Content content = contentAdaptor.findById(contentId);
-        switch (contentType) {
-            case LINK -> content.updateLinkContent(archivingId, link, title, memo);
-            case IMAGE -> content.updateImageContent(archivingId, imgUrl, title, memo);
-        }
+        content.updateContent(archivingId, imgUrl, link, title, memo);
         contentAdaptor.save(content);
     }
 }

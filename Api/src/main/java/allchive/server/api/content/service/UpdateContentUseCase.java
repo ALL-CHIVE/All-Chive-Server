@@ -44,7 +44,6 @@ public class UpdateContentUseCase {
         updateArchiving(contentId, request.getArchivingId(), request.getContentType());
         contentDomainService.update(
                 contentId,
-                request.getContentType(),
                 request.getArchivingId(),
                 request.getLink(),
                 request.getMemo(),
