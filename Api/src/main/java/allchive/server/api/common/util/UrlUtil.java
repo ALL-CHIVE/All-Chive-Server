@@ -16,13 +16,13 @@ public class UrlUtil {
     }
 
     public static String toAssetUrl(String key) {
-//        if (key.equals("")) {
-//            return "";
-//        }
-//        if (springEnvironmentHelper.isProdProfile()) {
-//            return PROD_ASSET_URL + key;
-//        }
-//        return STAGING_ASSET_URL + key;
+        //        if (key.equals("")) {
+        //            return "";
+        //        }
+        //        if (springEnvironmentHelper.isProdProfile()) {
+        //            return PROD_ASSET_URL + key;
+        //        }
+        //        return STAGING_ASSET_URL + key;
         return key;
     }
 

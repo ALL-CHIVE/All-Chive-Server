@@ -77,7 +77,8 @@ public class Content extends BaseTimeEntity {
         this.deleteStatus = Boolean.FALSE;
     }
 
-    public void updateContent(Long archivingId, String imgUrl, String link, String title, String memo) {
+    public void updateContent(
+            Long archivingId, String imgUrl, String link, String title, String memo) {
         this.archivingId = archivingId;
         this.imageUrl = imgUrl;
         this.linkUrl = link;
