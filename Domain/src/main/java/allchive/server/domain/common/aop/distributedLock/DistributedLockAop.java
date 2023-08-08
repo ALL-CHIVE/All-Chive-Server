@@ -32,13 +32,13 @@ public class DistributedLockAop {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
-        return lockManager.lock(joinPoint, getKey(joinPoint, distributedLock.identifier()));
+        return lockManager.lock(joinPoint, getKey(joinPoint, distributedLock));
     }
 
-    private String getKey(ProceedingJoinPoint joinPoint, String[] identifiers) {
+    private String getKey(ProceedingJoinPoint joinPoint, DistributedLock distributedLock) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String[] methodParameterNames = methodSignature.getParameterNames();
-        return REDISSON_LOCK_PREFIX + createDynamicKey(methodParameterNames, joinPoint.getArgs(), identifiers);
+        return REDISSON_LOCK_PREFIX + distributedLock.lockType().getLockName() + "-" + createDynamicKey(methodParameterNames, joinPoint.getArgs(), distributedLock.identifier());
     }
 
     private String createDynamicKey(String[] methodParameterNames, Object[] methodArgs, String[] identifiers) {
@@ -51,7 +51,6 @@ public class DistributedLockAop {
             }
             resultList.add(arg.toString());
         }
-        log.info(String.join(":", resultList));
         return String.join(":", resultList);
     }
 }
