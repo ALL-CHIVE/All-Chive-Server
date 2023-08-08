@@ -1,4 +1,4 @@
-package allchive.domain;
+package allchive.server.domain;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.function.Executable;
@@ -17,7 +17,6 @@ public class CalculateCurrentExecutionSupporter {
             throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreadPool);
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
-
         for (long i = 1; i <= numberOfThreads; i++) {
             executorService.submit(
                     () -> {
@@ -25,7 +24,7 @@ public class CalculateCurrentExecutionSupporter {
                             executable.execute();
                             successCount.getAndIncrement();
                         } catch (Throwable e) {
-                            log.info(e.getClass().getName());
+                            log.info(e.toString());
                         } finally {
                             latch.countDown();
                         }
