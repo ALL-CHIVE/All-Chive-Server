@@ -1,9 +1,13 @@
 package allchive.server.api.content.service;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.mapper.RecycleMapper;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
+import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
+import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.recycle.domain.Recycle;
@@ -19,6 +23,8 @@ public class DeleteContentUseCase {
     private final ContentDomainService contentDomainService;
     private final RecycleMapper recycleMapper;
     private final RecycleDomainService recycleDomainService;
+    private final ArchivingDomainService archivingDomainService;
+    private final ContentAdaptor contentAdaptor;
 
     @Transactional
     public void execute(Long contentId) {
@@ -26,6 +32,7 @@ public class DeleteContentUseCase {
         validateExecution(contentId, userId);
         contentDomainService.softDeleteById(contentId);
         createRecycle(userId, contentId);
+        decreaseArchivingCount(contentId);
     }
 
     private void validateExecution(Long contentId, Long userId) {
@@ -37,5 +44,11 @@ public class DeleteContentUseCase {
         Recycle recycle =
                 recycleMapper.toContentRecycleEntity(userId, contentId, RecycleType.CONTENT);
         recycleDomainService.save(recycle);
+    }
+
+    private void decreaseArchivingCount(Long contentId) {
+        Content content = contentAdaptor.findById(contentId);
+        archivingDomainService.updateContentCnt(
+                content.getArchivingId(), content.getContentType(), MINUS_ONE);
     }
 }

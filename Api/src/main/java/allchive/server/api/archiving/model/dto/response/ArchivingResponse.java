@@ -44,6 +44,9 @@ public class ArchivingResponse {
     @Schema(description = "아카이빙 스크랩/고정 여부, true == 스크랩/고정됨")
     private boolean markStatus;
 
+    @Schema(description = "아카이빙 공개 여부")
+    private boolean publicStatus;
+
     @Builder
     private ArchivingResponse(
             Long archivingId,
@@ -54,7 +57,8 @@ public class ArchivingResponse {
             Long imgCnt,
             Long linkCnt,
             Long scrapCnt,
-            boolean markStatus) {
+            boolean markStatus,
+            boolean publicStatus) {
         this.archivingId = archivingId;
         this.title = title;
         this.imageUrl = imageUrl;
@@ -64,6 +68,7 @@ public class ArchivingResponse {
         this.linkCnt = linkCnt;
         this.scrapCnt = scrapCnt;
         this.markStatus = markStatus;
+        this.publicStatus = publicStatus;
     }
 
     public static ArchivingResponse of(Archiving archiving, boolean markStatus) {
@@ -77,6 +82,7 @@ public class ArchivingResponse {
                 .linkCnt(archiving.getLinkCnt())
                 .scrapCnt(archiving.getScrapCnt())
                 .markStatus(markStatus)
+                .publicStatus(archiving.getPublicStatus())
                 .build();
     }
 }
