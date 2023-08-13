@@ -1,5 +1,6 @@
 package allchive.server.api.content.service;
 
+import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.mapper.RecycleMapper;
@@ -14,9 +15,6 @@ import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
-import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 @UseCase
 @RequiredArgsConstructor
@@ -52,6 +50,5 @@ public class DeleteContentUseCase {
         Content content = contentAdaptor.findById(contentId);
         archivingDomainService.updateContentCnt(
                 content.getArchivingId(), content.getContentType(), MINUS_ONE);
-
     }
 }
