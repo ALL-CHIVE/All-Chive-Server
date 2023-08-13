@@ -1,9 +1,9 @@
 package allchive.server.api.archiving.model.dto.response;
 
-import lombok.Builder;
-import lombok.Getter;
 
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class ArchivingsResponse {
@@ -15,8 +15,6 @@ public class ArchivingsResponse {
     }
 
     public static ArchivingsResponse of(List<ArchivingResponse> archivings) {
-        return ArchivingsResponse.builder()
-                .archivings(archivings)
-                .build();
+        return ArchivingsResponse.builder().archivings(archivings).build();
     }
 }
