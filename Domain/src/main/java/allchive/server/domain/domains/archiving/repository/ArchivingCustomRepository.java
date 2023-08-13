@@ -29,5 +29,6 @@ public interface ArchivingCustomRepository {
             List<Long> blockList,
             String keyword,
             Pageable pageable,
-            Set<Long> tagArchivingIds);
+            Set<Long> tagArchivingIds,
+            Long userId);
 }

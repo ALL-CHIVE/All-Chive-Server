@@ -85,9 +85,10 @@ public class ArchivingAdaptor {
             List<Long> blockList,
             String keyword,
             Pageable pageable,
-            Set<Long> tagArchivingIds) {
+            Set<Long> tagArchivingIds,
+            Long userId) {
         return archivingRepository.querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
-                archivingIdList, blockList, keyword, pageable, tagArchivingIds);
+                archivingIdList, blockList, keyword, pageable, tagArchivingIds, userId);
     }
 
     public List<Archiving> findAllByPublicStatus(Boolean publicStatus) {
