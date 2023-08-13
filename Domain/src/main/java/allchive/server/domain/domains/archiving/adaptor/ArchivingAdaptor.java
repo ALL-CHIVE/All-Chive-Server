@@ -94,4 +94,8 @@ public class ArchivingAdaptor {
     public List<Archiving> findAllByPublicStatus(Boolean publicStatus) {
         return archivingRepository.findAllByPublicStatus(publicStatus);
     }
+
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5() {
+        return archivingRepository.queryArchivingOrderByScrapCntLimit5();
+    }
 }
