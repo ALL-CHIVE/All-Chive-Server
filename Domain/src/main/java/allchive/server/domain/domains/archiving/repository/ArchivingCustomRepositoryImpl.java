@@ -100,7 +100,9 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         List<Archiving> archivings =
                 queryFactory
                         .selectFrom(archiving)
-                        .where(userIdEq(userId), titleContainOrIdIn(keyword, tagArchivingIds))
+                        .where(userIdEq(userId),
+                                titleContainOrIdIn(keyword, tagArchivingIds),
+                                deleteStatusFalse())
                         .orderBy(idIn(tagArchivingIds), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
@@ -114,14 +116,15 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
             List<Long> blockList,
             String keyword,
             Pageable pageable,
-            Set<Long> tagArchivingIds) {
+            Set<Long> tagArchivingIds,
+            Long userId) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
                         .from(archiving)
                         .where(
                                 userIdNotIn(blockList),
-                                publicStatusTrue(),
+                                userIdEqOrPublicStatusTrue(userId),
                                 deleteStatusFalse(),
                                 titleContainOrIdIn(keyword, tagArchivingIds))
                         .orderBy(
@@ -168,6 +171,10 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     private BooleanExpression titleContainOrIdIn(String keyword, Set<Long> tagArchivingIds) {
         return archiving.title.contains(keyword).or(archiving.id.in(tagArchivingIds));
+    }
+
+    private BooleanExpression userIdEqOrPublicStatusTrue(Long userId) {
+        return archiving.userId.eq(userId).or(archiving.publicStatus.eq(Boolean.TRUE));
     }
 
     private OrderSpecifier<Long> scrabListDesc(List<Long> archivingIdList) {

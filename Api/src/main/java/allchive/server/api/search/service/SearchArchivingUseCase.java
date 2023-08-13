@@ -69,7 +69,7 @@ public class SearchArchivingUseCase {
     }
 
     private Set<Long> getTagArchivingIds(Long userId, String word) {
-        List<Tag> tags = tagAdaptor.findAllByUserIdAndName(userId, word);
+        List<Tag> tags = tagAdaptor.queryTagByUserIdContainName(userId, word);
         return contentTagGroupAdaptor.queryContentTagGroupByTagInWithContent(tags).stream()
                 .map(contentTagGroup -> contentTagGroup.getContent().getArchivingId())
                 .collect(Collectors.toSet());
@@ -112,7 +112,7 @@ public class SearchArchivingUseCase {
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
                         .querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
-                                archivingIdList, blockList, keyword, pageable, tagArchivingIds)
+                                archivingIdList, blockList, keyword, pageable, tagArchivingIds, userId)
                         .map(archiving -> ArchivingResponse.of(archiving, Boolean.FALSE));
         return SliceResponse.of(archivingSlices);
     }

@@ -45,8 +45,8 @@ public class TagAdaptor {
         tagRepository.deleteAll(tagList);
     }
 
-    public List<Tag> findAllByUserIdAndName(Long userId, String word) {
-        return tagRepository.findAllByUserIdAndName(userId, word);
+    public List<Tag> queryTagByUserIdContainName(Long userId, String word) {
+        return tagRepository.queryTagByUserIdContainName(userId, word);
     }
 
     public List<Tag> findAll() {
