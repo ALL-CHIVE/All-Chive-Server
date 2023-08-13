@@ -112,7 +112,12 @@ public class SearchArchivingUseCase {
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
                         .querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
-                                archivingIdList, blockList, keyword, pageable, tagArchivingIds, userId)
+                                archivingIdList,
+                                blockList,
+                                keyword,
+                                pageable,
+                                tagArchivingIds,
+                                userId)
                         .map(archiving -> ArchivingResponse.of(archiving, Boolean.FALSE));
         return SliceResponse.of(archivingSlices);
     }

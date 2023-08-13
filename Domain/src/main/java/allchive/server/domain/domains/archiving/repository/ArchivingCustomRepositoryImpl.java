@@ -100,7 +100,8 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         List<Archiving> archivings =
                 queryFactory
                         .selectFrom(archiving)
-                        .where(userIdEq(userId),
+                        .where(
+                                userIdEq(userId),
                                 titleContainOrIdIn(keyword, tagArchivingIds),
                                 deleteStatusFalse())
                         .orderBy(idIn(tagArchivingIds), createdAtDesc())

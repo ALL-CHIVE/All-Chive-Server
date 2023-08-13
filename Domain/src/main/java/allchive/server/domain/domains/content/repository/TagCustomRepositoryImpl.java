@@ -30,9 +30,7 @@ public class TagCustomRepositoryImpl implements TagCustomRepository {
 
     @Override
     public List<Tag> queryTagByUserIdContainName(Long userId, String name) {
-        return queryFactory.selectFrom(tag)
-                .where(userIdEq(userId), titleContain(name))
-                .fetch();
+        return queryFactory.selectFrom(tag).where(userIdEq(userId), titleContain(name)).fetch();
     }
 
     private BooleanExpression tagUserIdEq(Long userId) {
