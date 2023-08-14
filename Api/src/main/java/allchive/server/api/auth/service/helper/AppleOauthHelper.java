@@ -54,7 +54,7 @@ public class AppleOauthHelper {
                 appleOAuthProperties.getWebClientId(),
                 appleOAuthProperties.getRedirectUrl(),
                 code,
-                this.getClientSecret());
+                this.getClientSecretDev());
     }
 
     /** idtoken 분석 * */
@@ -107,6 +107,15 @@ public class AppleOauthHelper {
         return AppleLoginUtil.createClientSecret(
                 appleOAuthProperties.getTeamId(),
                 appleOAuthProperties.getClientId(),
+                appleOAuthProperties.getKeyId(),
+                appleOAuthProperties.getAuthKey(),
+                appleOAuthProperties.getBaseUrl());
+    }
+
+    private String getClientSecretDev() {
+        return AppleLoginUtil.createClientSecret(
+                appleOAuthProperties.getTeamId(),
+                appleOAuthProperties.getWebClientId(),
                 appleOAuthProperties.getKeyId(),
                 appleOAuthProperties.getAuthKey(),
                 appleOAuthProperties.getBaseUrl());
