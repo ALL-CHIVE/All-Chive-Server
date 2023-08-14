@@ -55,7 +55,7 @@ public class KakaoOauthHelper {
 
     public KakaoTokenResponse getKakaoOauthTokenDev(String code) {
         return kakaoOauthClient.kakaoAuth(
-                kakaoOauthProperties.getClientId(),
+                kakaoOauthProperties.getWebClientId(),
                 kakaoOauthProperties.getRedirectUrl(),
                 code,
                 kakaoOauthProperties.getClientSecret());
@@ -67,6 +67,11 @@ public class KakaoOauthHelper {
         return OauthInfo.of(OauthProvider.KAKAO, oidcDecodePayload.getSub());
     }
 
+    public OauthInfo getKakaoOauthInfoByIdTokenDev(String idToken) {
+        OIDCDecodePayload oidcDecodePayload = getOIDCDecodePayloadDev(idToken);
+        return OauthInfo.of(OauthProvider.KAKAO, oidcDecodePayload.getSub());
+    }
+
     /** oidc decode * */
     public OIDCDecodePayload getOIDCDecodePayload(String token) {
         OIDCPublicKeysResponse oidcPublicKeysResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
@@ -74,6 +79,15 @@ public class KakaoOauthHelper {
                 token,
                 kakaoOauthProperties.getBaseUrl(),
                 kakaoOauthProperties.getAppId(),
+                oidcPublicKeysResponse);
+    }
+
+    public OIDCDecodePayload getOIDCDecodePayloadDev(String token) {
+        OIDCPublicKeysResponse oidcPublicKeysResponse = kakaoOauthClient.getKakaoOIDCOpenKeys();
+        return oauthOIDCHelper.getPayloadFromIdToken(
+                token,
+                kakaoOauthProperties.getBaseUrl(),
+                kakaoOauthProperties.getWebAppId(),
                 oidcPublicKeysResponse);
     }
 

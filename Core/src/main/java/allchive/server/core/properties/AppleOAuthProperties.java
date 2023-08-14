@@ -13,6 +13,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 public class AppleOAuthProperties {
     private String baseUrl;
     private String clientId;
+    private String webClientId;
     private String keyId;
     private String redirectUrl;
     private String teamId;

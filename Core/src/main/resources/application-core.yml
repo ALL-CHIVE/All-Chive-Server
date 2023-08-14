@@ -20,6 +20,7 @@ oauth:
   apple:
     baseUrl: ${APPLE_BASE_URL}
     clientId: ${APPLE_CLIENT_ID}
+    webClientId: ${APPLE_WEB_CLIENT_ID}
     keyId: ${APPLE_KEY_ID}
     redirectUrl: ${APPLE_REDIRECT}
     teamId: ${APPLE_TEAM_ID}
