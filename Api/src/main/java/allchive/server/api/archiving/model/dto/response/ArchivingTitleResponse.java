@@ -2,12 +2,15 @@ package allchive.server.api.archiving.model.dto.response;
 
 
 import allchive.server.api.archiving.model.vo.TitleContentCntVo;
+import allchive.server.api.common.json.naming.UpperCaseStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@JsonNaming(UpperCaseStrategy.class)
 public class ArchivingTitleResponse {
     private List<TitleContentCntVo> FOOD;
     private List<TitleContentCntVo> LIFE;

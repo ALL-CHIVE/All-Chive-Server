@@ -26,7 +26,12 @@ public class GetUserInfoResponse {
     private OauthProvider oauthProvider;
 
     @Builder
-    public GetUserInfoResponse(String imgUrl, String email, String name, String nickname, OauthProvider oauthProvider) {
+    public GetUserInfoResponse(
+            String imgUrl,
+            String email,
+            String name,
+            String nickname,
+            OauthProvider oauthProvider) {
         this.imgUrl = imgUrl;
         this.email = email;
         this.name = name;
