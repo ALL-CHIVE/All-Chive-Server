@@ -17,4 +17,6 @@ public class KakaoOAuthProperties {
     private String redirectUrl;
     private String appId;
     private String adminKey;
+    private String webClientId;
+    private String webAppId;
 }

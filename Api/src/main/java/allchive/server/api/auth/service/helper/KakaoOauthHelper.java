@@ -40,7 +40,7 @@ public class KakaoOauthHelper {
         return kakaoOauthProperties.getBaseUrl()
                 + String.format(
                         KAKAO_OAUTH_QUERY_STRING,
-                        kakaoOauthProperties.getClientId(),
+                        kakaoOauthProperties.getWebClientId(),
                         kakaoOauthProperties.getRedirectUrl());
     }
 

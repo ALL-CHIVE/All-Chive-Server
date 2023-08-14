@@ -14,6 +14,8 @@ oauth:
     redirect-url: ${KAKAO_REDIRECT}
     app-id: ${KAKAO_APP_ID}
     admin-key: ${KAKAO_ADMIN_KEY}
+    web-client-id: ${KAKAO_WEB_CLIENT}
+    web-app-id: ${KAKAO_WEB_APP_ID}
 
   apple:
     baseUrl: ${APPLE_BASE_URL}
