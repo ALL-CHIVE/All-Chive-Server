@@ -74,6 +74,17 @@ public class OauthHelper {
         }
     }
 
+    public OauthInfo getOauthInfoDev(OauthProvider provider, String idToken) {
+        switch (provider) {
+            case KAKAO:
+                return kakaoOauthHelper.getKakaoOauthInfoByIdTokenDev(idToken);
+            case APPLE:
+                return appleOauthHelper.getAppleOAuthInfoByIdTokenDev(idToken);
+            default:
+                throw InvalidOauthProviderException.EXCEPTION;
+        }
+    }
+
     /** 회원탈퇴 * */
     public void withdraw(OauthProvider provider, String oid, String appleAccessToken) {
         switch (provider) {

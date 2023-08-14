@@ -36,7 +36,7 @@ public class AppleOauthHelper {
         return appleOAuthProperties.getBaseUrl()
                 + String.format(
                         APPLE_OAUTH_QUERY_STRING,
-                        appleOAuthProperties.getClientId(),
+                        appleOAuthProperties.getWebClientId(),
                         appleOAuthProperties.getRedirectUrl());
     }
 
@@ -51,7 +51,7 @@ public class AppleOauthHelper {
 
     public AppleTokenResponse getAppleOAuthTokenDev(String code) {
         return appleOAuthClient.appleAuth(
-                appleOAuthProperties.getClientId(),
+                appleOAuthProperties.getWebClientId(),
                 appleOAuthProperties.getRedirectUrl(),
                 code,
                 this.getClientSecret());
@@ -66,6 +66,14 @@ public class AppleOauthHelper {
                 .build();
     }
 
+    public OauthInfo getAppleOAuthInfoByIdTokenDev(String idToken) {
+        OIDCDecodePayload oidcDecodePayload = this.getOIDCDecodePayloadDev(idToken);
+        return OauthInfo.builder()
+                .provider(OauthProvider.APPLE)
+                .oid(oidcDecodePayload.getSub())
+                .build();
+    }
+
     /** oidc decode * */
     public OIDCDecodePayload getOIDCDecodePayload(String token) {
         OIDCPublicKeysResponse oidcPublicKeysResponse = appleOIDCClient.getAppleOIDCOpenKeys();
@@ -73,6 +81,15 @@ public class AppleOauthHelper {
                 token,
                 appleOAuthProperties.getBaseUrl(),
                 appleOAuthProperties.getClientId(),
+                oidcPublicKeysResponse);
+    }
+
+    public OIDCDecodePayload getOIDCDecodePayloadDev(String token) {
+        OIDCPublicKeysResponse oidcPublicKeysResponse = appleOIDCClient.getAppleOIDCOpenKeys();
+        return oAuthOIDCHelper.getPayloadFromIdToken(
+                token,
+                appleOAuthProperties.getBaseUrl(),
+                appleOAuthProperties.getWebClientId(),
                 oidcPublicKeysResponse);
     }
 

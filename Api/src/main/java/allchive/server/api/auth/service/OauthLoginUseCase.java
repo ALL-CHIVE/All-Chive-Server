@@ -35,11 +35,20 @@ public class OauthLoginUseCase {
     @Transactional
     public OauthSignInResponse devLogin(OauthProvider provider, String code) {
         final OauthTokenResponse oauthTokenResponse = oauthHelper.getCredentialDev(provider, code);
-        return processLoginWithIdToken(provider, oauthTokenResponse.getIdToken());
+        return processLoginWithIdTokenDev(provider, oauthTokenResponse.getIdToken());
     }
 
     private OauthSignInResponse processLoginWithIdToken(OauthProvider provider, String idToken) {
         final OauthInfo oauthInfo = oauthHelper.getOauthInfo(provider, idToken);
+        return checkUserCanLogin(oauthInfo, idToken);
+    }
+
+    private OauthSignInResponse processLoginWithIdTokenDev(OauthProvider provider, String idToken) {
+        final OauthInfo oauthInfo = oauthHelper.getOauthInfoDev(provider, idToken);
+        return checkUserCanLogin(oauthInfo, idToken);
+    }
+
+    private OauthSignInResponse checkUserCanLogin(OauthInfo oauthInfo, String idToken) {
         if (userDomainService.checkUserCanLogin(oauthInfo)) {
             User user = userDomainService.loginUser(oauthInfo);
             return tokenGenerateHelper.execute(user);
