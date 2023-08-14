@@ -27,6 +27,7 @@ public class JwtOIDCProvider {
 
     private Jwt<Header, Claims> getUnsignedTokenClaims(String token, String iss, String aud) {
         try {
+            log.info("{} / {} / {}", token, iss, aud);
             return Jwts.parserBuilder()
                     .requireAudience(aud)
                     .requireIssuer(iss)
