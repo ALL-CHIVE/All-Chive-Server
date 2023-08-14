@@ -31,4 +31,6 @@ public interface ArchivingCustomRepository {
             Pageable pageable,
             Set<Long> tagArchivingIds,
             Long userId);
+
+    List<Archiving> queryArchivingOrderByScrapCntLimit5();
 }

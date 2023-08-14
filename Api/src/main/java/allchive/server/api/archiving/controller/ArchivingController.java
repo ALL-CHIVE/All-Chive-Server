@@ -6,6 +6,7 @@ import allchive.server.api.archiving.model.dto.request.UpdateArchivingRequest;
 import allchive.server.api.archiving.model.dto.response.ArchivingContentsResponse;
 import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
 import allchive.server.api.archiving.model.dto.response.ArchivingTitleResponse;
+import allchive.server.api.archiving.model.dto.response.ArchivingsResponse;
 import allchive.server.api.archiving.service.*;
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
@@ -35,6 +36,7 @@ public class ArchivingController {
     private final GetArchivingContentsUseCase getArchivingContentsUseCase;
     private final UpdateArchivingScrapUseCase updateArchivingScrapUseCase;
     private final UpdateArchivingPinUseCase updateArchivingPinUseCase;
+    private final GetPopularArchivingUseCase getPopularArchivingUseCase;
 
     @Operation(summary = "아카이빙을 생성합니다.")
     @PostMapping()
@@ -96,6 +98,12 @@ public class ArchivingController {
     @GetMapping(value = "/lists")
     public ArchivingTitleResponse getScrapArchiving() {
         return getArchivingTitleUseCase.execute();
+    }
+
+    @Operation(summary = "인기있는 아카이빙 5개를 가져옵니다")
+    @GetMapping(value = "/popular")
+    public ArchivingsResponse getPopularArchiving() {
+        return getPopularArchivingUseCase.execute();
     }
 
     @Operation(summary = "아카이빙별 컨텐츠 리스트를 가져옵니다.")

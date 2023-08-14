@@ -139,6 +139,16 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         return SliceUtil.toSlice(archivings, pageable);
     }
 
+    @Override
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5() {
+        return queryFactory
+                .selectFrom(archiving)
+                .where(deleteStatusFalse(), publicStatusTrue())
+                .orderBy(scrapCntDesc())
+                .limit(5L)
+                .fetch();
+    }
+
     private BooleanExpression userIdNotIn(List<Long> blockList) {
         return archiving.userId.notIn(blockList);
     }
