@@ -14,12 +14,10 @@ import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.ContentTagGroupAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
-import java.util.List;
-
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
-import allchive.server.domain.domains.user.service.ScrapDomainService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

@@ -6,12 +6,11 @@ import allchive.server.api.archiving.model.dto.response.ArchivingsResponse;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 
 @UseCase
@@ -26,15 +25,19 @@ public class GetPopularArchivingUseCase {
         List<ArchivingResponse> archivingResponses =
                 archivingAdaptor.queryArchivingOrderByScrapCntLimit5().stream()
                         .filter(archiving -> archiving.getScrapCnt() > 0)
-                        .map(archiving ->
-                            ArchivingResponse.of(archiving, calculateIsScrap(scraps, archiving))
-                        )
+                        .map(
+                                archiving ->
+                                        ArchivingResponse.of(
+                                                archiving, calculateIsScrap(scraps, archiving)))
                         .collect(Collectors.toList());
         return ArchivingsResponse.of(archivingResponses);
     }
 
     private Boolean calculateIsScrap(List<Scrap> scraps, Archiving archiving) {
-        if (scraps.stream().filter(scrap -> scrap.getArchivingId().equals(archiving.getId())).count() == 1L) {
+        if (scraps.stream()
+                        .filter(scrap -> scrap.getArchivingId().equals(archiving.getId()))
+                        .count()
+                == 1L) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
