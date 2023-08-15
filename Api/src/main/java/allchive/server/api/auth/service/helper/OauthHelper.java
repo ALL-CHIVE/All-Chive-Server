@@ -36,8 +36,10 @@ public class OauthHelper {
     /** idtoken 가져오기 * */
     public OauthTokenResponse getCredential(OauthProvider provider, String code, String referer) {
         return switch (provider) {
-            case KAKAO -> OauthTokenResponse.from(kakaoOauthHelper.getKakaoOauthToken(code, referer));
-            case APPLE -> OauthTokenResponse.from(appleOauthHelper.getAppleOAuthToken(code, referer));
+            case KAKAO -> OauthTokenResponse.from(
+                    kakaoOauthHelper.getKakaoOauthToken(code, referer));
+            case APPLE -> OauthTokenResponse.from(
+                    appleOauthHelper.getAppleOAuthToken(code, referer));
             default -> throw InvalidOauthProviderException.EXCEPTION;
         };
     }
@@ -77,8 +79,7 @@ public class OauthHelper {
         }
     }
 
-    public void withdrawDev(
-            OauthProvider provider, String oid, String appleAccessToken) {
+    public void withdrawDev(OauthProvider provider, String oid, String appleAccessToken) {
         switch (provider) {
             case KAKAO -> kakaoOauthHelper.withdrawKakaoOauthUser(oid);
             case APPLE -> appleOauthHelper.withdrawAppleOauthUserDev(appleAccessToken);

@@ -73,8 +73,7 @@ public class WithdrawUserUseCase {
         }
     }
 
-    private void withdrawOauthDev(
-            OauthProvider provider, String appleAccessToken, User user) {
+    private void withdrawOauthDev(OauthProvider provider, String appleAccessToken, User user) {
         switch (provider) {
             case KAKAO -> oauthHelper.withdrawDev(provider, user.getOauthInfo().getOid(), null);
             case APPLE -> oauthHelper.withdrawDev(provider, null, appleAccessToken);
