@@ -105,6 +105,17 @@ public class AppleOauthHelper {
                 this.getClientSecret());
     }
 
+    public void withdrawAppleOauthUserDev(String code) {
+        if (code == null) {
+            throw NoAppleCodeException.EXCEPTION;
+        }
+        AppleTokenResponse appleTokenResponse = getAppleOAuthTokenDev(code);
+        appleOAuthClient.revoke(
+                appleOAuthProperties.getWebClientId(),
+                appleTokenResponse.getAccessToken(),
+                this.getClientSecret());
+    }
+
     /** client secret 가져오기 * */
     private String getClientSecret() {
         return AppleLoginUtil.createClientSecret(

@@ -29,6 +29,13 @@ public class AuthController {
         withdrawUserUseCase.execute(appleCode, referer);
     }
 
+    @Operation(summary = "회원탈퇴를 합니다. (개발용)", deprecated = true)
+    @DeleteMapping("/withdrawal/dev")
+    public void withDrawUserDev(
+            @RequestParam(required = false, name = "appleCode", value = "") String appleCode) {
+        withdrawUserUseCase.executeDev(appleCode);
+    }
+
     @Operation(summary = "로그아웃을 합니다.")
     @PostMapping("/logout")
     public void logOutUser() {

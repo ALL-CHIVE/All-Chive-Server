@@ -54,11 +54,30 @@ public class WithdrawUserUseCase {
         withdrawService(userId, user);
     }
 
+    @Transactional
+    public void executeDev(String appleAccessToken) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        User user = userAdaptor.findById(userId);
+        // oauth쪽 탈퇴
+        withdrawOauthDev(user.getOauthInfo().getProvider(), appleAccessToken, user);
+        // 우리쪽 탈퇴
+        withdrawService(userId, user);
+    }
+
     private void withdrawOauth(
             OauthProvider provider, String appleAccessToken, User user, String referer) {
         switch (provider) {
             case KAKAO -> oauthHelper.withdraw(provider, user.getOauthInfo().getOid(), null, null);
             case APPLE -> oauthHelper.withdraw(provider, null, appleAccessToken, referer);
+            default -> throw InvalidOauthProviderException.EXCEPTION;
+        }
+    }
+
+    private void withdrawOauthDev(
+            OauthProvider provider, String appleAccessToken, User user) {
+        switch (provider) {
+            case KAKAO -> oauthHelper.withdrawDev(provider, user.getOauthInfo().getOid(), null);
+            case APPLE -> oauthHelper.withdrawDev(provider, null, appleAccessToken);
             default -> throw InvalidOauthProviderException.EXCEPTION;
         }
     }
