@@ -4,7 +4,7 @@ import static allchive.server.core.consts.AllchiveConst.APPLE_OAUTH_QUERY_STRING
 
 import allchive.server.core.annotation.Helper;
 import allchive.server.core.dto.OIDCDecodePayload;
-import allchive.server.core.error.exception.NoAppleAccessTokenException;
+import allchive.server.core.error.exception.NoAppleCodeException;
 import allchive.server.core.properties.AppleOAuthProperties;
 import allchive.server.domain.domains.user.domain.enums.OauthInfo;
 import allchive.server.domain.domains.user.domain.enums.OauthProvider;
@@ -94,12 +94,26 @@ public class AppleOauthHelper {
     }
 
     /** apple측 회원 탈퇴 * */
-    public void withdrawAppleOauthUser(String appleOAuthAccessToken) {
-        if (appleOAuthAccessToken == null) {
-            throw NoAppleAccessTokenException.EXCEPTION;
+    public void withdrawAppleOauthUser(String code, String referer) {
+        if (code == null) {
+            throw NoAppleCodeException.EXCEPTION;
         }
+        AppleTokenResponse appleTokenResponse = getAppleOAuthToken(code, referer);
         appleOAuthClient.revoke(
-                appleOAuthProperties.getClientId(), appleOAuthAccessToken, this.getClientSecret());
+                appleOAuthProperties.getClientId(),
+                appleTokenResponse.getAccessToken(),
+                this.getClientSecret());
+    }
+
+    public void withdrawAppleOauthUserDev(String code) {
+        if (code == null) {
+            throw NoAppleCodeException.EXCEPTION;
+        }
+        AppleTokenResponse appleTokenResponse = getAppleOAuthTokenDev(code);
+        appleOAuthClient.revoke(
+                appleOAuthProperties.getWebClientId(),
+                appleTokenResponse.getAccessToken(),
+                this.getClientSecret());
     }
 
     /** client secret 가져오기 * */
