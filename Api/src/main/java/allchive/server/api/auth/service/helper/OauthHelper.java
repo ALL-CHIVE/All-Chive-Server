@@ -86,13 +86,14 @@ public class OauthHelper {
     }
 
     /** 회원탈퇴 * */
-    public void withdraw(OauthProvider provider, String oid, String appleAccessToken) {
+    public void withdraw(
+            OauthProvider provider, String oid, String appleAccessToken, String referer) {
         switch (provider) {
             case KAKAO:
                 kakaoOauthHelper.withdrawKakaoOauthUser(oid);
                 break;
             case APPLE:
-                appleOauthHelper.withdrawAppleOauthUser(appleAccessToken);
+                appleOauthHelper.withdrawAppleOauthUser(appleAccessToken, referer);
                 break;
             default:
                 throw InvalidOauthProviderException.EXCEPTION;
