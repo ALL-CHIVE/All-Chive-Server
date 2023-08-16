@@ -1,9 +1,8 @@
 package allchive.server.api.common.page;
 
 
-import org.springframework.data.domain.Page;
-
 import java.util.List;
+import org.springframework.data.domain.Page;
 
 public record PageResponse<T>(
         List<T> content,

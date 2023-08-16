@@ -13,15 +13,13 @@ public class SearchResponse {
 
     @Builder
     private SearchResponse(
-            PageResponse<ArchivingResponse> archivings,
-            PageResponse<ArchivingResponse> community) {
+            PageResponse<ArchivingResponse> archivings, PageResponse<ArchivingResponse> community) {
         this.archivings = archivings;
         this.community = community;
     }
 
     public static SearchResponse forAll(
-            PageResponse<ArchivingResponse> archivings,
-            PageResponse<ArchivingResponse> community) {
+            PageResponse<ArchivingResponse> archivings, PageResponse<ArchivingResponse> community) {
         return SearchResponse.builder().archivings(archivings).community(community).build();
     }
 

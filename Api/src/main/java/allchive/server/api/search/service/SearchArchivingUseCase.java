@@ -3,7 +3,6 @@ package allchive.server.api.search.service;
 
 import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
 import allchive.server.api.common.page.PageResponse;
-import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.common.util.StringParamUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.search.model.dto.response.SearchResponse;
@@ -26,7 +25,6 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase

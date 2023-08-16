@@ -1,15 +1,17 @@
 package allchive.server.domain.common.util;
 
-import allchive.server.domain.domains.archiving.domain.Archiving;
-import com.querydsl.core.QueryResults;
-import org.springframework.data.domain.*;
 
+import com.querydsl.core.QueryResults;
 import java.util.List;
+import org.springframework.data.domain.*;
 
 public class PageUtil {
     public static <T> Page<T> toPage(QueryResults<T> results, Pageable pageable) {
         boolean hasNext = hasNext(results.getResults(), pageable);
-        return new PageImpl<>(hasNext ? getContent(results.getResults(), pageable) : results.getResults(), pageable, results.getTotal());
+        return new PageImpl<>(
+                hasNext ? getContent(results.getResults(), pageable) : results.getResults(),
+                pageable,
+                results.getTotal());
     }
 
     // 다음 페이지 있는지 확인
