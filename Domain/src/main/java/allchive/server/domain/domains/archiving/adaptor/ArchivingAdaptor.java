@@ -10,6 +10,7 @@ import allchive.server.domain.domains.archiving.repository.ArchivingRepository;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -74,13 +75,13 @@ public class ArchivingAdaptor {
         archivingRepository.deleteAllById(archivingIds);
     }
 
-    public Slice<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+    public Page<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
         return archivingRepository.querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
                 userId, keyword, pageable, tagArchivingIds);
     }
 
-    public Slice<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
+    public Page<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
             List<Long> archivingIdList,
             List<Long> blockList,
             String keyword,

@@ -2,6 +2,7 @@ package allchive.server.api.search.service;
 
 
 import allchive.server.api.archiving.model.dto.response.ArchivingResponse;
+import allchive.server.api.common.page.PageResponse;
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.common.util.StringParamUtil;
 import allchive.server.api.config.security.SecurityUtil;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,8 +45,8 @@ public class SearchArchivingUseCase {
         validateExecution(word);
         Long userId = SecurityUtil.getCurrentUserId();
         Set<Long> tagArchivingIds = getTagArchivingIds(userId, word);
-        SliceResponse<ArchivingResponse> my;
-        SliceResponse<ArchivingResponse> community;
+        PageResponse<ArchivingResponse> my;
+        PageResponse<ArchivingResponse> community;
         renewalLatestSearch(userId, word);
         switch (type) {
             case ALL -> {
@@ -93,23 +95,23 @@ public class SearchArchivingUseCase {
                 .isEmpty();
     }
 
-    private SliceResponse<ArchivingResponse> getMyArchivings(
+    private PageResponse<ArchivingResponse> getMyArchivings(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
-        Slice<ArchivingResponse> archivingSlices =
+        Page<ArchivingResponse> archivingPages =
                 archivingAdaptor
                         .querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
                                 userId, keyword, pageable, tagArchivingIds)
                         .map(archiving -> ArchivingResponse.of(archiving, Boolean.FALSE));
-        return SliceResponse.of(archivingSlices);
+        return PageResponse.of(archivingPages);
     }
 
-    private SliceResponse<ArchivingResponse> getCommunityArchivings(
+    private PageResponse<ArchivingResponse> getCommunityArchivings(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
         List<Long> archivingIdList =
                 scrapAdaptor.findAllByUserId(userId).stream().map(Scrap::getArchivingId).toList();
         List<Long> blockList =
                 blockAdaptor.findByBlockFrom(userId).stream().map(Block::getBlockUser).toList();
-        Slice<ArchivingResponse> archivingSlices =
+        Page<ArchivingResponse> archivingSlices =
                 archivingAdaptor
                         .querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
                                 archivingIdList,
@@ -119,6 +121,6 @@ public class SearchArchivingUseCase {
                                 tagArchivingIds,
                                 userId)
                         .map(archiving -> ArchivingResponse.of(archiving, Boolean.FALSE));
-        return SliceResponse.of(archivingSlices);
+        return PageResponse.of(archivingSlices);
     }
 }

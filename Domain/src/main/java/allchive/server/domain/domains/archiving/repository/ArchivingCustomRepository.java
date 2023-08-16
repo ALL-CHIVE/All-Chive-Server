@@ -5,6 +5,8 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -21,10 +23,10 @@ public interface ArchivingCustomRepository {
 
     boolean queryArchivingExistById(Long archivingId);
 
-    Slice<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+    Page<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds);
 
-    Slice<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
+    Page<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
             List<Long> archivingIdList,
             List<Long> blockList,
             String keyword,

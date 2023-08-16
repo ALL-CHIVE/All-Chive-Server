@@ -7,6 +7,7 @@ import allchive.server.core.annotation.UseCase;
 import allchive.server.core.error.exception.InvalidOauthProviderException;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
+import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.block.service.BlockDomainService;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
@@ -43,6 +44,7 @@ public class WithdrawUserUseCase {
     private final RecycleDomainService recycleDomainService;
     private final ReportDomainService reportDomainService;
     private final UserDomainService userDomainService;
+    private final ArchivingDomainService archivingDomainService;
 
     @Transactional
     public void execute(String appleAccessToken, String referer) {
@@ -94,6 +96,7 @@ public class WithdrawUserUseCase {
         contentDomainService.deleteAllByArchivingIdIn(archivingId);
         recycleDomainService.deleteAllByUserId(userId);
         reportDomainService.deleteAllByReportedUserId(userId);
+        archivingDomainService.deleteAllById(archivingId);
         userDomainService.deleteUserById(userId);
     }
 }

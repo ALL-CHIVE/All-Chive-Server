@@ -3,9 +3,11 @@ package allchive.server.domain.domains.archiving.repository;
 import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 import static allchive.server.domain.domains.archiving.domain.QArchiving.archiving;
 
+import allchive.server.domain.common.util.PageUtil;
 import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -95,9 +98,9 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+    public Page<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
-        List<Archiving> archivings =
+        QueryResults<Archiving> results =
                 queryFactory
                         .selectFrom(archiving)
                         .where(
@@ -107,19 +110,19 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .orderBy(idIn(tagArchivingIds), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
-                        .fetch();
-        return SliceUtil.toSlice(archivings, pageable);
+                        .fetchResults();
+        return PageUtil.toPage(results, pageable);
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
+    public Page<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
             List<Long> archivingIdList,
             List<Long> blockList,
             String keyword,
             Pageable pageable,
             Set<Long> tagArchivingIds,
             Long userId) {
-        List<Archiving> archivings =
+        QueryResults<Archiving> archivings =
                 queryFactory
                         .select(archiving)
                         .from(archiving)
@@ -135,8 +138,8 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
-                        .fetch();
-        return SliceUtil.toSlice(archivings, pageable);
+                        .fetchResults();
+        return PageUtil.toPage(archivings, pageable);
     }
 
     @Override
