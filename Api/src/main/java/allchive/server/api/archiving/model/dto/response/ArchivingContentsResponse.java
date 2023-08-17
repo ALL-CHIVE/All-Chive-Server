@@ -82,7 +82,7 @@ public class ArchivingContentsResponse {
                 .createdAt(archiving.getCreatedAt())
                 .archivingTitle(archiving.getTitle())
                 .category(archiving.getCategory())
-                .totalContentsCount(archiving.getScrapCnt() + archiving.getImgCnt())
+                .totalContentsCount(archiving.getLinkCnt() + archiving.getImgCnt())
                 .contents(contentResponseSlice)
                 .ownerId(user.getId())
                 .ownerNickname(user.getNickname())
