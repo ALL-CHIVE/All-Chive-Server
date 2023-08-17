@@ -3,6 +3,7 @@ package allchive.server.api.archiving.model.dto.response;
 
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.content.model.dto.response.ContentResponse;
+import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.user.domain.User;
@@ -24,6 +25,7 @@ public class ArchivingContentsResponse {
     @Schema(description = "아카이빙 고유번호")
     private Long archivingId;
 
+    @DateFormat
     @Schema(description = "아카이빙 생성일")
     private LocalDateTime createdAt;
 
