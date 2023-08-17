@@ -128,7 +128,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .from(archiving)
                         .where(
                                 userIdNotIn(blockList),
-                                userIdEqOrPublicStatusTrue(userId),
+                                userIdNeAndPublicStatusTrue(userId),
                                 deleteStatusFalse(),
                                 titleContainOrIdIn(keyword, tagArchivingIds))
                         .orderBy(
@@ -189,6 +189,10 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     private BooleanExpression userIdEqOrPublicStatusTrue(Long userId) {
         return archiving.userId.eq(userId).or(archiving.publicStatus.eq(Boolean.TRUE));
+    }
+
+    private BooleanExpression userIdNeAndPublicStatusTrue(Long userId) {
+        return archiving.userId.ne(userId).and(archiving.publicStatus.eq(Boolean.TRUE));
     }
 
     private OrderSpecifier<Long> scrabListDesc(List<Long> archivingIdList) {

@@ -7,6 +7,7 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.user.domain.User;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -22,6 +23,9 @@ public class ArchivingContentsResponse {
 
     @Schema(description = "아카이빙 고유번호")
     private Long archivingId;
+
+    @Schema(description = "아카이빙 생성일")
+    private LocalDateTime createdAt;
 
     @Schema(description = "아카이빙의 총 컨텐츠 개수")
     private Long totalContentsCount;
@@ -47,6 +51,7 @@ public class ArchivingContentsResponse {
             String archivingTitle,
             Category category,
             Long archivingId,
+            LocalDateTime createdAt,
             Long totalContentsCount,
             Long ownerId,
             String ownerNickname,
@@ -57,6 +62,7 @@ public class ArchivingContentsResponse {
         this.archivingTitle = archivingTitle;
         this.category = category;
         this.archivingId = archivingId;
+        this.createdAt = createdAt;
         this.totalContentsCount = totalContentsCount;
         this.ownerId = ownerId;
         this.ownerNickname = ownerNickname;
@@ -73,9 +79,10 @@ public class ArchivingContentsResponse {
             Boolean isScrap) {
         return ArchivingContentsResponse.builder()
                 .archivingId(archiving.getId())
+                .createdAt(archiving.getCreatedAt())
                 .archivingTitle(archiving.getTitle())
                 .category(archiving.getCategory())
-                .totalContentsCount(archiving.getScrapCnt() + archiving.getImgCnt())
+                .totalContentsCount(archiving.getLinkCnt() + archiving.getImgCnt())
                 .contents(contentResponseSlice)
                 .ownerId(user.getId())
                 .ownerNickname(user.getNickname())
