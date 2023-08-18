@@ -27,6 +27,9 @@ public class RegisterRequest {
     @ArraySchema(schema = @Schema(description = "관심 주제", defaultValue = "FOOD"))
     private List<@ValidEnum(target = Category.class) Category> categories;
 
+    @Schema(defaultValue = "false", description = "마케팅 정보 수신 동의 여부")
+    private boolean marketingAgreement;
+
     @Schema(defaultValue = "이름", description = "이름, 애플 회원가입용")
     private String name;
 
