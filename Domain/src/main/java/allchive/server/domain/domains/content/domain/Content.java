@@ -29,6 +29,7 @@ public class Content extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT")
     private String linkUrl;
+
     private String title;
 
     @Column(columnDefinition = "TEXT")

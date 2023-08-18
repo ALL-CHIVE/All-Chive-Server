@@ -27,6 +27,7 @@ public class Archiving extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT")
     private String imageUrl;
+
     private String title;
     private Boolean publicStatus = Boolean.FALSE;
     private Long scrapCnt;
