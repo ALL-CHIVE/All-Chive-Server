@@ -34,6 +34,18 @@ public class OauthRegisterUseCase {
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
     }
 
+    @Transactional
+    public OauthRegisterResponse executeDev(
+            OauthProvider provider,
+            String idToken,
+            String oauthAccessToken,
+            RegisterRequest request) {
+        final OauthInfo oauthInfo = oauthHelper.getOauthInfoDev(provider, idToken);
+        final OauthUserInfoDto oauthUserInfoDto = getUserInfo(provider, oauthAccessToken);
+        final User user = registerUser(provider, oauthInfo, oauthUserInfoDto, request);
+        return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
+    }
+
     private User registerUser(
             OauthProvider provider,
             OauthInfo oauthInfo,
@@ -47,6 +59,7 @@ public class OauthRegisterUseCase {
                         request.getNickname(),
                         UrlUtil.convertUrlToKey(request.getProfileImgUrl()),
                         request.getCategories(),
+                        request.isMarketingAgreement(),
                         oauthInfo);
             default:
                 return userDomainService.registerUser(
@@ -55,6 +68,7 @@ public class OauthRegisterUseCase {
                         request.getNickname(),
                         UrlUtil.convertUrlToKey(request.getProfileImgUrl()),
                         request.getCategories(),
+                        request.isMarketingAgreement(),
                         oauthInfo);
         }
     }
