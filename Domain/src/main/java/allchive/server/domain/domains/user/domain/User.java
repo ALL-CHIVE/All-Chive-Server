@@ -32,6 +32,7 @@ public class User extends BaseTimeEntity {
 
     @NotNull private String nickname;
 
+    @Column(columnDefinition = "TEXT")
     private String profileImgUrl;
 
     @Embedded private OauthInfo oauthInfo;

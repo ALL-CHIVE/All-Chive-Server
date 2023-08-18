@@ -24,6 +24,8 @@ public class Archiving extends BaseTimeEntity {
 
     // 카테고리 만든 사람
     private Long userId;
+
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
     private String title;
     private Boolean publicStatus = Boolean.FALSE;
