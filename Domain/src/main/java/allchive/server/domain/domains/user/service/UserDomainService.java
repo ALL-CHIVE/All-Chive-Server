@@ -32,7 +32,15 @@ public class UserDomainService {
             boolean marketingAgreement,
             OauthInfo oauthInfo) {
         userValidator.validUserCanRegister(oauthInfo);
-        final User newUser = User.of(name, email, nickname, profileImgUrl, categoryList, marketingAgreement, oauthInfo);
+        final User newUser =
+                User.of(
+                        name,
+                        email,
+                        nickname,
+                        profileImgUrl,
+                        categoryList,
+                        marketingAgreement,
+                        oauthInfo);
         userAdaptor.save(newUser);
         return newUser;
     }
