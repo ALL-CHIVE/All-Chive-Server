@@ -27,12 +27,12 @@ public class UrlUtil {
     }
 
     public static String convertUrlToKey(String url) {
-        if (url.equals("")) {
-            return "";
-        }
-        if (validateUrl(url)) {
-            return url.split("/", 4)[3];
-        }
+//        if (url.equals("")) {
+//            return "";
+//        }
+//        if (validateUrl(url)) {
+//            return url.split("/", 4)[3];
+//        }
         return url;
     }
 
