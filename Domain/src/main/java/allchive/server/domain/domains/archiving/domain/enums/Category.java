@@ -20,7 +20,9 @@ public enum Category {
     SELF_IMPROVEMENT("SELF_IMPROVEMENT"),
     TECH("TECH"),
     DESIGN("DESIGN"),
-    TREND("TREND");
+    TREND("TREND"),
+
+    ETC("ETC");
 
     @JsonValue private String value;
 
