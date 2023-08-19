@@ -7,6 +7,7 @@ import allchive.server.core.annotation.UseCase;
 import allchive.server.core.error.exception.InvalidOauthProviderException;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
+import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.block.service.BlockDomainService;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
@@ -43,21 +44,41 @@ public class WithdrawUserUseCase {
     private final RecycleDomainService recycleDomainService;
     private final ReportDomainService reportDomainService;
     private final UserDomainService userDomainService;
+    private final ArchivingDomainService archivingDomainService;
 
     @Transactional
-    public void execute(String appleAccessToken) {
+    public void execute(String appleAccessToken, String referer) {
         Long userId = SecurityUtil.getCurrentUserId();
         User user = userAdaptor.findById(userId);
         // oauth쪽 탈퇴
-        withdrawOauth(user.getOauthInfo().getProvider(), appleAccessToken, user);
+        withdrawOauth(user.getOauthInfo().getProvider(), appleAccessToken, user, referer);
         // 우리쪽 탈퇴
         withdrawService(userId, user);
     }
 
-    private void withdrawOauth(OauthProvider provider, String appleAccessToken, User user) {
+    @Transactional
+    public void executeDev(String appleAccessToken) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        User user = userAdaptor.findById(userId);
+        // oauth쪽 탈퇴
+        withdrawOauthDev(user.getOauthInfo().getProvider(), appleAccessToken, user);
+        // 우리쪽 탈퇴
+        withdrawService(userId, user);
+    }
+
+    private void withdrawOauth(
+            OauthProvider provider, String appleAccessToken, User user, String referer) {
         switch (provider) {
-            case KAKAO -> oauthHelper.withdraw(provider, user.getOauthInfo().getOid(), null);
-            case APPLE -> oauthHelper.withdraw(provider, null, appleAccessToken);
+            case KAKAO -> oauthHelper.withdraw(provider, user.getOauthInfo().getOid(), null, null);
+            case APPLE -> oauthHelper.withdraw(provider, null, appleAccessToken, referer);
+            default -> throw InvalidOauthProviderException.EXCEPTION;
+        }
+    }
+
+    private void withdrawOauthDev(OauthProvider provider, String appleAccessToken, User user) {
+        switch (provider) {
+            case KAKAO -> oauthHelper.withdrawDev(provider, user.getOauthInfo().getOid(), null);
+            case APPLE -> oauthHelper.withdrawDev(provider, null, appleAccessToken);
             default -> throw InvalidOauthProviderException.EXCEPTION;
         }
     }
@@ -75,6 +96,7 @@ public class WithdrawUserUseCase {
         contentDomainService.deleteAllByArchivingIdIn(archivingId);
         recycleDomainService.deleteAllByUserId(userId);
         reportDomainService.deleteAllByReportedUserId(userId);
+        archivingDomainService.deleteAllById(archivingId);
         userDomainService.deleteUserById(userId);
     }
 }

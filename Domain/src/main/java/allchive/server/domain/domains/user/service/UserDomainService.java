@@ -29,9 +29,18 @@ public class UserDomainService {
             String nickname,
             String profileImgUrl,
             List<Category> categoryList,
+            boolean marketingAgreement,
             OauthInfo oauthInfo) {
         userValidator.validUserCanRegister(oauthInfo);
-        final User newUser = User.of(name, email, nickname, profileImgUrl, categoryList, oauthInfo);
+        final User newUser =
+                User.of(
+                        name,
+                        email,
+                        nickname,
+                        profileImgUrl,
+                        categoryList,
+                        marketingAgreement,
+                        oauthInfo);
         userAdaptor.save(newUser);
         return newUser;
     }

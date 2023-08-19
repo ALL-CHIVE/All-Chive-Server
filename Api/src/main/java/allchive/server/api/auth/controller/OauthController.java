@@ -82,8 +82,18 @@ public class OauthController {
     public OauthRegisterResponse oauthUserRegister(
             @PathVariable("provider") OauthProvider provider,
             @RequestParam("idToken") String idToken,
-            @RequestParam("oauthAccessToken") String accessToken,
+            @RequestParam(value = "oauthAccessToken", required = false) String accessToken,
             @RequestBody RegisterRequest registerRequest) {
         return oauthRegisterUseCase.execute(provider, idToken, accessToken, registerRequest);
+    }
+
+    @Operation(summary = "회원가입 (개발용)", deprecated = true)
+    @PostMapping("/register/{provider}/dev")
+    public OauthRegisterResponse oauthUserRegisterDev(
+            @PathVariable("provider") OauthProvider provider,
+            @RequestParam("idToken") String idToken,
+            @RequestParam(value = "oauthAccessToken", required = false) String accessToken,
+            @RequestBody RegisterRequest registerRequest) {
+        return oauthRegisterUseCase.executeDev(provider, idToken, accessToken, registerRequest);
     }
 }

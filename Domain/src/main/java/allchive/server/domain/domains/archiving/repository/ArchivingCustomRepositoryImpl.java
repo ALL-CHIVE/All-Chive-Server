@@ -3,9 +3,11 @@ package allchive.server.domain.domains.archiving.repository;
 import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 import static allchive.server.domain.domains.archiving.domain.QArchiving.archiving;
 
+import allchive.server.domain.common.util.PageUtil;
 import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -95,33 +98,37 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
+    public Page<Archiving> querySliceArchivingByUserIdAndKeywordsOrderByTagArchvingIds(
             Long userId, String keyword, Pageable pageable, Set<Long> tagArchivingIds) {
-        List<Archiving> archivings =
+        QueryResults<Archiving> results =
                 queryFactory
                         .selectFrom(archiving)
-                        .where(userIdEq(userId), titleContainOrIdIn(keyword, tagArchivingIds))
+                        .where(
+                                userIdEq(userId),
+                                titleContainOrIdIn(keyword, tagArchivingIds),
+                                deleteStatusFalse())
                         .orderBy(idIn(tagArchivingIds), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
-                        .fetch();
-        return SliceUtil.toSlice(archivings, pageable);
+                        .fetchResults();
+        return PageUtil.toPage(results, pageable);
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
+    public Page<Archiving> querySliceArchivingByKeywordExceptBlockOrderByTagArchvingIds(
             List<Long> archivingIdList,
             List<Long> blockList,
             String keyword,
             Pageable pageable,
-            Set<Long> tagArchivingIds) {
-        List<Archiving> archivings =
+            Set<Long> tagArchivingIds,
+            Long userId) {
+        QueryResults<Archiving> archivings =
                 queryFactory
                         .select(archiving)
                         .from(archiving)
                         .where(
                                 userIdNotIn(blockList),
-                                publicStatusTrue(),
+                                userIdNeAndPublicStatusTrue(userId),
                                 deleteStatusFalse(),
                                 titleContainOrIdIn(keyword, tagArchivingIds))
                         .orderBy(
@@ -131,8 +138,18 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
-                        .fetch();
-        return SliceUtil.toSlice(archivings, pageable);
+                        .fetchResults();
+        return PageUtil.toPage(archivings, pageable);
+    }
+
+    @Override
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5() {
+        return queryFactory
+                .selectFrom(archiving)
+                .where(deleteStatusFalse(), publicStatusTrue())
+                .orderBy(scrapCntDesc())
+                .limit(5L)
+                .fetch();
     }
 
     private BooleanExpression userIdNotIn(List<Long> blockList) {
@@ -168,6 +185,14 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     private BooleanExpression titleContainOrIdIn(String keyword, Set<Long> tagArchivingIds) {
         return archiving.title.contains(keyword).or(archiving.id.in(tagArchivingIds));
+    }
+
+    private BooleanExpression userIdEqOrPublicStatusTrue(Long userId) {
+        return archiving.userId.eq(userId).or(archiving.publicStatus.eq(Boolean.TRUE));
+    }
+
+    private BooleanExpression userIdNeAndPublicStatusTrue(Long userId) {
+        return archiving.userId.ne(userId).and(archiving.publicStatus.eq(Boolean.TRUE));
     }
 
     private OrderSpecifier<Long> scrabListDesc(List<Long> archivingIdList) {

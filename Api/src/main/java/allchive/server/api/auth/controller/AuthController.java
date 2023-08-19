@@ -24,9 +24,16 @@ public class AuthController {
     @Operation(summary = "회원탈퇴를 합니다.")
     @DeleteMapping("/withdrawal")
     public void withDrawUser(
-            @RequestParam(required = false, name = "appleAccessToken", value = "")
-                    String appleAccessToken) {
-        withdrawUserUseCase.execute(appleAccessToken);
+            @RequestParam(required = false, name = "appleCode", value = "") String appleCode,
+            @RequestHeader(value = "referer", required = false) String referer) {
+        withdrawUserUseCase.execute(appleCode, referer);
+    }
+
+    @Operation(summary = "회원탈퇴를 합니다. (개발용)", deprecated = true)
+    @DeleteMapping("/withdrawal/dev")
+    public void withDrawUserDev(
+            @RequestParam(required = false, name = "appleCode", value = "") String appleCode) {
+        withdrawUserUseCase.executeDev(appleCode);
     }
 
     @Operation(summary = "로그아웃을 합니다.")

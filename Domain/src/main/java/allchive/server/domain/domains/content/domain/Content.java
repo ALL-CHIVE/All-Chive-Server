@@ -24,8 +24,12 @@ public class Content extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private ContentType contentType;
 
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
+
+    @Column(columnDefinition = "TEXT")
     private String linkUrl;
+
     private String title;
 
     @Column(columnDefinition = "TEXT")
@@ -77,16 +81,11 @@ public class Content extends BaseTimeEntity {
         this.deleteStatus = Boolean.FALSE;
     }
 
-    public void updateLinkContent(Long archivingId, String link, String title, String memo) {
-        this.archivingId = archivingId;
-        this.linkUrl = link;
-        this.title = title;
-        this.memo = memo;
-    }
-
-    public void updateImageContent(Long archivingId, String imgUrl, String title, String memo) {
+    public void updateContent(
+            Long archivingId, String imgUrl, String link, String title, String memo) {
         this.archivingId = archivingId;
         this.imageUrl = imgUrl;
+        this.linkUrl = link;
         this.title = title;
         this.memo = memo;
     }

@@ -28,6 +28,11 @@ public class TagCustomRepositoryImpl implements TagCustomRepository {
         return queryFactory.selectFrom(tag).where(tagIdIn(tagIds)).fetch();
     }
 
+    @Override
+    public List<Tag> queryTagByUserIdContainName(Long userId, String name) {
+        return queryFactory.selectFrom(tag).where(userIdEq(userId), titleContain(name)).fetch();
+    }
+
     private BooleanExpression tagUserIdEq(Long userId) {
         return tag.userId.eq(userId);
     }
@@ -38,6 +43,14 @@ public class TagCustomRepositoryImpl implements TagCustomRepository {
 
     private BooleanExpression tagIdIn(List<Long> tagIds) {
         return tag.id.in(tagIds);
+    }
+
+    private BooleanExpression userIdEq(Long userId) {
+        return tag.userId.eq(userId);
+    }
+
+    private BooleanExpression titleContain(String name) {
+        return tag.name.contains(name);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

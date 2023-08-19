@@ -32,6 +32,7 @@ public class User extends BaseTimeEntity {
 
     @NotNull private String nickname;
 
+    @Column(columnDefinition = "TEXT")
     private String profileImgUrl;
 
     @Embedded private OauthInfo oauthInfo;
@@ -46,6 +47,8 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.USER;
 
+    private boolean marketingAgreement = false;
+
     @Convert(converter = StringListConverter.class)
     private List<Category> categories = new ArrayList<>();
 
@@ -56,12 +59,14 @@ public class User extends BaseTimeEntity {
             String nickname,
             String profileImgUrl,
             List<Category> categoryList,
+            boolean marketingAgreement,
             OauthInfo oauthInfo) {
         this.name = name;
         this.email = email;
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
         this.categories = categoryList;
+        this.marketingAgreement = marketingAgreement;
         this.oauthInfo = oauthInfo;
         this.lastLoginAt = LocalDateTime.now();
     }
@@ -72,6 +77,7 @@ public class User extends BaseTimeEntity {
             String nickname,
             String profileImgUrl,
             List<Category> categoryList,
+            boolean marketingAgreement,
             OauthInfo oauthInfo) {
         return User.builder()
                 .name(name)
@@ -79,6 +85,7 @@ public class User extends BaseTimeEntity {
                 .nickname(nickname)
                 .profileImgUrl(profileImgUrl)
                 .categoryList(categoryList)
+                .marketingAgreement(marketingAgreement)
                 .oauthInfo(oauthInfo)
                 .build();
     }

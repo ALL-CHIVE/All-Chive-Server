@@ -8,4 +8,6 @@ public interface TagCustomRepository {
     List<Tag> queryTagByUserIdOrderByUsedAt(Long userId);
 
     List<Tag> queryTagByTagIdIn(List<Long> tagIds);
+
+    List<Tag> queryTagByUserIdContainName(Long userId, String name);
 }
