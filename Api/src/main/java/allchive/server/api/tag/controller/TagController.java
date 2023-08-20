@@ -4,6 +4,7 @@ package allchive.server.api.tag.controller;
 import allchive.server.api.tag.model.dto.request.CreateTagRequest;
 import allchive.server.api.tag.model.dto.request.UpdateTagRequest;
 import allchive.server.api.tag.model.dto.response.AllTagResponse;
+import allchive.server.api.tag.model.dto.response.TagResponse;
 import allchive.server.api.tag.service.CreateTagUseCase;
 import allchive.server.api.tag.service.DeleteTagUseCase;
 import allchive.server.api.tag.service.GetAllTagUseCase;
@@ -33,8 +34,8 @@ public class TagController {
 
     @Operation(summary = "태그를 추가합니다.")
     @PostMapping()
-    public void createTag(@RequestBody CreateTagRequest request) {
-        createTagUseCase.execute(request);
+    public TagResponse createTag(@RequestBody CreateTagRequest request) {
+        return createTagUseCase.execute(request);
     }
 
     @Operation(summary = "태그를 수정합니다.")
