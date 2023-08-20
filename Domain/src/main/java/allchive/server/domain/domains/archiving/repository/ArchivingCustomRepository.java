@@ -33,5 +33,5 @@ public interface ArchivingCustomRepository {
             Set<Long> tagArchivingIds,
             Long userId);
 
-    List<Archiving> queryArchivingOrderByScrapCntLimit5();
+    List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(List<Long> blockList);
 }
