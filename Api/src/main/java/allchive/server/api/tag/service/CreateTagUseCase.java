@@ -3,6 +3,7 @@ package allchive.server.api.tag.service;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.tag.model.dto.request.CreateTagRequest;
+import allchive.server.api.tag.model.dto.response.TagResponse;
 import allchive.server.api.tag.model.mapper.TagMapper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.content.domain.Tag;
@@ -17,9 +18,10 @@ public class CreateTagUseCase {
     private final TagDomainService tagDomainService;
 
     @Transactional
-    public void execute(CreateTagRequest request) {
+    public TagResponse execute(CreateTagRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
         Tag tag = tagMapper.toEntity(request, userId);
         tagDomainService.save(tag);
+        return TagResponse.from(tag);
     }
 }
