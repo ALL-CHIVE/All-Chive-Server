@@ -143,7 +143,8 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(List<Long> blockList) {
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(
+            List<Long> blockList) {
         return queryFactory
                 .selectFrom(archiving)
                 .where(userIdNotIn(blockList), deleteStatusFalse(), publicStatusTrue())

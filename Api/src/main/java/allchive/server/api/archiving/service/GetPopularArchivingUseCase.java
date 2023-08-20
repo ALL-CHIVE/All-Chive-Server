@@ -30,7 +30,9 @@ public class GetPopularArchivingUseCase {
         List<Long> blockList =
                 blockAdaptor.findByBlockFrom(userId).stream().map(Block::getBlockUser).toList();
         List<ArchivingResponse> archivingResponses =
-                archivingAdaptor.queryArchivingOrderByScrapCntLimit5ExceptBlockList(blockList).stream()
+                archivingAdaptor
+                        .queryArchivingOrderByScrapCntLimit5ExceptBlockList(blockList)
+                        .stream()
                         .filter(archiving -> archiving.getScrapCnt() > 0)
                         .map(
                                 archiving ->

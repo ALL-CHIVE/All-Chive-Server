@@ -96,7 +96,8 @@ public class ArchivingAdaptor {
         return archivingRepository.findAllByPublicStatus(publicStatus);
     }
 
-    public List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(List<Long> blockList) {
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(
+            List<Long> blockList) {
         return archivingRepository.queryArchivingOrderByScrapCntLimit5ExceptBlockList(blockList);
     }
 }
