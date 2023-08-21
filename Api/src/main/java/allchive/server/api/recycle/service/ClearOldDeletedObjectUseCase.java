@@ -71,6 +71,7 @@ public class ClearOldDeletedObjectUseCase {
         contents.stream()
                 .filter(content -> content.getContentType().equals(ContentType.IMAGE))
                 .map(Content::getImageUrl)
+                .filter(url -> !url.isEmpty())
                 .filter(url -> !url.startsWith("http"))
                 .forEach(imageKeys::add);
         s3DeleteObjectService.deleteS3Object(imageKeys);
