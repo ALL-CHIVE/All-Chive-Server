@@ -63,8 +63,8 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingByIdIn(
-            List<Long> archivingIdList, Category category, Pageable pageable) {
+    public Slice<Archiving> querySliceArchivingByIdInExceptBlockList(
+            List<Long> archivingIdList, List<Long> blockList, Category category, Pageable pageable) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -72,6 +72,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .where(
                                 archivingIdListIn(archivingIdList),
                                 publicStatusTrue(),
+                                userIdNotIn(blockList),
                                 categoryEq(category),
                                 deleteStatusFalse())
                         .orderBy(scrapCntDesc(), createdAtDesc())
