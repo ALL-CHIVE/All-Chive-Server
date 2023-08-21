@@ -33,7 +33,8 @@ public class GetScrapArchivingUseCase {
                 blockAdaptor.findByBlockFrom(userId).stream().map(Block::getBlockUser).toList();
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingByIdInExceptBlockList(archivingIdList, blockList, category, pageable)
+                        .querySliceArchivingByIdInExceptBlockList(
+                                archivingIdList, blockList, category, pageable)
                         .map(
                                 archiving ->
                                         ArchivingResponse.of(

@@ -47,8 +47,12 @@ public class ArchivingAdaptor {
     }
 
     public Slice<Archiving> querySliceArchivingByIdInExceptBlockList(
-            List<Long> archivingIdList, List<Long> blockList, Category category, Pageable pageable) {
-        return archivingRepository.querySliceArchivingByIdInExceptBlockList(archivingIdList, blockList, category, pageable);
+            List<Long> archivingIdList,
+            List<Long> blockList,
+            Category category,
+            Pageable pageable) {
+        return archivingRepository.querySliceArchivingByIdInExceptBlockList(
+                archivingIdList, blockList, category, pageable);
     }
 
     public List<Archiving> queryArchivingByUserId(Long userId) {
