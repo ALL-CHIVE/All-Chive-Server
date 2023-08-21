@@ -59,11 +59,12 @@ public class ClearDeletedObjectUseCase {
     }
 
     private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
-        List<String> imageKeys = archivings.stream()
-                .map(Archiving::getImageUrl)
-                .filter(url -> !url.isEmpty())
-                .filter(url -> !url.startsWith("http"))
-                .toList();
+        List<String> imageKeys =
+                archivings.stream()
+                        .map(Archiving::getImageUrl)
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .toList();
         contents.stream()
                 .filter(content -> content.getContentType().equals(ContentType.IMAGE))
                 .map(Content::getImageUrl)
