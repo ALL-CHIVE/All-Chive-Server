@@ -2,6 +2,8 @@ package allchive.server.api.recycle.service;
 
 
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
+import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
@@ -36,6 +38,7 @@ public class ClearOldDeletedObjectUseCase {
     private final RecycleDomainService recycleDomainService;
     private final ReportDomainService reportDomainService;
     private final S3DeleteObjectService s3DeleteObjectService;
+    private final ArchivingAdaptor archivingAdaptor;
 
     /** 삭제 후 30일 지난 항목 제거 스케쥴러 매일 02:30에 수행 */
     @Scheduled(cron = "0 30 2 * * *")
@@ -45,6 +48,7 @@ public class ClearOldDeletedObjectUseCase {
         LocalDateTime deleteStandard = LocalDateTime.now().minusDays(30);
         List<Recycle> recycles = recycleAdaptor.findAllByDeletedAtBefore(deleteStandard);
         List<Long> archivingIds = getArchivingIds(recycles);
+        List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
         List<Content> contents = contentAdaptor.findAllByArchivingIds(archivingIds);
         List<Long> contentIds = getContentsId(recycles, contents);
         scrapDomainService.deleteAllByArchivingIdIn(archivingIds);
@@ -53,16 +57,21 @@ public class ClearOldDeletedObjectUseCase {
         archivingDomainService.deleteAllById(archivingIds);
         recycleDomainService.deleteAll(recycles);
         reportDomainService.deleteAllByArchivingIdInOrContentIdIn(archivingIds, contentIds);
-        deleteS3Object(contents);
+        deleteS3Object(contents, archivings);
         log.info("scheduler off");
     }
 
-    private void deleteS3Object(List<Content> contents) {
-        List<String> imageKeys =
-                contents.stream()
-                        .filter(content -> content.getContentType().equals(ContentType.IMAGE))
-                        .map(Content::getImageUrl)
-                        .toList();
+    private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
+        List<String> imageKeys = archivings.stream()
+                .map(Archiving::getImageUrl)
+                .filter(url -> !url.isEmpty())
+                .filter(url -> !url.startsWith("http"))
+                .toList();
+        contents.stream()
+                .filter(content -> content.getContentType().equals(ContentType.IMAGE))
+                .map(Content::getImageUrl)
+                .filter(url -> !url.startsWith("http"))
+                .forEach(imageKeys::add);
         s3DeleteObjectService.deleteS3Object(imageKeys);
     }
 
