@@ -7,23 +7,32 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
+import allchive.server.domain.domains.block.adaptor.BlockAdaptor;
+import allchive.server.domain.domains.block.domain.Block;
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
 public class GetPopularArchivingUseCase {
     private final ArchivingAdaptor archivingAdaptor;
     private final ScrapAdaptor scrapAdaptor;
+    private final BlockAdaptor blockAdaptor;
 
+    @Transactional
     public ArchivingsResponse execute() {
         Long userId = SecurityUtil.getCurrentUserId();
         List<Scrap> scraps = scrapAdaptor.findAllByUserId(userId);
+        List<Long> blockList =
+                blockAdaptor.findByBlockFrom(userId).stream().map(Block::getBlockUser).toList();
         List<ArchivingResponse> archivingResponses =
-                archivingAdaptor.queryArchivingOrderByScrapCntLimit5().stream()
+                archivingAdaptor
+                        .queryArchivingOrderByScrapCntLimit5ExceptBlockList(blockList)
+                        .stream()
                         .filter(archiving -> archiving.getScrapCnt() > 0)
                         .map(
                                 archiving ->

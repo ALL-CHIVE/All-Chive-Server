@@ -63,8 +63,11 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public Slice<Archiving> querySliceArchivingByIdIn(
-            List<Long> archivingIdList, Category category, Pageable pageable) {
+    public Slice<Archiving> querySliceArchivingByIdInExceptBlockList(
+            List<Long> archivingIdList,
+            List<Long> blockList,
+            Category category,
+            Pageable pageable) {
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -72,6 +75,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .where(
                                 archivingIdListIn(archivingIdList),
                                 publicStatusTrue(),
+                                userIdNotIn(blockList),
                                 categoryEq(category),
                                 deleteStatusFalse())
                         .orderBy(scrapCntDesc(), createdAtDesc())
@@ -143,10 +147,11 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
     }
 
     @Override
-    public List<Archiving> queryArchivingOrderByScrapCntLimit5() {
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(
+            List<Long> blockList) {
         return queryFactory
                 .selectFrom(archiving)
-                .where(deleteStatusFalse(), publicStatusTrue())
+                .where(userIdNotIn(blockList), deleteStatusFalse(), publicStatusTrue())
                 .orderBy(scrapCntDesc())
                 .limit(5L)
                 .fetch();
@@ -185,10 +190,6 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     private BooleanExpression titleContainOrIdIn(String keyword, Set<Long> tagArchivingIds) {
         return archiving.title.contains(keyword).or(archiving.id.in(tagArchivingIds));
-    }
-
-    private BooleanExpression userIdEqOrPublicStatusTrue(Long userId) {
-        return archiving.userId.eq(userId).or(archiving.publicStatus.eq(Boolean.TRUE));
     }
 
     private BooleanExpression userIdNeAndPublicStatusTrue(Long userId) {

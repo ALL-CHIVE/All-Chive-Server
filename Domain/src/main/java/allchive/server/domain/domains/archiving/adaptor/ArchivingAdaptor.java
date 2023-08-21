@@ -46,9 +46,13 @@ public class ArchivingAdaptor {
         return archivingRepository.querySliceArchivingByUserId(userId, category, pageable);
     }
 
-    public Slice<Archiving> querySliceArchivingByIdIn(
-            List<Long> archivingIdList, Category category, Pageable pageable) {
-        return archivingRepository.querySliceArchivingByIdIn(archivingIdList, category, pageable);
+    public Slice<Archiving> querySliceArchivingByIdInExceptBlockList(
+            List<Long> archivingIdList,
+            List<Long> blockList,
+            Category category,
+            Pageable pageable) {
+        return archivingRepository.querySliceArchivingByIdInExceptBlockList(
+                archivingIdList, blockList, category, pageable);
     }
 
     public List<Archiving> queryArchivingByUserId(Long userId) {
@@ -96,7 +100,8 @@ public class ArchivingAdaptor {
         return archivingRepository.findAllByPublicStatus(publicStatus);
     }
 
-    public List<Archiving> queryArchivingOrderByScrapCntLimit5() {
-        return archivingRepository.queryArchivingOrderByScrapCntLimit5();
+    public List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(
+            List<Long> blockList) {
+        return archivingRepository.queryArchivingOrderByScrapCntLimit5ExceptBlockList(blockList);
     }
 }
