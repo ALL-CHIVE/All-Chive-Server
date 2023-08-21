@@ -36,6 +36,7 @@ public class ArchivingMapper {
                         case TECH -> response.addTech(TitleContentCntVo.from(archiving));
                         case DESIGN -> response.addDesign(TitleContentCntVo.from(archiving));
                         case TREND -> response.addTrend(TitleContentCntVo.from(archiving));
+                        case ETC -> response.addEtc(TitleContentCntVo.from(archiving));
                     }
                 });
         return response;
