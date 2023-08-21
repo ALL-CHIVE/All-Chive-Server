@@ -12,85 +12,93 @@ import lombok.Getter;
 @Getter
 @JsonNaming(UpperCaseStrategy.class)
 public class ArchivingTitleResponse {
-    private List<TitleContentCntVo> FOOD;
-    private List<TitleContentCntVo> LIFE;
-    private List<TitleContentCntVo> HOME_LIVING;
-    private List<TitleContentCntVo> SHOPPING;
-    private List<TitleContentCntVo> SPORT;
-    private List<TitleContentCntVo> SELF_IMPROVEMENT;
-    private List<TitleContentCntVo> TECH;
-    private List<TitleContentCntVo> DESIGN;
-    private List<TitleContentCntVo> TREND;
+    private List<TitleContentCntVo> food;
+    private List<TitleContentCntVo> life;
+    private List<TitleContentCntVo> home_living;
+    private List<TitleContentCntVo> shopping;
+    private List<TitleContentCntVo> sport;
+    private List<TitleContentCntVo> self_improvement;
+    private List<TitleContentCntVo> tech;
+    private List<TitleContentCntVo> design;
+    private List<TitleContentCntVo> trend;
+    private List<TitleContentCntVo> etc;
 
     @Builder
     private ArchivingTitleResponse(
-            List<TitleContentCntVo> FOOD,
-            List<TitleContentCntVo> LIFE,
-            List<TitleContentCntVo> HOME_LIVING,
-            List<TitleContentCntVo> SHOPPING,
-            List<TitleContentCntVo> SPORT,
-            List<TitleContentCntVo> SELF_IMPROVEMENT,
-            List<TitleContentCntVo> TECH,
-            List<TitleContentCntVo> DESIGN,
-            List<TitleContentCntVo> TREND) {
-        this.FOOD = FOOD;
-        this.LIFE = LIFE;
-        this.HOME_LIVING = HOME_LIVING;
-        this.SHOPPING = SHOPPING;
-        this.SPORT = SPORT;
-        this.SELF_IMPROVEMENT = SELF_IMPROVEMENT;
-        this.TECH = TECH;
-        this.DESIGN = DESIGN;
-        this.TREND = TREND;
+            List<TitleContentCntVo> food,
+            List<TitleContentCntVo> life,
+            List<TitleContentCntVo> home_living,
+            List<TitleContentCntVo> shopping,
+            List<TitleContentCntVo> sport,
+            List<TitleContentCntVo> self_improvement,
+            List<TitleContentCntVo> tech,
+            List<TitleContentCntVo> design,
+            List<TitleContentCntVo> trend,
+            List<TitleContentCntVo> etc) {
+        this.food = food;
+        this.life = life;
+        this.home_living = home_living;
+        this.shopping = shopping;
+        this.sport = sport;
+        this.self_improvement = self_improvement;
+        this.tech = tech;
+        this.design = design;
+        this.trend = trend;
+        this.etc = etc;
     }
 
     public static ArchivingTitleResponse init() {
         return ArchivingTitleResponse.builder()
-                .FOOD(new ArrayList<>())
-                .LIFE(new ArrayList<>())
-                .HOME_LIVING(new ArrayList<>())
-                .SHOPPING(new ArrayList<>())
-                .SPORT(new ArrayList<>())
-                .SELF_IMPROVEMENT(new ArrayList<>())
-                .TECH(new ArrayList<>())
-                .DESIGN(new ArrayList<>())
-                .TREND(new ArrayList<>())
+                .food(new ArrayList<>())
+                .life(new ArrayList<>())
+                .home_living(new ArrayList<>())
+                .shopping(new ArrayList<>())
+                .sport(new ArrayList<>())
+                .self_improvement(new ArrayList<>())
+                .tech(new ArrayList<>())
+                .design(new ArrayList<>())
+                .trend(new ArrayList<>())
+                .etc(new ArrayList<>())
                 .build();
     }
 
     public void addFood(TitleContentCntVo vo) {
-        this.FOOD.add(vo);
+        this.food.add(vo);
     }
 
     public void addLife(TitleContentCntVo vo) {
-        this.LIFE.add(vo);
+        this.life.add(vo);
     }
 
     public void addHomeLiving(TitleContentCntVo vo) {
-        this.HOME_LIVING.add(vo);
+        this.home_living.add(vo);
     }
 
     public void addShopping(TitleContentCntVo vo) {
-        this.SHOPPING.add(vo);
+        this.shopping.add(vo);
     }
 
     public void addSport(TitleContentCntVo vo) {
-        this.SPORT.add(vo);
+        this.sport.add(vo);
     }
 
     public void addSelfImprovement(TitleContentCntVo vo) {
-        this.SELF_IMPROVEMENT.add(vo);
+        this.self_improvement.add(vo);
     }
 
     public void addTech(TitleContentCntVo vo) {
-        this.TECH.add(vo);
+        this.tech.add(vo);
     }
 
     public void addDesign(TitleContentCntVo vo) {
-        this.DESIGN.add(vo);
+        this.design.add(vo);
     }
 
     public void addTrend(TitleContentCntVo vo) {
-        this.TREND.add(vo);
+        this.trend.add(vo);
+    }
+
+    public void addEtc(TitleContentCntVo vo) {
+        this.etc.add(vo);
     }
 }
