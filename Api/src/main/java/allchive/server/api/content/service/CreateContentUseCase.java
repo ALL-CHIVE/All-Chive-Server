@@ -14,6 +14,7 @@ import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
+import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class CreateContentUseCase {
     private final ContentDomainService contentDomainService;
     private final TagValidator tagValidator;
     private final TagAdaptor tagAdaptor;
+    private final TagDomainService tagDomainService;
     private final ContentTagGroupDomainService contentTagGroupDomainService;
     private final ArchivingDomainService archivingDomainService;
 
@@ -34,6 +36,7 @@ public class CreateContentUseCase {
     public void execute(CreateContentRequest request) {
         validateExecution(request);
         Content content = contentMapper.toEntity(request);
+        updateTagUsedAt(request.getTagIds());
         createContentTagGroup(content, request.getTagIds());
         contentDomainService.save(content);
         archivingDomainService.updateContentCnt(
@@ -51,5 +54,9 @@ public class CreateContentUseCase {
         List<ContentTagGroup> contentTagGroupList =
                 contentMapper.toContentTagGroupEntityList(content, tags);
         contentTagGroupDomainService.saveAll(contentTagGroupList);
+    }
+
+    private void updateTagUsedAt(List<Long> tagIds) {
+        tagAdaptor.queryTagByTagIdIn(tagIds).forEach(tagDomainService::updateUsedAt);
     }
 }
