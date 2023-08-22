@@ -8,7 +8,6 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.content.model.dto.request.UpdateContentRequest;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
@@ -18,6 +17,7 @@ import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
+import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import java.util.List;
@@ -35,11 +35,12 @@ public class UpdateContentUseCase {
     private final ContentDomainService contentDomainService;
     private final ContentTagGroupDomainService contentTagGroupDomainService;
     private final ArchivingDomainService archivingDomainService;
-    private final ArchivingAdaptor archivingAdaptor;
+    private final TagDomainService tagDomainService;
 
     @Transactional
     public void execute(Long contentId, UpdateContentRequest request) {
         validateExecution(contentId, request);
+        updateTagUsedAt(request.getTagIds());
         regenerateContentTagGroup(contentId, request.getTagIds());
         updateArchiving(contentId, request.getArchivingId(), request.getContentType());
         contentDomainService.update(
@@ -73,5 +74,9 @@ public class UpdateContentUseCase {
         List<ContentTagGroup> contentTagGroupList =
                 contentMapper.toContentTagGroupEntityList(content, tags);
         contentTagGroupDomainService.saveAll(contentTagGroupList);
+    }
+
+    private void updateTagUsedAt(List<Long> tagIds) {
+        tagAdaptor.queryTagByTagIdIn(tagIds).forEach(tagDomainService::updateUsedAt);
     }
 }

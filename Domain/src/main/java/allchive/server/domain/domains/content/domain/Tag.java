@@ -44,4 +44,8 @@ public class Tag extends BaseTimeEntity {
     public void updateName(String name) {
         this.name = name;
     }
+
+    public void updateUsedAt(LocalDateTime now) {
+        this.usedAt = now;
+    }
 }
