@@ -33,7 +33,7 @@ public class UrlUtil {
             return "";
         }
         if (validateS3Url(url)) {
-            return url.split("/", 4)[3].split("\\?",2)[0];
+            return url.split("/", 4)[3].split("\\?", 2)[0];
         }
         return url;
     }

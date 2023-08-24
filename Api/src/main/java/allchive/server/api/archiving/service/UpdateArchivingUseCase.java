@@ -10,11 +10,9 @@ import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor

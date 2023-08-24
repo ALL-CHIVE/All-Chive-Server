@@ -8,7 +8,6 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.content.model.dto.request.UpdateContentRequest;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
@@ -21,9 +20,8 @@ import allchive.server.domain.domains.content.service.ContentTagGroupDomainServi
 import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.content.validator.TagValidator;
-import java.util.List;
-
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,7 +85,8 @@ public class UpdateContentUseCase {
 
     private void eliminateOldImage(Long contentId, String newUrl) {
         Content content = contentAdaptor.findById(contentId);
-        if (UrlUtil.validateS3Key(content.getImageUrl()) && !content.getImageUrl().equals(UrlUtil.convertUrlToKey(newUrl))) {
+        if (UrlUtil.validateS3Key(content.getImageUrl())
+                && !content.getImageUrl().equals(UrlUtil.convertUrlToKey(newUrl))) {
             s3DeleteObjectService.deleteS3Object(List.of(content.getImageUrl()));
         }
     }

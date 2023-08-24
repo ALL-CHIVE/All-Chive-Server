@@ -5,16 +5,14 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.service.UserDomainService;
 import allchive.server.domain.domains.user.validator.UserValidator;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @UseCase
 @RequiredArgsConstructor
