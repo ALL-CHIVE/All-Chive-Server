@@ -16,23 +16,25 @@ public class UrlUtil {
     }
 
     public static String toAssetUrl(String key) {
-        //        if (key.equals("")) {
-        //            return "";
-        //        }
-        //        if (springEnvironmentHelper.isProdProfile()) {
-        //            return PROD_ASSET_URL + key;
-        //        }
-        //        return STAGING_ASSET_URL + key;
-        return key;
+        if (key.startsWith("http")) {
+            return key;
+        }
+        if (key.equals("")) {
+            return "";
+        }
+        if (springEnvironmentHelper.isProdProfile()) {
+            return PROD_ASSET_URL + key;
+        }
+        return STAGING_ASSET_URL + key;
     }
 
     public static String convertUrlToKey(String url) {
-        //        if (url.equals("")) {
-        //            return "";
-        //        }
-        //        if (validateUrl(url)) {
-        //            return url.split("/", 4)[3];
-        //        }
+        if (url.equals("")) {
+            return "";
+        }
+        if (validateUrl(url)) {
+            return url.split("/", 4)[3];
+        }
         return url;
     }
 

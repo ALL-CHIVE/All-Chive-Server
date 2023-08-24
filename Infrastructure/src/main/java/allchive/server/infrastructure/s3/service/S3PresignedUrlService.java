@@ -39,7 +39,7 @@ public class S3PresignedUrlService {
     private String generateFileName(Long id, PresignedType presignedType) {
         String fileName;
         switch (presignedType) {
-            case USER -> fileName = baseUrl + "/user/";
+            case USER -> fileName = baseUrl + "/user";
             case CONTENT -> fileName = baseUrl + "/content/" + id.toString();
             case ARCHIVING -> fileName = baseUrl + "/archiving/" + id.toString();
             default -> throw InternalServerError.EXCEPTION;

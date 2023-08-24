@@ -20,9 +20,8 @@ public class UpdateUserInfoUseCase {
     public void execute(UpdateUserInfoRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(userId);
-        String imgKey = UrlUtil.convertUrlToKey(request.getImgUrl());
         userDomainService.updateUserInfo(
-                userId, request.getName(), request.getEmail(), request.getNickname(), imgKey);
+                userId, request.getName(), request.getEmail(), request.getNickname(), UrlUtil.convertUrlToKey(request.getImgUrl()));
     }
 
     private void validateExecution(Long userId) {
