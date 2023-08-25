@@ -20,6 +20,8 @@ import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -63,19 +65,18 @@ public class ClearOldDeletedObjectUseCase {
 
     private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
         List<String> imageKeys =
-                new ArrayList<>(
                         archivings.stream()
                                 .map(Archiving::getImageUrl)
                                 .filter(url -> !url.isEmpty())
                                 .filter(url -> !url.startsWith("http"))
-                                .toList());
+                                .collect(Collectors.toList());
         imageKeys.addAll(
                 contents.stream()
                         .filter(content -> content.getContentType().equals(ContentType.IMAGE))
                         .map(Content::getImageUrl)
                         .filter(url -> !url.isEmpty())
                         .filter(url -> !url.startsWith("http"))
-                        .toList());
+                        .collect(Collectors.toList()));
         s3DeleteObjectService.deleteS3Object(imageKeys);
     }
 
@@ -91,7 +92,7 @@ public class ClearOldDeletedObjectUseCase {
                 recycles.stream()
                         .filter(recycle -> recycle.getRecycleType().equals(RecycleType.CONTENT))
                         .map(Recycle::getContentId)
-                        .toList();
+                        .collect(Collectors.toList());
 
         if (contentIds.isEmpty()) {
             contentIds = new ArrayList<>();
