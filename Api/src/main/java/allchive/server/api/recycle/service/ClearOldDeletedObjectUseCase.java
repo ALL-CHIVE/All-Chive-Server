@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -65,11 +64,11 @@ public class ClearOldDeletedObjectUseCase {
 
     private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
         List<String> imageKeys =
-                        archivings.stream()
-                                .map(Archiving::getImageUrl)
-                                .filter(url -> !url.isEmpty())
-                                .filter(url -> !url.startsWith("http"))
-                                .collect(Collectors.toList());
+                archivings.stream()
+                        .map(Archiving::getImageUrl)
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList());
         imageKeys.addAll(
                 contents.stream()
                         .filter(content -> content.getContentType().equals(ContentType.IMAGE))

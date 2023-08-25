@@ -22,8 +22,6 @@ import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,11 +60,12 @@ public class ClearDeletedObjectUseCase {
     }
 
     private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
-        List<String> imageKeys = archivings.stream()
-                                .map(Archiving::getImageUrl)
-                                .filter(url -> !url.isEmpty())
-                                .filter(url -> !url.startsWith("http"))
-                                .collect(Collectors.toList());
+        List<String> imageKeys =
+                archivings.stream()
+                        .map(Archiving::getImageUrl)
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList());
         imageKeys.addAll(
                 contents.stream()
                         .filter(content -> content.getContentType().equals(ContentType.IMAGE))
