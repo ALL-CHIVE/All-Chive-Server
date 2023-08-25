@@ -21,6 +21,7 @@ import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,24 +61,23 @@ public class ClearDeletedObjectUseCase {
 
     private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
         List<String> imageKeys =
-                new ArrayList<>(
-                        archivings.stream()
-                                .map(Archiving::getImageUrl)
-                                .filter(url -> !url.isEmpty())
-                                .filter(url -> !url.startsWith("http"))
-                                .toList());
+                archivings.stream()
+                        .map(Archiving::getImageUrl)
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList());
         imageKeys.addAll(
                 contents.stream()
                         .filter(content -> content.getContentType().equals(ContentType.IMAGE))
                         .map(Content::getImageUrl)
                         .filter(url -> !url.isEmpty())
                         .filter(url -> !url.startsWith("http"))
-                        .toList());
+                        .collect(Collectors.toList()));
         s3DeleteObjectService.deleteS3Object(imageKeys);
     }
 
     private List<Long> getContentsId(List<Content> contents, ClearDeletedObjectRequest request) {
-        List<Long> contentsId = contents.stream().map(Content::getId).toList();
+        List<Long> contentsId = contents.stream().map(Content::getId).collect(Collectors.toList());
         if (!request.getContentIds().isEmpty()) {
             if (contentsId.isEmpty()) {
                 contentsId = new ArrayList<>();
