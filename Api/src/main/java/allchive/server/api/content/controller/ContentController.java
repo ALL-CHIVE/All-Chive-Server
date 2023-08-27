@@ -26,7 +26,8 @@ public class ContentController {
 
     @Operation(summary = "컨텐츠를 생성합니다.")
     @PostMapping()
-    public ContentTagResponse createContent(@RequestBody CreateContentRequest createContentRequest) {
+    public ContentTagResponse createContent(
+            @RequestBody CreateContentRequest createContentRequest) {
         return createContentUseCase.execute(createContentRequest);
     }
 

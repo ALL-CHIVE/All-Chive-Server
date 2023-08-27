@@ -39,7 +39,8 @@ public class CreateContentUseCase {
         validateExecution(userId, request);
         Content content = contentMapper.toEntity(request);
         updateTagUsedAt(request.getTagIds());
-        List<ContentTagGroup> contentTagGroupList = createContentTagGroup(content, request.getTagIds());
+        List<ContentTagGroup> contentTagGroupList =
+                createContentTagGroup(content, request.getTagIds());
         contentDomainService.save(content);
         archivingDomainService.updateContentCnt(
                 request.getArchivingId(), request.getContentType(), PLUS_ONE);
