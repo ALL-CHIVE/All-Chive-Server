@@ -4,6 +4,7 @@ import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.content.model.dto.request.CreateContentRequest;
+import allchive.server.api.content.model.dto.response.ContentTagResponse;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
@@ -33,27 +34,30 @@ public class CreateContentUseCase {
     private final ArchivingDomainService archivingDomainService;
 
     @Transactional
-    public void execute(CreateContentRequest request) {
-        validateExecution(request);
+    public ContentTagResponse execute(CreateContentRequest request) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        validateExecution(userId, request);
         Content content = contentMapper.toEntity(request);
         updateTagUsedAt(request.getTagIds());
-        createContentTagGroup(content, request.getTagIds());
+        List<ContentTagGroup> contentTagGroupList =
+                createContentTagGroup(content, request.getTagIds());
         contentDomainService.save(content);
         archivingDomainService.updateContentCnt(
                 request.getArchivingId(), request.getContentType(), PLUS_ONE);
+        return contentMapper.toContentTagResponse(content, contentTagGroupList, true, userId);
     }
 
-    private void validateExecution(CreateContentRequest request) {
-        Long userId = SecurityUtil.getCurrentUserId();
+    private void validateExecution(Long userId, CreateContentRequest request) {
         archivingValidator.verifyUser(userId, request.getArchivingId());
         tagValidator.validateExistTagsAndUser(request.getTagIds(), userId);
     }
 
-    private void createContentTagGroup(Content content, List<Long> tagIds) {
+    private List<ContentTagGroup> createContentTagGroup(Content content, List<Long> tagIds) {
         List<Tag> tags = tagAdaptor.queryTagByTagIdIn(tagIds);
         List<ContentTagGroup> contentTagGroupList =
                 contentMapper.toContentTagGroupEntityList(content, tags);
         contentTagGroupDomainService.saveAll(contentTagGroupList);
+        return contentTagGroupList;
     }
 
     private void updateTagUsedAt(List<Long> tagIds) {
