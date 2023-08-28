@@ -4,13 +4,12 @@ package allchive.server.infrastructure.slack;
 import allchive.server.core.event.events.slack.SlackAsyncErrorEvent;
 import allchive.server.core.event.events.slack.SlackErrorEvent;
 import com.slack.api.webhook.Payload;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor

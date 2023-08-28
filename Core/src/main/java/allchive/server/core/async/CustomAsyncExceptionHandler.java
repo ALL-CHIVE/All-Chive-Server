@@ -1,10 +1,9 @@
 package allchive.server.core.async;
 
 
-import java.lang.reflect.Method;
-
 import allchive.server.core.event.Event;
 import allchive.server.core.event.events.slack.SlackAsyncErrorEvent;
+import java.lang.reflect.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;

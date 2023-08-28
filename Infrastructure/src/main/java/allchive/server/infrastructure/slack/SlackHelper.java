@@ -4,11 +4,10 @@ package allchive.server.infrastructure.slack;
 import allchive.server.core.helper.SpringEnvironmentHelper;
 import com.slack.api.Slack;
 import com.slack.api.webhook.Payload;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
@@ -22,9 +21,9 @@ public class SlackHelper {
         final Slack slack = Slack.getInstance();
 
         try {
-//            if (springEnvironmentHelper.isProdProfile()) {
-                slack.send(slackUrl, payload);
-//            }
+            //            if (springEnvironmentHelper.isProdProfile()) {
+            slack.send(slackUrl, payload);
+            //            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

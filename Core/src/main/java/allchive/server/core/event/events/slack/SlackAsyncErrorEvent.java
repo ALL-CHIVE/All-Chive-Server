@@ -1,5 +1,6 @@
 package allchive.server.core.event.events.slack;
 
+
 import lombok.Builder;
 import lombok.Getter;
 

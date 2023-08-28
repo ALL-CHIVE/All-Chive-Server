@@ -1,5 +1,6 @@
 package allchive.server.core.event.events.slack;
 
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,8 +14,6 @@ public class SlackErrorEvent {
     }
 
     public static SlackErrorEvent from(Exception exception) {
-        return SlackErrorEvent.builder()
-                .exception(exception)
-                .build();
+        return SlackErrorEvent.builder().exception(exception).build();
     }
 }
