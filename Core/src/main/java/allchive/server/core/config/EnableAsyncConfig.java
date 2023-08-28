@@ -40,6 +40,11 @@ public class EnableAsyncConfig implements AsyncConfigurer {
         return createTaskExecutor("S3_IMAGE_TASK_EXECUTOR");
     }
 
+    @Bean(name = "slackTaskExecutor")
+    public Executor slackTaskExecutor() {
+        return createTaskExecutor("SLACK_TASK_EXECUTOR");
+    }
+
     private Executor createTaskExecutor(String name) {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(CORE_POOL_SIZE);

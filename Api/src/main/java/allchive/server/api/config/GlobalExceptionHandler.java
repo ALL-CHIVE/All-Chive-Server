@@ -7,6 +7,8 @@ import allchive.server.core.error.BaseDynamicException;
 import allchive.server.core.error.BaseErrorException;
 import allchive.server.core.error.ErrorResponse;
 import allchive.server.core.error.GlobalErrorCode;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.slack.SlackErrorEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -98,6 +100,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             BaseDynamicException e, HttpServletRequest request) {
         ErrorResponse errorResponse =
                 ErrorResponse.from(ErrorReason.of(e.getStatus(), e.getCode(), e.getMessage()));
+        Event.raise(SlackErrorEvent.from(e));
         return ResponseEntity.status(HttpStatus.valueOf(e.getStatus())).body(errorResponse);
     }
 
@@ -109,6 +112,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         final GlobalErrorCode globalErrorCode = GlobalErrorCode._INTERNAL_SERVER_ERROR;
         final ErrorReason errorReason = globalErrorCode.getErrorReason();
         final ErrorResponse errorResponse = ErrorResponse.from(errorReason);
+        Event.raise(SlackErrorEvent.from(e));
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
