@@ -46,4 +46,8 @@ public class AllchiveConst {
     public static final int PLUS_ONE = 1;
     public static final int MINUS_ONE = -1;
     public static final int ZERO = 0;
+
+    public static final int CORE_POOL_SIZE = 1;
+    public static final int MAX_POOL_SIZE = 30;
+    public static final int QUEUE_CAPACITY = 500;
 }

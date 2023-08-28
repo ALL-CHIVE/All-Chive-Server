@@ -4,6 +4,8 @@ package allchive.server.api.recycle.service;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
@@ -73,7 +75,7 @@ public class ClearDeletedObjectUseCase {
                         .filter(url -> !url.isEmpty())
                         .filter(url -> !url.startsWith("http"))
                         .collect(Collectors.toList()));
-        s3DeleteObjectService.deleteS3Object(imageKeys);
+        Event.raise(S3ImageDeleteEvent.from(imageKeys));
     }
 
     private List<Long> getContentsId(List<Content> contents, ClearDeletedObjectRequest request) {

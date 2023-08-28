@@ -5,6 +5,8 @@ import allchive.server.api.archiving.model.dto.request.UpdateArchivingRequest;
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
@@ -44,7 +46,7 @@ public class UpdateArchivingUseCase {
         Archiving archiving = archivingAdaptor.findById(archivingId);
         if (UrlUtil.validateS3Key(archiving.getImageUrl())
                 && !archiving.getImageUrl().equals(UrlUtil.convertUrlToKey(newUrl))) {
-            s3DeleteObjectService.deleteS3Object(List.of(archiving.getImageUrl()));
+            Event.raise(S3ImageDeleteEvent.from(List.of(archiving.getImageUrl())));
         }
     }
 }
