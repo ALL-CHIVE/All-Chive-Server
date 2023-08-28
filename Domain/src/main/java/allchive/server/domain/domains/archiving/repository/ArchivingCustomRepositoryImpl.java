@@ -55,7 +55,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                         .select(archiving)
                         .from(archiving)
                         .where(userIdEq(userId), categoryEq(category), deleteStatusFalse())
-                        .orderBy(pinDesc(userId), scrapCntDesc(), createdAtDesc())
+                        .orderBy(pinDesc(userId), createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
