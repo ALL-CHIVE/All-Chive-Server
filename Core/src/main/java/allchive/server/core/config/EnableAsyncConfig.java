@@ -25,6 +25,16 @@ public class EnableAsyncConfig implements AsyncConfigurer {
         return customAsyncExceptionHandler;
     }
 
+    @Bean(name = "archivingContentCntTaskExecutor")
+    public Executor archivingContentCntTaskExecutor() {
+        return createTaskExecutor("ARCHIVING_CONTENT_CNT_TASK_EXECUTOR");
+    }
+
+    @Bean(name = "tagTaskExecutor")
+    public Executor tagTaskExecutor() {
+        return createTaskExecutor("TAG_TASK_EXECUTOR");
+    }
+
     @Bean(name = "s3ImageTaskExecutor")
     public Executor s3ImageTaskExecutor() {
         return createTaskExecutor("S3_IMAGE_TASK_EXECUTOR");

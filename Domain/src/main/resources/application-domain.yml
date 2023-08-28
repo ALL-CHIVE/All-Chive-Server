@@ -34,8 +34,8 @@ logging:
     com.zaxxer.hikari: TRACE
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
-#    org.hibernate.SQL: debug
-#    org.hibernate.type: trace
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
 ---
 # dev
 spring:
