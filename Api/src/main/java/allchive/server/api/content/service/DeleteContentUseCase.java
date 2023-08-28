@@ -5,7 +5,7 @@ import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.mapper.RecycleMapper;
 import allchive.server.core.annotation.UseCase;
-import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
+import allchive.server.domain.domains.archiving.service.ArchivingAsyncDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.service.ContentDomainService;
@@ -23,8 +23,8 @@ public class DeleteContentUseCase {
     private final ContentDomainService contentDomainService;
     private final RecycleMapper recycleMapper;
     private final RecycleDomainService recycleDomainService;
-    private final ArchivingDomainService archivingDomainService;
     private final ContentAdaptor contentAdaptor;
+    private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
     @Transactional
     public void execute(Long contentId) {
@@ -48,7 +48,7 @@ public class DeleteContentUseCase {
 
     private void decreaseArchivingCount(Long contentId) {
         Content content = contentAdaptor.findById(contentId);
-        archivingDomainService.updateContentCnt(
+        archivingAsyncDomainService.updateContentCnt(
                 content.getArchivingId(), content.getContentType(), MINUS_ONE);
     }
 }

@@ -69,5 +69,6 @@ public class ArchivingDomainService {
         } else {
             archiving.updateLinkCnt(i);
         }
+        archivingAdaptor.save(archiving);
     }
 }

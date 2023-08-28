@@ -33,4 +33,8 @@ public class ContentTagGroupDomainService {
     public void deleteAllByContent(Content content) {
         contentTagGroupAdaptor.deleteAllByContent(content);
     }
+
+    public void deleteAll(List<ContentTagGroup> contentTagGroups) {
+        contentTagGroupAdaptor.deleteAll(contentTagGroups);
+    }
 }
