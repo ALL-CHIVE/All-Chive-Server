@@ -1,6 +1,12 @@
 package allchive.server.core.config;
 
+import allchive.server.core.async.CustomAsyncExceptionHandler;
+import lombok.RequiredArgsConstructor;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
@@ -8,7 +14,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import static allchive.server.core.consts.AllchiveConst.*;
 
-public class AsyncConfig {
+@EnableAsync
+@Configuration
+@RequiredArgsConstructor
+public class EnableAsyncConfig implements AsyncConfigurer {
+
+    private final CustomAsyncExceptionHandler customAsyncExceptionHandler;
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return customAsyncExceptionHandler;
+    }
+
     @Bean(name = "s3ImageTaskExecutor")
     public Executor s3ImageTaskExecutor() {
         return createTaskExecutor("S3_IMAGE_TASK_EXECUTOR");

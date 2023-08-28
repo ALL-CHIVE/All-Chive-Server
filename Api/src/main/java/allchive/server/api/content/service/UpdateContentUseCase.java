@@ -8,6 +8,8 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.content.model.dto.request.UpdateContentRequest;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
@@ -87,7 +89,7 @@ public class UpdateContentUseCase {
         Content content = contentAdaptor.findById(contentId);
         if (UrlUtil.validateS3Key(content.getImageUrl())
                 && !content.getImageUrl().equals(UrlUtil.convertUrlToKey(newUrl))) {
-            s3DeleteObjectService.deleteS3Object(List.of(content.getImageUrl()));
+            Event.raise(S3ImageDeleteEvent.from(List.of(content.getImageUrl())));
         }
     }
 }

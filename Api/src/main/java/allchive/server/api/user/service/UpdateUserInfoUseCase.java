@@ -5,6 +5,8 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.service.UserDomainService;
@@ -43,7 +45,7 @@ public class UpdateUserInfoUseCase {
         User user = userAdaptor.findById(userId);
         if (UrlUtil.validateS3Key(user.getProfileImgUrl())
                 && !user.getProfileImgUrl().equals(UrlUtil.convertUrlToKey(newUrl))) {
-            s3DeleteObjectService.deleteS3Object(List.of(user.getProfileImgUrl()));
+            Event.raise(S3ImageDeleteEvent.from(List.of(user.getProfileImgUrl())));
         }
     }
 }
