@@ -11,7 +11,6 @@ import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
 import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.service.ArchivingAsyncDomainService;
-import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.ContentTagGroupAdaptor;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
@@ -22,10 +21,8 @@ import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
 import allchive.server.domain.domains.content.service.TagAsyncDomainService;
-import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.content.validator.TagValidator;
-import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,18 +74,21 @@ public class UpdateContentUseCase {
 
     private void regenerateContentTagGroup(Long contentId, List<Long> tagIds) {
         Content content = contentAdaptor.findById(contentId);
-        List<ContentTagGroup> contentTagGroups = contentTagGroupAdaptor.queryContentTagGroupByContentIn(List.of(content));
-        List<ContentTagGroup> oldContentTagGroups = contentTagGroups.stream()
-                .filter(contentTagGroup -> !tagIds.contains(contentTagGroup.getTag().getId()))
-                .toList();
+        List<ContentTagGroup> contentTagGroups =
+                contentTagGroupAdaptor.queryContentTagGroupByContentIn(List.of(content));
+        List<ContentTagGroup> oldContentTagGroups =
+                contentTagGroups.stream()
+                        .filter(
+                                contentTagGroup ->
+                                        !tagIds.contains(contentTagGroup.getTag().getId()))
+                        .toList();
         contentTagGroupDomainService.deleteAll(oldContentTagGroups);
 
-        List<Long> oldTagIds = contentTagGroups.stream()
-                .map(contentTagGroup -> contentTagGroup.getTag().getId())
-                .toList();
-        List<Long> newTagIds = tagIds.stream()
-                .filter(tagId -> !oldTagIds.contains(tagId))
-                .toList();
+        List<Long> oldTagIds =
+                contentTagGroups.stream()
+                        .map(contentTagGroup -> contentTagGroup.getTag().getId())
+                        .toList();
+        List<Long> newTagIds = tagIds.stream().filter(tagId -> !oldTagIds.contains(tagId)).toList();
         List<Tag> tags = tagAdaptor.queryTagByTagIdIn(newTagIds);
         List<ContentTagGroup> contentTagGroupList =
                 contentMapper.toContentTagGroupEntityList(content, tags);
