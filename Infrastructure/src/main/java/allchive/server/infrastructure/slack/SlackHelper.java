@@ -21,9 +21,9 @@ public class SlackHelper {
         final Slack slack = Slack.getInstance();
 
         try {
-            //            if (springEnvironmentHelper.isProdProfile()) {
-            slack.send(slackUrl, payload);
-            //            }
+            if (springEnvironmentHelper.isProdProfile()) {
+                slack.send(slackUrl, payload);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
