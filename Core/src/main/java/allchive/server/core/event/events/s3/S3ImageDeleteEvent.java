@@ -1,9 +1,9 @@
 package allchive.server.core.event.events.s3;
 
-import lombok.Builder;
-import lombok.Getter;
 
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class S3ImageDeleteEvent {
@@ -15,8 +15,6 @@ public class S3ImageDeleteEvent {
     }
 
     public static S3ImageDeleteEvent from(List<String> keys) {
-        return S3ImageDeleteEvent.builder()
-                .keys(keys)
-                .build();
+        return S3ImageDeleteEvent.builder().keys(keys).build();
     }
 }

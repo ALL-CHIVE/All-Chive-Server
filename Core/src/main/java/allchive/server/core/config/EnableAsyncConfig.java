@@ -1,6 +1,10 @@
 package allchive.server.core.config;
 
+import static allchive.server.core.consts.AllchiveConst.*;
+
 import allchive.server.core.async.CustomAsyncExceptionHandler;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
@@ -8,11 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.ThreadPoolExecutor;
-
-import static allchive.server.core.consts.AllchiveConst.*;
 
 @EnableAsync
 @Configuration
