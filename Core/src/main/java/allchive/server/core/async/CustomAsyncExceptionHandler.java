@@ -2,6 +2,9 @@ package allchive.server.core.async;
 
 
 import java.lang.reflect.Method;
+
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.slack.SlackAsyncErrorEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -19,5 +22,6 @@ public class CustomAsyncExceptionHandler implements AsyncUncaughtExceptionHandle
         for (Object param : params) {
             log.error("Parameter value - " + param);
         }
+        Event.raise(SlackAsyncErrorEvent.of(method.getName(), throwable, params));
     }
 }
