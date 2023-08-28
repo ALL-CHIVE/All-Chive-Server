@@ -7,6 +7,7 @@ import allchive.server.api.content.model.dto.request.CreateContentRequest;
 import allchive.server.api.content.model.dto.response.ContentTagResponse;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.domains.archiving.service.ArchivingAsyncDomainService;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
@@ -15,6 +16,7 @@ import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
+import allchive.server.domain.domains.content.service.TagAsyncDomainService;
 import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import java.util.List;
@@ -29,20 +31,20 @@ public class CreateContentUseCase {
     private final ContentDomainService contentDomainService;
     private final TagValidator tagValidator;
     private final TagAdaptor tagAdaptor;
-    private final TagDomainService tagDomainService;
     private final ContentTagGroupDomainService contentTagGroupDomainService;
-    private final ArchivingDomainService archivingDomainService;
+    private final ArchivingAsyncDomainService archivingAsyncDomainService;
+    private final TagAsyncDomainService tagAsyncDomainService;
 
     @Transactional
     public ContentTagResponse execute(CreateContentRequest request) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(userId, request);
         Content content = contentMapper.toEntity(request);
-        updateTagUsedAt(request.getTagIds());
         List<ContentTagGroup> contentTagGroupList =
                 createContentTagGroup(content, request.getTagIds());
         contentDomainService.save(content);
-        archivingDomainService.updateContentCnt(
+        updateTagUsedAt(request.getTagIds());
+        archivingAsyncDomainService.updateContentCnt(
                 request.getArchivingId(), request.getContentType(), PLUS_ONE);
         return contentMapper.toContentTagResponse(content, contentTagGroupList, true, userId);
     }
@@ -61,6 +63,6 @@ public class CreateContentUseCase {
     }
 
     private void updateTagUsedAt(List<Long> tagIds) {
-        tagAdaptor.queryTagByTagIdIn(tagIds).forEach(tagDomainService::updateUsedAt);
+        tagAdaptor.queryTagByTagIdIn(tagIds).forEach(tagAsyncDomainService::updateUsedAt);
     }
 }

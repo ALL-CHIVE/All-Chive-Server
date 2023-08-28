@@ -10,6 +10,7 @@ import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @DomainService
 @RequiredArgsConstructor
@@ -69,5 +70,6 @@ public class ArchivingDomainService {
         } else {
             archiving.updateLinkCnt(i);
         }
+        archivingAdaptor.save(archiving);
     }
 }
