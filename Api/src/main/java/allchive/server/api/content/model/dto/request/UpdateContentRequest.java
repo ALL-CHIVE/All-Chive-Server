@@ -7,12 +7,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.Getter;
 
+import javax.validation.constraints.Positive;
+
 @Getter
 public class UpdateContentRequest {
     @Schema(defaultValue = "IMAGE", description = "컨텐츠 타입")
     @ValidEnum(target = ContentType.class)
     private ContentType contentType;
 
+    @Positive
     @Schema(defaultValue = "0", description = "아카이빙 고유번호")
     private Long archivingId;
 
