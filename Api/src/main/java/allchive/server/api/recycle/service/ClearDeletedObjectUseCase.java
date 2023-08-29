@@ -6,6 +6,8 @@ import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
 import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
@@ -44,8 +46,8 @@ public class ClearDeletedObjectUseCase {
     private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional
-    public void execute(ClearDeletedObjectRequest request) {
-        Long userId = SecurityUtil.getCurrentUserId();
+    @DistributedLock(lockType = DistributedLockType.RECYCLE, identifier ={"userId"})
+    public void execute(ClearDeletedObjectRequest request, Long userId) {
         validateExecution(userId, request);
         List<Content> contents = contentAdaptor.findAllByArchivingIds(request.getArchivingIds());
         List<Long> contentsId = getContentsId(contents, request);

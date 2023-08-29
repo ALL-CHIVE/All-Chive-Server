@@ -1,6 +1,7 @@
 package allchive.server.api.user.controller;
 
 
+import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.user.model.dto.request.CheckUserNicknameRequest;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.api.user.model.dto.response.GetUserInfoResponse;
@@ -41,7 +42,8 @@ public class UserController {
     @Operation(summary = "내 정보를 수정합니다.")
     @PostMapping(value = "/info")
     public void getUserInfo(@RequestBody UpdateUserInfoRequest updateUserInfoRequest) {
-        updateUserInfoUseCase.execute(updateUserInfoRequest);
+        Long userId = SecurityUtil.getCurrentUserId();
+        updateUserInfoUseCase.execute(updateUserInfoRequest, userId);
     }
 
     @Operation(summary = "닉네임 중복체크합니다.")

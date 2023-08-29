@@ -3,6 +3,8 @@ package allchive.server.api.tag.service;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.content.adaptor.TagAdaptor;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
@@ -20,6 +22,7 @@ public class DeleteTagUseCase {
     private final TagDomainService tagDomainService;
 
     @Transactional
+    @DistributedLock(lockType = DistributedLockType.TAG, identifier ={"tagId"})
     public void execute(Long tagId) {
         validateExecution(tagId);
         Tag tag = tagAdaptor.findById(tagId);
