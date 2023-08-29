@@ -5,6 +5,8 @@ import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
@@ -25,8 +27,8 @@ public class UpdateArchivingScrapUseCase {
     private final ScrapValidator scrapValidator;
 
     @Transactional
-    public void execute(Long archivingId, Boolean cancel) {
-        Long userId = SecurityUtil.getCurrentUserId();
+    @DistributedLock(lockType = DistributedLockType.ARCHIVING_SCRAP, identifier ={"archivingId", "userId"})
+    public void execute(Long archivingId, Boolean cancel, Long userId) {
         validateExecution(archivingId, userId, cancel);
         User user = userAdaptor.findById(userId);
         if (cancel) {

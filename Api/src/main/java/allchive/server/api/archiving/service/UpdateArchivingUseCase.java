@@ -5,6 +5,8 @@ import allchive.server.api.archiving.model.dto.request.UpdateArchivingRequest;
 import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.core.event.Event;
 import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
@@ -22,9 +24,9 @@ public class UpdateArchivingUseCase {
     private final ArchivingDomainService archivingDomainService;
     private final ArchivingAdaptor archivingAdaptor;
     private final ArchivingValidator archivingValidator;
-    private final S3DeleteObjectService s3DeleteObjectService;
 
     @Transactional
+    @DistributedLock(lockType = DistributedLockType.ARCHIVING, identifier ={"archivingId"})
     public void execute(Long archivingId, UpdateArchivingRequest request) {
         validateExecution(archivingId);
         Archiving archiving = archivingAdaptor.findById(archivingId);

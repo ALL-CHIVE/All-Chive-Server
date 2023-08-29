@@ -5,6 +5,8 @@ import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.mapper.RecycleMapper;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.service.ArchivingAsyncDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
@@ -27,6 +29,7 @@ public class DeleteContentUseCase {
     private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
     @Transactional
+    @DistributedLock(lockType = DistributedLockType.CONTENT, identifier ={"contentId"})
     public void execute(Long contentId) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(contentId, userId);
