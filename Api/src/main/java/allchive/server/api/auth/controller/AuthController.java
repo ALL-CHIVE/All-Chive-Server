@@ -5,6 +5,7 @@ import allchive.server.api.auth.model.dto.response.OauthRegisterResponse;
 import allchive.server.api.auth.service.LogOutUserUseCase;
 import allchive.server.api.auth.service.TokenRefreshUseCase;
 import allchive.server.api.auth.service.WithdrawUserUseCase;
+import allchive.server.api.config.security.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,8 @@ public class AuthController {
     public void withDrawUser(
             @RequestParam(required = false, name = "appleCode", value = "") String appleCode,
             @RequestHeader(value = "referer", required = false) String referer) {
-        withdrawUserUseCase.execute(appleCode, referer);
+        Long userId = SecurityUtil.getCurrentUserId();
+        withdrawUserUseCase.execute(appleCode, referer, userId);
     }
 
     @Operation(summary = "회원탈퇴를 합니다. (개발용)", deprecated = true)

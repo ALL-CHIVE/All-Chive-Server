@@ -5,6 +5,8 @@ import allchive.server.api.auth.service.helper.OauthHelper;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.error.exception.InvalidOauthProviderException;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
@@ -47,8 +49,8 @@ public class WithdrawUserUseCase {
     private final ArchivingDomainService archivingDomainService;
 
     @Transactional
-    public void execute(String appleAccessToken, String referer) {
-        Long userId = SecurityUtil.getCurrentUserId();
+    @DistributedLock(lockType = DistributedLockType.USER, identifier ={"userId"})
+    public void execute(String appleAccessToken, String referer, Long userId) {
         User user = userAdaptor.findById(userId);
         // oauth쪽 탈퇴
         withdrawOauth(user.getOauthInfo().getProvider(), appleAccessToken, user, referer);

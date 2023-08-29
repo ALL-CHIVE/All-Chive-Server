@@ -19,10 +19,16 @@ public class RecycleCustomRepositoryImpl implements RecycleCustomRepository {
             List<Long> archivingIds, List<Long> contentIds, Long userId) {
         return queryFactory
                 .selectFrom(recycle)
-                .where(archivingIdInOrContentIdIn(archivingIds, contentIds))
+                .where(userIdEq(userId), archivingIdInOrContentIdIn(archivingIds, contentIds))
                 .orderBy(createdAtDesc())
                 .fetch();
     }
+
+    private BooleanExpression userIdEq(
+            Long userId) {
+        return recycle.userId.eq(userId);
+    }
+
 
     private BooleanExpression archivingIdInOrContentIdIn(
             List<Long> archivingIdList, List<Long> contentIdList) {

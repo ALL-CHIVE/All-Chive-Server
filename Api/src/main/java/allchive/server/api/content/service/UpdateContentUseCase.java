@@ -10,6 +10,8 @@ import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
 import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.domain.common.aop.distributedLock.DistributedLock;
+import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.service.ArchivingAsyncDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.ContentTagGroupAdaptor;
@@ -42,6 +44,7 @@ public class UpdateContentUseCase {
     private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
     @Transactional
+    @DistributedLock(lockType = DistributedLockType.CONTENT, identifier ={"contentId"})
     public void execute(Long contentId, UpdateContentRequest request) {
         validateExecution(contentId, request);
         regenerateContentTagGroup(contentId, request.getTagIds());
