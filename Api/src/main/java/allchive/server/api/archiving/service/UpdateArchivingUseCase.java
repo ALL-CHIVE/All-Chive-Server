@@ -24,7 +24,6 @@ public class UpdateArchivingUseCase {
     private final ArchivingDomainService archivingDomainService;
     private final ArchivingAdaptor archivingAdaptor;
     private final ArchivingValidator archivingValidator;
-    private final S3DeleteObjectService s3DeleteObjectService;
 
     @Transactional
     @DistributedLock(lockType = DistributedLockType.ARCHIVING, identifier ={"archivingId"})

@@ -43,7 +43,6 @@ public class ArchivingDomainService {
         } else {
             archiving.deletePinUserId(userId);
         }
-        archiving.updateScrapCnt(pin ? PLUS_ONE : MINUS_ONE);
     }
 
     public void softDeleteById(Long archivingId) {

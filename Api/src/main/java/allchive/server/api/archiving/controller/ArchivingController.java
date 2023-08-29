@@ -9,6 +9,7 @@ import allchive.server.api.archiving.model.dto.response.ArchivingTitleResponse;
 import allchive.server.api.archiving.model.dto.response.ArchivingsResponse;
 import allchive.server.api.archiving.service.*;
 import allchive.server.api.common.slice.SliceResponse;
+import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -118,13 +119,15 @@ public class ArchivingController {
     @PatchMapping(value = "/{archivingId}/scrap")
     public void updateArchivingScrap(
             @RequestParam("cancel") Boolean cancel, @PathVariable("archivingId") Long archivingId) {
-        updateArchivingScrapUseCase.execute(archivingId, cancel);
+        Long userId = SecurityUtil.getCurrentUserId();
+        updateArchivingScrapUseCase.execute(archivingId, cancel, userId);
     }
 
     @Operation(summary = "아카이빙을 고정합니다.", description = "고정 취소면 cancel에 true 값 보내주세요")
     @PatchMapping(value = "/{archivingId}/pin")
     public void updateArchivingPin(
             @RequestParam("cancel") Boolean cancel, @PathVariable("archivingId") Long archivingId) {
-        updateArchivingPinUseCase.execute(archivingId, cancel);
+        Long userId = SecurityUtil.getCurrentUserId();
+        updateArchivingPinUseCase.execute(archivingId, cancel, userId);
     }
 }

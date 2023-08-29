@@ -27,9 +27,8 @@ public class UpdateArchivingScrapUseCase {
     private final ScrapValidator scrapValidator;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.ARCHIVING_SCRAP, identifier ={"archivingId"})
-    public void execute(Long archivingId, Boolean cancel) {
-        Long userId = SecurityUtil.getCurrentUserId();
+    @DistributedLock(lockType = DistributedLockType.ARCHIVING_SCRAP, identifier ={"archivingId", "userId"})
+    public void execute(Long archivingId, Boolean cancel, Long userId) {
         validateExecution(archivingId, userId, cancel);
         User user = userAdaptor.findById(userId);
         if (cancel) {

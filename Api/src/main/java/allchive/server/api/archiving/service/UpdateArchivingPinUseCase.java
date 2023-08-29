@@ -17,9 +17,8 @@ public class UpdateArchivingPinUseCase {
     private final ArchivingDomainService archivingDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.ARCHIVING_PIN, identifier ={"archivingId"})
-    public void execute(Long archivingId, Boolean cancel) {
-        Long userId = SecurityUtil.getCurrentUserId();
+    @DistributedLock(lockType = DistributedLockType.ARCHIVING_PIN, identifier ={"archivingId", "userId"})
+    public void execute(Long archivingId, Boolean cancel, Long userId) {
         validateExecution(archivingId, userId, cancel);
         archivingDomainService.updatePin(archivingId, userId, !cancel);
     }
