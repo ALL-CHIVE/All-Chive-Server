@@ -2,6 +2,10 @@ package allchive.server.api.recycle.service;
 
 
 import allchive.server.core.annotation.UseCase;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
+import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
@@ -18,6 +22,7 @@ import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,6 +41,7 @@ public class ClearOldDeletedObjectUseCase {
     private final RecycleDomainService recycleDomainService;
     private final ReportDomainService reportDomainService;
     private final S3DeleteObjectService s3DeleteObjectService;
+    private final ArchivingAdaptor archivingAdaptor;
 
     /** 삭제 후 30일 지난 항목 제거 스케쥴러 매일 02:30에 수행 */
     @Scheduled(cron = "0 30 2 * * *")
@@ -45,6 +51,7 @@ public class ClearOldDeletedObjectUseCase {
         LocalDateTime deleteStandard = LocalDateTime.now().minusDays(30);
         List<Recycle> recycles = recycleAdaptor.findAllByDeletedAtBefore(deleteStandard);
         List<Long> archivingIds = getArchivingIds(recycles);
+        List<Archiving> archivings = archivingAdaptor.findAllByIdIn(archivingIds);
         List<Content> contents = contentAdaptor.findAllByArchivingIds(archivingIds);
         List<Long> contentIds = getContentsId(recycles, contents);
         scrapDomainService.deleteAllByArchivingIdIn(archivingIds);
@@ -53,17 +60,25 @@ public class ClearOldDeletedObjectUseCase {
         archivingDomainService.deleteAllById(archivingIds);
         recycleDomainService.deleteAll(recycles);
         reportDomainService.deleteAllByArchivingIdInOrContentIdIn(archivingIds, contentIds);
-        deleteS3Object(contents);
+        deleteS3Object(contents, archivings);
         log.info("scheduler off");
     }
 
-    private void deleteS3Object(List<Content> contents) {
+    private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
         List<String> imageKeys =
+                archivings.stream()
+                        .map(Archiving::getImageUrl)
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList());
+        imageKeys.addAll(
                 contents.stream()
                         .filter(content -> content.getContentType().equals(ContentType.IMAGE))
                         .map(Content::getImageUrl)
-                        .toList();
-        s3DeleteObjectService.deleteS3Object(imageKeys);
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList()));
+        Event.raise(S3ImageDeleteEvent.from(imageKeys));
     }
 
     private List<Long> getArchivingIds(List<Recycle> recycles) {
@@ -78,7 +93,7 @@ public class ClearOldDeletedObjectUseCase {
                 recycles.stream()
                         .filter(recycle -> recycle.getRecycleType().equals(RecycleType.CONTENT))
                         .map(Recycle::getContentId)
-                        .toList();
+                        .collect(Collectors.toList());
 
         if (contentIds.isEmpty()) {
             contentIds = new ArrayList<>();

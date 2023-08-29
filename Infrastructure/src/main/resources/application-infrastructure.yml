@@ -5,16 +5,9 @@ aws:
     bucket: ${AWS_S3_BUCKET:bucket}
     base-url: ${AWS_S3_BASEURL:baseUrl}
 
----
-spring:
-  config:
-    activate:
-      on-profile: test
-
-  redis:
-    host: localhost
-    port: 6379
-    password: qlalfqjsgh
+slack:
+  webhook:
+    slackUrl: ${SLACK_URL}
 
 
 ---

@@ -7,6 +7,8 @@ import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import allchive.server.domain.domains.block.adaptor.BlockAdaptor;
+import allchive.server.domain.domains.block.domain.Block;
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.domain.Scrap;
 import java.util.List;
@@ -20,15 +22,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetScrapArchivingUseCase {
     private final ScrapAdaptor scrapAdaptor;
     private final ArchivingAdaptor archivingAdaptor;
+    private final BlockAdaptor blockAdaptor;
 
     @Transactional(readOnly = true)
     public SliceResponse<ArchivingResponse> execute(Category category, Pageable pageable) {
         Long userId = SecurityUtil.getCurrentUserId();
         List<Long> archivingIdList =
                 scrapAdaptor.findAllByUserId(userId).stream().map(Scrap::getArchivingId).toList();
+        List<Long> blockList =
+                blockAdaptor.findByBlockFrom(userId).stream().map(Block::getBlockUser).toList();
         Slice<ArchivingResponse> archivingSlices =
                 archivingAdaptor
-                        .querySliceArchivingByIdIn(archivingIdList, category, pageable)
+                        .querySliceArchivingByIdInExceptBlockList(
+                                archivingIdList, blockList, category, pageable)
                         .map(
                                 archiving ->
                                         ArchivingResponse.of(

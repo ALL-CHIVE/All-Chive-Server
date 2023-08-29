@@ -15,8 +15,8 @@ public interface ArchivingCustomRepository {
 
     Slice<Archiving> querySliceArchivingByUserId(Long userId, Category category, Pageable pageable);
 
-    Slice<Archiving> querySliceArchivingByIdIn(
-            List<Long> archivingIdList, Category category, Pageable pageable);
+    Slice<Archiving> querySliceArchivingByIdInExceptBlockList(
+            List<Long> archivingIdList, List<Long> blockList, Category category, Pageable pageable);
 
     List<Archiving> queryArchivingByUserId(Long userId);
 
@@ -33,5 +33,5 @@ public interface ArchivingCustomRepository {
             Set<Long> tagArchivingIds,
             Long userId);
 
-    List<Archiving> queryArchivingOrderByScrapCntLimit5();
+    List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(List<Long> blockList);
 }

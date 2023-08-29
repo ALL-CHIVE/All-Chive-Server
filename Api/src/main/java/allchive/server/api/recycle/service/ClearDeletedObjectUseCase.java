@@ -4,6 +4,10 @@ package allchive.server.api.recycle.service;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
+import allchive.server.core.event.Event;
+import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
+import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
@@ -19,6 +23,7 @@ import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +41,7 @@ public class ClearDeletedObjectUseCase {
     private final RecycleDomainService recycleDomainService;
     private final ReportDomainService reportDomainService;
     private final S3DeleteObjectService s3DeleteObjectService;
+    private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional
     public void execute(ClearDeletedObjectRequest request) {
@@ -43,28 +49,37 @@ public class ClearDeletedObjectUseCase {
         validateExecution(userId, request);
         List<Content> contents = contentAdaptor.findAllByArchivingIds(request.getArchivingIds());
         List<Long> contentsId = getContentsId(contents, request);
+        List<Archiving> archivings = archivingAdaptor.findAllByIdIn(request.getArchivingIds());
         scrapDomainService.deleteAllByArchivingIdIn(request.getArchivingIds());
         contentTagGroupDomainService.deleteByContentIn(contents);
         contentDomainService.deleteAllById(contentsId);
-        archivingDomainService.deleteAllById(request.getArchivingIds());
         recycleDomainService.deleteAllByUserIdAndArchivingIdInOrUserIdAndContentIdIn(
                 request.getArchivingIds(), request.getContentIds(), userId);
         reportDomainService.deleteAllByArchivingIdInOrContentIdIn(
                 request.getArchivingIds(), request.getContentIds());
-        deleteS3Object(contents);
+        archivingDomainService.deleteAllById(request.getArchivingIds());
+        deleteS3Object(contents, archivings);
     }
 
-    private void deleteS3Object(List<Content> contents) {
+    private void deleteS3Object(List<Content> contents, List<Archiving> archivings) {
         List<String> imageKeys =
+                archivings.stream()
+                        .map(Archiving::getImageUrl)
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList());
+        imageKeys.addAll(
                 contents.stream()
                         .filter(content -> content.getContentType().equals(ContentType.IMAGE))
                         .map(Content::getImageUrl)
-                        .toList();
-        s3DeleteObjectService.deleteS3Object(imageKeys);
+                        .filter(url -> !url.isEmpty())
+                        .filter(url -> !url.startsWith("http"))
+                        .collect(Collectors.toList()));
+        Event.raise(S3ImageDeleteEvent.from(imageKeys));
     }
 
     private List<Long> getContentsId(List<Content> contents, ClearDeletedObjectRequest request) {
-        List<Long> contentsId = contents.stream().map(Content::getId).toList();
+        List<Long> contentsId = contents.stream().map(Content::getId).collect(Collectors.toList());
         if (!request.getContentIds().isEmpty()) {
             if (contentsId.isEmpty()) {
                 contentsId = new ArrayList<>();

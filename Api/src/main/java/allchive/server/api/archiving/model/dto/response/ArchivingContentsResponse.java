@@ -2,6 +2,7 @@ package allchive.server.api.archiving.model.dto.response;
 
 
 import allchive.server.api.common.slice.SliceResponse;
+import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.content.model.dto.response.ContentResponse;
 import allchive.server.core.annotation.DateFormat;
 import allchive.server.domain.domains.archiving.domain.Archiving;
@@ -88,7 +89,7 @@ public class ArchivingContentsResponse {
                 .contents(contentResponseSlice)
                 .ownerId(user.getId())
                 .ownerNickname(user.getNickname())
-                .ownerProfileImgUrl(user.getProfileImgUrl())
+                .ownerProfileImgUrl(UrlUtil.toAssetUrl(user.getProfileImgUrl()))
                 .isMine(isMine)
                 .isScrap(isScrap)
                 .build();
