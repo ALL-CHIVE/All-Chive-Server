@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 
 @RequiredArgsConstructor
 public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository {
@@ -31,6 +32,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
             List<Long> blockList,
             Category category,
             Pageable pageable) {
+        List<OrderSpecifier> sorting = createdAtAndscrapCntDescPriority(pageable.getSort());
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -40,7 +42,11 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 publicStatusTrue(),
                                 categoryEq(category),
                                 deleteStatusFalse())
-                        .orderBy(scrabListDesc(archivingIdList), scrapCntDesc(), createdAtDesc())
+                        .orderBy(
+                                scrabListDesc(archivingIdList),
+                                sorting.get(0),
+                                sorting.get(1)
+                        )
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
@@ -68,6 +74,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
             List<Long> blockList,
             Category category,
             Pageable pageable) {
+        List<OrderSpecifier> sorting = createdAtAndscrapCntDescPriority(pageable.getSort());
         List<Archiving> archivings =
                 queryFactory
                         .select(archiving)
@@ -78,7 +85,9 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 userIdNotIn(blockList),
                                 categoryEq(category),
                                 deleteStatusFalse())
-                        .orderBy(scrapCntDesc(), createdAtDesc())
+                        .orderBy(
+                                sorting.get(0),
+                                sorting.get(1))
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
@@ -210,6 +219,13 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
 
     private OrderSpecifier<Long> scrapCntDesc() {
         return archiving.scrapCnt.desc();
+    }
+
+    private <T> List<OrderSpecifier> createdAtAndscrapCntDescPriority(Sort sort){
+        if (sort.equals(Sort.by("popular"))) {
+            return List.of(archiving.scrapCnt.desc(), archiving.createdAt.desc());
+        }
+        return List.of(archiving.createdAt.desc(), archiving.scrapCnt.desc());
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {
