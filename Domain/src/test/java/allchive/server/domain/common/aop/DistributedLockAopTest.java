@@ -1,11 +1,13 @@
 package allchive.server.domain.common.aop;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 import allchive.server.domain.CalculateCurrentExecutionSupporter;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.aop.distributedLock.DistributedLockAop;
 import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.infrastructure.redis.lock.LockManager;
+import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,16 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.concurrent.atomic.AtomicLong;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @Slf4j
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class DistributedLockAopTest {
-    @MockBean
-    LockManager lockManager;
+    @MockBean LockManager lockManager;
     DistributedLockAop distributedLockAop;
 
     private final RedissonService redissonService;
@@ -44,9 +41,7 @@ public class DistributedLockAopTest {
     void 분산락_적용_동시성_테스트() throws InterruptedException {
         AtomicLong successCount = new AtomicLong();
         CalculateCurrentExecutionSupporter.execute(
-                () -> redissonService.testWithLock(1),
-                successCount
-        );
+                () -> redissonService.testWithLock(1), successCount);
         assertThat(redissonService.apply).isEqualTo((int) successCount.get());
     }
 
@@ -54,9 +49,7 @@ public class DistributedLockAopTest {
     void 분산락_미적용_동시성_테스트() throws InterruptedException {
         AtomicLong successCount = new AtomicLong();
         CalculateCurrentExecutionSupporter.execute(
-                () -> redissonService.testWithoutLock(1),
-                successCount
-        );
+                () -> redissonService.testWithoutLock(1), successCount);
         assertThat(redissonService.apply).isNotEqualTo((int) successCount.get());
     }
 }
@@ -74,6 +67,3 @@ class RedissonService {
         apply++;
     }
 }
-
-
-

@@ -5,9 +5,8 @@ import allchive.server.core.annotation.ValidEnum;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
-import lombok.Getter;
-
 import javax.validation.constraints.Positive;
+import lombok.Getter;
 
 @Getter
 public class UpdateContentRequest {

@@ -23,7 +23,9 @@ public class DeleteBlockUseCase {
     private final UserAdaptor userAdaptor;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.BLOCK, identifier ={"fromUserId, toUserId"})
+    @DistributedLock(
+            lockType = DistributedLockType.BLOCK,
+            identifier = {"fromUserId, toUserId"})
     public BlockResponse execute(BlockRequest request, Long fromUserId, Long toUserId) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(userId, request);

@@ -42,11 +42,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 publicStatusTrue(),
                                 categoryEq(category),
                                 deleteStatusFalse())
-                        .orderBy(
-                                scrabListDesc(archivingIdList),
-                                sorting.get(0),
-                                sorting.get(1)
-                        )
+                        .orderBy(scrabListDesc(archivingIdList), sorting.get(0), sorting.get(1))
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
@@ -85,9 +81,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                                 userIdNotIn(blockList),
                                 categoryEq(category),
                                 deleteStatusFalse())
-                        .orderBy(
-                                sorting.get(0),
-                                sorting.get(1))
+                        .orderBy(sorting.get(0), sorting.get(1))
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + PLUS_ONE)
                         .fetch();
@@ -221,7 +215,7 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
         return archiving.scrapCnt.desc();
     }
 
-    private <T> List<OrderSpecifier> createdAtAndscrapCntDescPriority(Sort sort){
+    private <T> List<OrderSpecifier> createdAtAndscrapCntDescPriority(Sort sort) {
         if (sort.equals(Sort.by("popular"))) {
             return List.of(archiving.scrapCnt.desc(), archiving.createdAt.desc());
         }

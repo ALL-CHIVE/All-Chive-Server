@@ -29,7 +29,9 @@ public class DeleteContentUseCase {
     private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.CONTENT, identifier ={"contentId"})
+    @DistributedLock(
+            lockType = DistributedLockType.CONTENT,
+            identifier = {"contentId"})
     public void execute(Long contentId) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(contentId, userId);

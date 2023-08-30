@@ -2,7 +2,6 @@ package allchive.server.api.recycle.service;
 
 import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
-import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.dto.request.RestoreDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
@@ -30,7 +29,9 @@ public class RestoreDeletedObjectUseCase {
     private final ContentAdaptor contentAdaptor;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.RECYCLE, identifier ={"userId"})
+    @DistributedLock(
+            lockType = DistributedLockType.RECYCLE,
+            identifier = {"userId"})
     public void execute(RestoreDeletedObjectRequest request, Long userId) {
         validateExecution(request, userId);
         archivingDomainService.restoreByIdIn(request.getArchivingIds());

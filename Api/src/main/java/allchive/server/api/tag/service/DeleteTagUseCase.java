@@ -22,7 +22,9 @@ public class DeleteTagUseCase {
     private final TagDomainService tagDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.TAG, identifier ={"tagId"})
+    @DistributedLock(
+            lockType = DistributedLockType.TAG,
+            identifier = {"tagId"})
     public void execute(Long tagId) {
         validateExecution(tagId);
         Tag tag = tagAdaptor.findById(tagId);

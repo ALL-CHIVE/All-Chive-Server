@@ -44,7 +44,9 @@ public class UpdateContentUseCase {
     private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.CONTENT, identifier ={"contentId"})
+    @DistributedLock(
+            lockType = DistributedLockType.CONTENT,
+            identifier = {"contentId"})
     public void execute(Long contentId, UpdateContentRequest request) {
         validateExecution(contentId, request);
         regenerateContentTagGroup(contentId, request.getTagIds());
