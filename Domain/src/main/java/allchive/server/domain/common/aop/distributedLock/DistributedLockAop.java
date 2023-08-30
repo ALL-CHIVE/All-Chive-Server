@@ -11,7 +11,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -38,10 +37,15 @@ public class DistributedLockAop {
     private String getKey(ProceedingJoinPoint joinPoint, DistributedLock distributedLock) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String[] methodParameterNames = methodSignature.getParameterNames();
-        return REDISSON_LOCK_PREFIX + distributedLock.lockType().getLockName() + "-" + createDynamicKey(methodParameterNames, joinPoint.getArgs(), distributedLock.identifier());
+        return REDISSON_LOCK_PREFIX
+                + distributedLock.lockType().getLockName()
+                + "-"
+                + createDynamicKey(
+                        methodParameterNames, joinPoint.getArgs(), distributedLock.identifier());
     }
 
-    private String createDynamicKey(String[] methodParameterNames, Object[] methodArgs, String[] identifiers) {
+    private String createDynamicKey(
+            String[] methodParameterNames, Object[] methodArgs, String[] identifiers) {
         List<String> resultList = new ArrayList<>();
         for (String identifier : identifiers) {
             int indexOfKey = Arrays.asList(methodParameterNames).indexOf(identifier);

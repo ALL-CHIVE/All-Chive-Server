@@ -18,7 +18,9 @@ public class UpdateTagUseCase {
     private final TagDomainService tagDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.TAG, identifier ={"tagId"})
+    @DistributedLock(
+            lockType = DistributedLockType.TAG,
+            identifier = {"tagId"})
     public void execute(Long tagId, UpdateTagRequest request) {
         validateExecution(tagId);
         tagDomainService.updateTag(tagId, request.getName());

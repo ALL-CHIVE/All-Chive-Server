@@ -3,7 +3,6 @@ package allchive.server.api.archiving.service;
 import static allchive.server.core.consts.AllchiveConst.MINUS_ONE;
 import static allchive.server.core.consts.AllchiveConst.PLUS_ONE;
 
-import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.enums.DistributedLockType;
@@ -27,7 +26,9 @@ public class UpdateArchivingScrapUseCase {
     private final ScrapValidator scrapValidator;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.ARCHIVING_SCRAP, identifier ={"archivingId", "userId"})
+    @DistributedLock(
+            lockType = DistributedLockType.ARCHIVING_SCRAP,
+            identifier = {"archivingId", "userId"})
     public void execute(Long archivingId, Boolean cancel, Long userId) {
         validateExecution(archivingId, userId, cancel);
         User user = userAdaptor.findById(userId);

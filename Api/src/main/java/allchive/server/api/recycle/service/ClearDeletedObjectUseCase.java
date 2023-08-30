@@ -1,7 +1,6 @@
 package allchive.server.api.recycle.service;
 
 
-import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
@@ -46,7 +45,9 @@ public class ClearDeletedObjectUseCase {
     private final ArchivingAdaptor archivingAdaptor;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.RECYCLE, identifier ={"userId"})
+    @DistributedLock(
+            lockType = DistributedLockType.RECYCLE,
+            identifier = {"userId"})
     public void execute(ClearDeletedObjectRequest request, Long userId) {
         validateExecution(userId, request);
         List<Content> contents = contentAdaptor.findAllByArchivingIds(request.getArchivingIds());

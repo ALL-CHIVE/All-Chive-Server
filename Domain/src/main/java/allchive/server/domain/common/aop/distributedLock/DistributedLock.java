@@ -2,7 +2,6 @@ package allchive.server.domain.common.aop.distributedLock;
 
 
 import allchive.server.domain.common.enums.DistributedLockType;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

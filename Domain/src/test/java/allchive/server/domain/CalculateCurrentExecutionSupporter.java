@@ -1,12 +1,12 @@
 package allchive.server.domain;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicLong;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.function.Executable;
 
 @Slf4j
 public class CalculateCurrentExecutionSupporter {
@@ -33,4 +33,3 @@ public class CalculateCurrentExecutionSupporter {
         latch.await();
     }
 }
-

@@ -1,5 +1,6 @@
 package allchive.server.domain.common.enums;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

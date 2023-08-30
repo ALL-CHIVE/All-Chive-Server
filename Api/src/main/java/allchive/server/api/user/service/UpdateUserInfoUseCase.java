@@ -2,7 +2,6 @@ package allchive.server.api.user.service;
 
 
 import allchive.server.api.common.util.UrlUtil;
-import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
@@ -27,7 +26,9 @@ public class UpdateUserInfoUseCase {
     private final S3DeleteObjectService s3DeleteObjectService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.USER, identifier ={"userId"})
+    @DistributedLock(
+            lockType = DistributedLockType.USER,
+            identifier = {"userId"})
     public void execute(UpdateUserInfoRequest request, Long userId) {
         validateExecution(userId);
         eliminateOldImage(userId, request.getImgUrl());

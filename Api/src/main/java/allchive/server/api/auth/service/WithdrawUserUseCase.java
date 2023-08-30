@@ -49,7 +49,9 @@ public class WithdrawUserUseCase {
     private final ArchivingDomainService archivingDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.USER, identifier ={"userId"})
+    @DistributedLock(
+            lockType = DistributedLockType.USER,
+            identifier = {"userId"})
     public void execute(String appleAccessToken, String referer, Long userId) {
         User user = userAdaptor.findById(userId);
         // oauth쪽 탈퇴

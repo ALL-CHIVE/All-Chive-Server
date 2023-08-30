@@ -14,7 +14,9 @@ public class ArchivingAsyncDomainService {
     private final ArchivingDomainService archivingDomainService;
 
     @Async(value = "archivingContentCntTaskExecutor")
-    @DistributedLock(lockType = DistributedLockType.ARCHIVING, identifier ={"archivingId"})
+    @DistributedLock(
+            lockType = DistributedLockType.ARCHIVING,
+            identifier = {"archivingId"})
     public void updateContentCnt(Long archivingId, ContentType contentType, int i) {
         archivingDomainService.updateContentCnt(archivingId, contentType, i);
     }

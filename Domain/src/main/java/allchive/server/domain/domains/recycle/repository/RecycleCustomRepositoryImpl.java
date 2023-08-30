@@ -24,11 +24,9 @@ public class RecycleCustomRepositoryImpl implements RecycleCustomRepository {
                 .fetch();
     }
 
-    private BooleanExpression userIdEq(
-            Long userId) {
+    private BooleanExpression userIdEq(Long userId) {
         return recycle.userId.eq(userId);
     }
-
 
     private BooleanExpression archivingIdInOrContentIdIn(
             List<Long> archivingIdList, List<Long> contentIdList) {
