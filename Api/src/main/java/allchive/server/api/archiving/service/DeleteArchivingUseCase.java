@@ -22,7 +22,9 @@ public class DeleteArchivingUseCase {
     private final RecycleDomainService recycleDomainService;
 
     @Transactional
-    @DistributedLock(lockType = DistributedLockType.ARCHIVING, identifier ={"archivingId"})
+    @DistributedLock(
+            lockType = DistributedLockType.ARCHIVING,
+            identifier = {"archivingId"})
     public void execute(Long archivingId) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(archivingId, userId);
