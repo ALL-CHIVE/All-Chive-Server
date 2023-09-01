@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
 @RequiredArgsConstructor
-@Slf4j
 public class DistributedLockAop {
     private final LockManager lockManager;
 
@@ -47,9 +45,7 @@ public class DistributedLockAop {
     private String createDynamicKey(
             String[] methodParameterNames, Object[] methodArgs, String[] identifiers) {
         List<String> resultList = new ArrayList<>();
-        Arrays.stream(methodParameterNames).forEach(a -> log.info(a));
         for (String identifier : identifiers) {
-            log.info(identifier);
             int indexOfKey = Arrays.asList(methodParameterNames).indexOf(identifier);
             Object arg = methodArgs[indexOfKey];
             if (arg == null) {
