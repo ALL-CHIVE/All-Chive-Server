@@ -47,7 +47,9 @@ public class DistributedLockAop {
     private String createDynamicKey(
             String[] methodParameterNames, Object[] methodArgs, String[] identifiers) {
         List<String> resultList = new ArrayList<>();
+        Arrays.stream(methodParameterNames).forEach(a -> log.info(a));
         for (String identifier : identifiers) {
+            log.info(identifier);
             int indexOfKey = Arrays.asList(methodParameterNames).indexOf(identifier);
             Object arg = methodArgs[indexOfKey];
             if (arg == null) {
