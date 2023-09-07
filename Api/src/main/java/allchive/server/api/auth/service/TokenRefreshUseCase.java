@@ -25,6 +25,7 @@ public class TokenRefreshUseCase {
         RefreshTokenEntity oldToken = refreshTokenAdaptor.findTokenByRefreshToken(refreshToken);
         Long userId = jwtTokenProvider.parseRefreshToken(oldToken.getRefreshToken());
         User user = userAdaptor.findById(userId);
+        refreshTokenAdaptor.delete(oldToken);
         return OauthRegisterResponse.from(tokenGenerateHelper.execute(user));
     }
 }
