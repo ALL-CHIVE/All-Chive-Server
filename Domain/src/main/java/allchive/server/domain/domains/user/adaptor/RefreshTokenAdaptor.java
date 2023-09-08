@@ -25,4 +25,8 @@ public class RefreshTokenAdaptor {
                 .findByRefreshToken(refreshToken)
                 .orElseThrow(() -> ExpiredRefreshTokenException.EXCEPTION);
     }
+
+    public void delete(RefreshTokenEntity token) {
+        refreshTokenRepository.delete(token);
+    }
 }

@@ -1,5 +1,46 @@
 # common
+
+---
+# local
 spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&tinyInt1isBit=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test
+    hikari:
+      maxLifetime: 580000
+      maximum-pool-size: 20
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+#    org.hibernate.SQL: debug
+#    org.hibernate.type: trace
+---
+# dev
+spring:
+  config:
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${DB_NAME}?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&tinyInt1isBit=false
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,27 +61,6 @@ spring:
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: mysql
----
-# local
-spring:
-  config:
-    activate:
-      on-profile: local
-
-logging:
-  level:
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
-    org.springframework.orm.jpa: DEBUG
-    org.springframework.transaction: DEBUG
-#    org.hibernate.SQL: debug
-#    org.hibernate.type: trace
----
-# dev
-spring:
-  config:
-    activate:
-      on-profile: dev
 
 logging:
   level:
@@ -56,6 +76,26 @@ spring:
   config:
     activate:
       on-profile: prod
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${DB_NAME}?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&tinyInt1isBit=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    hikari:
+      maxLifetime: 580000
+      maximum-pool-size: 20
+  jpa:
+    show-sql: ${SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: ${FORMAT_SQL:true}
+        default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
 
 logging:
   level:
