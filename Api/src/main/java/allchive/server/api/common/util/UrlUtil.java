@@ -29,6 +29,9 @@ public class UrlUtil {
     }
 
     public static String convertUrlToKey(String url) {
+        if (url == null) {
+            return "";
+        }
         if (url.equals("")) {
             return "";
         }
