@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 @Slf4j
 @RestControllerAdvice
@@ -98,9 +99,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BaseDynamicException.class)
     public ResponseEntity<ErrorResponse> BaseDynamicExceptionHandler(
             BaseDynamicException e, HttpServletRequest request) {
+        final ContentCachingRequestWrapper cachedRequest =
+                new ContentCachingRequestWrapper(request);
         ErrorResponse errorResponse =
                 ErrorResponse.from(ErrorReason.of(e.getStatus(), e.getCode(), e.getMessage()));
-        Event.raise(SlackErrorEvent.from(e));
+        Event.raise(SlackErrorEvent.of(e, cachedRequest));
         return ResponseEntity.status(HttpStatus.valueOf(e.getStatus())).body(errorResponse);
     }
 
@@ -109,10 +112,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleException(
             Exception e, HttpServletRequest request) {
         log.error("Exception", e);
+        final ContentCachingRequestWrapper cachedRequest =
+                new ContentCachingRequestWrapper(request);
         final GlobalErrorCode globalErrorCode = GlobalErrorCode._INTERNAL_SERVER_ERROR;
         final ErrorReason errorReason = globalErrorCode.getErrorReason();
         final ErrorResponse errorResponse = ErrorResponse.from(errorReason);
-        Event.raise(SlackErrorEvent.from(e));
+        Event.raise(SlackErrorEvent.of(e, cachedRequest));
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
