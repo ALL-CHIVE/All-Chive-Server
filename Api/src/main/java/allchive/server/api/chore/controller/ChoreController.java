@@ -11,16 +11,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/etc")
+@RequestMapping("/chore")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "etc. [chore]")
 public class ChoreController {
-    @Operation(summary = "error example")
+    @Operation(hidden = true)
     @PostMapping(value = "error/{test}")
     public void errorExample(@RequestBody UpdateArchivingRequest updateArchivingRequest,
                              @RequestParam("category") Category category,
                              @PathVariable("test") Long test) {
         throw new RuntimeException();
+    }
+
+    @Operation(hidden = true)
+    @GetMapping(value = "health")
+    public void errorExample() {
     }
 }

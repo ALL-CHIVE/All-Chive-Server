@@ -57,7 +57,7 @@ public class SecurityConfig {
         }
 
         http.authorizeRequests()
-                .mvcMatchers("/etc/**")
+                .mvcMatchers("/chore/**")
                 .permitAll()
                 .antMatchers(SwaggerPatterns)
                 .permitAll()
