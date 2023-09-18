@@ -16,10 +16,8 @@ public class SlackErrorEvent {
         this.cachedRequest = cachedRequest;
     }
 
-    public static SlackErrorEvent of(Exception exception, ContentCachingRequestWrapper cachedRequest) {
-        return SlackErrorEvent.builder()
-                .exception(exception)
-                .cachedRequest(cachedRequest)
-                .build();
+    public static SlackErrorEvent of(
+            Exception exception, ContentCachingRequestWrapper cachedRequest) {
+        return SlackErrorEvent.builder().exception(exception).cachedRequest(cachedRequest).build();
     }
 }

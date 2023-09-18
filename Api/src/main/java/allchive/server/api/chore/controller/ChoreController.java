@@ -1,8 +1,7 @@
 package allchive.server.api.chore.controller;
 
-import allchive.server.api.archiving.model.dto.request.CreateArchivingRequest;
+
 import allchive.server.api.archiving.model.dto.request.UpdateArchivingRequest;
-import allchive.server.core.error.exception.InternalServerError;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,14 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class ChoreController {
     @Operation(hidden = true)
     @PostMapping(value = "error/{test}")
-    public void errorExample(@RequestBody UpdateArchivingRequest updateArchivingRequest,
-                             @RequestParam("category") Category category,
-                             @PathVariable("test") Long test) {
+    public void errorExample(
+            @RequestBody UpdateArchivingRequest updateArchivingRequest,
+            @RequestParam("category") Category category,
+            @PathVariable("test") Long test) {
         throw new RuntimeException();
     }
 
     @Operation(hidden = true)
     @GetMapping(value = "health")
-    public void errorExample() {
-    }
+    public void errorExample() {}
 }
