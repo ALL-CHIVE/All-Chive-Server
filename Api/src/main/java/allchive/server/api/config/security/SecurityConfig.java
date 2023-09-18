@@ -57,6 +57,8 @@ public class SecurityConfig {
         }
 
         http.authorizeRequests()
+                .mvcMatchers("/etc/**")
+                .permitAll()
                 .antMatchers(SwaggerPatterns)
                 .permitAll()
                 .mvcMatchers("/auth/oauth/**")
