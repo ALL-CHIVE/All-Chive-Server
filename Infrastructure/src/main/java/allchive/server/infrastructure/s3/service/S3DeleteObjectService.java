@@ -2,7 +2,7 @@ package allchive.server.infrastructure.s3.service;
 
 
 import allchive.server.core.error.exception.S3ObjectNotFoundException;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import com.amazonaws.services.s3.AmazonS3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package allchive.server.core.event.events.s3;
+package allchive.server.infrastructure.s3.event;
 
 
 import java.util.List;
