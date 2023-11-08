@@ -1,8 +1,8 @@
 package allchive.server.infrastructure.slack;
 
 
-import allchive.server.core.event.events.slack.SlackAsyncErrorEvent;
-import allchive.server.core.event.events.slack.SlackErrorEvent;
+import allchive.server.infrastructure.slack.event.SlackAsyncErrorEvent;
+import allchive.server.infrastructure.slack.event.SlackErrorEvent;
 import com.slack.api.webhook.Payload;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;

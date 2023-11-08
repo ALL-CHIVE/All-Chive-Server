@@ -1,8 +1,7 @@
-package allchive.server.core.config;
+package allchive.server.domain.config.async;
 
 import static allchive.server.core.consts.AllchiveConst.*;
 
-import allchive.server.core.async.CustomAsyncExceptionHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 import lombok.RequiredArgsConstructor;

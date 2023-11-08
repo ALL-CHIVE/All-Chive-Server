@@ -8,7 +8,7 @@ import allchive.server.core.error.BaseErrorException;
 import allchive.server.core.error.ErrorResponse;
 import allchive.server.core.error.GlobalErrorCode;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.slack.SlackErrorEvent;
+import allchive.server.infrastructure.slack.event.SlackErrorEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

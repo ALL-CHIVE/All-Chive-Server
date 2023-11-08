@@ -1,7 +1,8 @@
 package allchive.server.api.common.filter;
 
 
-import com.amazonaws.util.IOUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+
 import java.io.*;
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;

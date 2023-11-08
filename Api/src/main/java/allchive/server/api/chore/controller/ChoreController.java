@@ -27,7 +27,6 @@ public class ChoreController {
 
     @Operation(hidden = true)
     @GetMapping(value = "health")
-    public ResponseEntity errorExample() {
-        return ResponseEntity.ok().build();
+    public void healthCheck() {
     }
 }

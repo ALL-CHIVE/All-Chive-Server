@@ -3,7 +3,7 @@ package allchive.server.api.recycle.service;
 
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;

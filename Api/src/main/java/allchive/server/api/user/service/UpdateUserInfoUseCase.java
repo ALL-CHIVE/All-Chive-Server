@@ -5,7 +5,7 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
