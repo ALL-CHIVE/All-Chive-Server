@@ -1,7 +1,7 @@
 package allchive.server.api.search.service;
 
+import static allchive.server.core.consts.AllchiveConst.ASTERISK;
 import static allchive.server.core.consts.AllchiveConst.SEARCH_KEY;
-import static jodd.util.StringPool.ASTERISK;
 
 import allchive.server.api.common.util.StringParamUtil;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
