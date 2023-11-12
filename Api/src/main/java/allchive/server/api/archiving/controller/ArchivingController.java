@@ -70,7 +70,8 @@ public class ArchivingController {
 
     @Operation(
             summary = "주제별 아카이빙 리스트를 가져옵니다.",
-            description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자")
+            description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자" +
+                    "\nsort에 popular쓰면 최신순 안쓰면 인기순 입니다!")
     @GetMapping()
     public SliceResponse<ArchivingResponse> getArchiving(
             @RequestParam("category") Category category,

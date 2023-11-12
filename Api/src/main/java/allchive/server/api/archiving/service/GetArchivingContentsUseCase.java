@@ -68,7 +68,6 @@ public class GetArchivingContentsUseCase {
                             contentTagGroup -> contentTagGroup.getContent().getId()
                     ).toList();
         }
-        log.info("contentIds = " + contentIds);
         Slice<Content> contentList =
                 contentAdaptor.querySliceContentByArchivingIdAndContentTypeAndIdIn(
                         archivingId, pageable, contentType, contentIds);
