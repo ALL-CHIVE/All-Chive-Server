@@ -14,14 +14,13 @@ import allchive.server.domain.domains.archiving.domain.enums.Category;
 import allchive.server.domain.domains.content.domain.enums.ContentType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/archivings")
@@ -70,8 +69,9 @@ public class ArchivingController {
 
     @Operation(
             summary = "주제별 아카이빙 리스트를 가져옵니다.",
-            description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자" +
-                    "\nsort에 popular쓰면 최신순 안쓰면 인기순 입니다!")
+            description =
+                    "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자"
+                            + "\nsort에 popular쓰면 최신순 안쓰면 인기순 입니다!")
     @GetMapping()
     public SliceResponse<ArchivingResponse> getArchiving(
             @RequestParam("category") Category category,

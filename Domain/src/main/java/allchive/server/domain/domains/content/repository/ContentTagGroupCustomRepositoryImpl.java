@@ -74,8 +74,7 @@ public class ContentTagGroupCustomRepositoryImpl implements ContentTagGroupCusto
     }
 
     private BooleanExpression tagIdIn(List<Long> tagIds) {
-        if(tagIds == null)
-            return null;
+        if (tagIds == null) return null;
         return contentTagGroup.tag.id.in(tagIds);
     }
 

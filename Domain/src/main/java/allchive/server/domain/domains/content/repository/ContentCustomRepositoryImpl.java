@@ -24,7 +24,11 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
         List<Content> archivings =
                 queryFactory
                         .selectFrom(content)
-                        .where(archivingIdEq(archivingId), deleteStatusFalse(), contentTypeEq(contentType), idIn(contentIds))
+                        .where(
+                                archivingIdEq(archivingId),
+                                deleteStatusFalse(),
+                                contentTypeEq(contentType),
+                                idIn(contentIds))
                         .orderBy(createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
@@ -61,8 +65,7 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
     }
 
     private BooleanExpression idIn(List<Long> contentIds) {
-        if(contentIds == null)
-            return null;
+        if (contentIds == null) return null;
         return content.id.in(contentIds);
     }
 

@@ -7,8 +7,6 @@ import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.repository.ContentTagGroupRepository;
 import java.util.List;
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 
 @Adaptor

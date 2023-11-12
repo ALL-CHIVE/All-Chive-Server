@@ -1,5 +1,6 @@
 package allchive.server.domain.domains.quitReason.adaptor;
 
+
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.quitReason.domain.QuitReason;
 import allchive.server.domain.domains.quitReason.repository.QuitReasonRepository;

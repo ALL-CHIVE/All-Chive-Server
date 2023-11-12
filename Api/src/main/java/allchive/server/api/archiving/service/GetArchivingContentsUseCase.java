@@ -62,11 +62,11 @@ public class GetArchivingContentsUseCase {
     private Slice<ContentResponse> getContentResponseSlice(
             Long archivingId, Pageable pageable, ContentType contentType, List<Long> tagIds) {
         List<Long> contentIds = null;
-        if(tagIds != null){
-            contentIds = contentTagGroupAdaptor.queryContentTagGroupByTagIdInWithContent(tagIds)
-                    .stream().map(
-                            contentTagGroup -> contentTagGroup.getContent().getId()
-                    ).toList();
+        if (tagIds != null) {
+            contentIds =
+                    contentTagGroupAdaptor.queryContentTagGroupByTagIdInWithContent(tagIds).stream()
+                            .map(contentTagGroup -> contentTagGroup.getContent().getId())
+                            .toList();
         }
         Slice<Content> contentList =
                 contentAdaptor.querySliceContentByArchivingIdAndContentTypeAndIdIn(

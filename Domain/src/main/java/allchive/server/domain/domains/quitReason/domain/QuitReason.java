@@ -1,14 +1,14 @@
 package allchive.server.domain.domains.quitReason.domain;
 
+
 import allchive.server.domain.common.model.BaseTimeEntity;
 import allchive.server.domain.domains.quitReason.domain.enums.Reason;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Table(name = "tbl_quit_reason")
@@ -19,8 +19,7 @@ public class QuitReason extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    private Long userId;
+    @NotNull private Long userId;
 
     private Reason reason;
 
@@ -31,9 +30,6 @@ public class QuitReason extends BaseTimeEntity {
     }
 
     public static QuitReason of(Long userId, Reason reason) {
-        return QuitReason.builder()
-                .userId(userId)
-                .reason(reason)
-                .build();
+        return QuitReason.builder().userId(userId).reason(reason).build();
     }
 }

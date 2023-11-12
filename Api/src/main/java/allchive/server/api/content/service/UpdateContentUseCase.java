@@ -9,7 +9,6 @@ import allchive.server.api.content.model.dto.request.UpdateContentRequest;
 import allchive.server.api.content.model.mapper.ContentMapper;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.service.ArchivingAsyncDomainService;
@@ -25,6 +24,7 @@ import allchive.server.domain.domains.content.service.ContentTagGroupDomainServi
 import allchive.server.domain.domains.content.service.TagAsyncDomainService;
 import allchive.server.domain.domains.content.validator.ContentValidator;
 import allchive.server.domain.domains.content.validator.TagValidator;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
