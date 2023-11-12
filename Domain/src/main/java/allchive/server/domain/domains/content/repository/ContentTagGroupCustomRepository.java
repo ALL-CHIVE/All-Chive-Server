@@ -12,4 +12,6 @@ public interface ContentTagGroupCustomRepository {
     List<ContentTagGroup> queryContentTagGroupByContentWithTag(Content content);
 
     List<ContentTagGroup> queryContentTagGroupByTagInWithContent(List<Tag> tags);
+
+    List<ContentTagGroup> queryContentTagGroupByTagIdInWithContent(List<Long> tagIds);
 }

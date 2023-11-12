@@ -4,6 +4,7 @@ import static allchive.server.domain.domains.content.domain.QContent.content;
 
 import allchive.server.domain.common.util.SliceUtil;
 import allchive.server.domain.domains.content.domain.Content;
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,11 +19,12 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<Content> querySliceContentByArchivingId(Long archivingId, Pageable pageable) {
+    public Slice<Content> querySliceContentByArchivingIdAndContentTypeAndIdIn(
+            Long archivingId, Pageable pageable, ContentType contentType, List<Long> contentIds) {
         List<Content> archivings =
                 queryFactory
                         .selectFrom(content)
-                        .where(archivingIdEq(archivingId), deleteStatusFalse())
+                        .where(archivingIdEq(archivingId), deleteStatusFalse(), contentTypeEq(contentType), idIn(contentIds))
                         .orderBy(createdAtDesc())
                         .offset(pageable.getOffset())
                         .limit(pageable.getPageSize() + 1)
@@ -48,6 +50,20 @@ public class ContentCustomRepositoryImpl implements ContentCustomRepository {
 
     private BooleanExpression deleteStatusFalse() {
         return content.deleteStatus.eq(Boolean.FALSE);
+    }
+
+    private BooleanExpression contentTypeEq(ContentType contentType) {
+        if (contentType == null) {
+            return null;
+        } else {
+            return content.contentType.eq(contentType);
+        }
+    }
+
+    private BooleanExpression idIn(List<Long> contentIds) {
+        if(contentIds == null)
+            return null;
+        return content.id.in(contentIds);
     }
 
     private BooleanExpression archivingIdEq(Long archivingId) {

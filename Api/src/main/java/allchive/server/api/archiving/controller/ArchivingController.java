@@ -11,6 +11,7 @@ import allchive.server.api.archiving.service.*;
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/archivings")
@@ -111,8 +114,10 @@ public class ArchivingController {
     @GetMapping(value = "/{archivingId}/contents")
     public ArchivingContentsResponse getArchivingContents(
             @PathVariable("archivingId") Long archivingId,
-            @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getArchivingContentsUseCase.execute(archivingId, pageable);
+            @ParameterObject @PageableDefault(size = 10) Pageable pageable,
+            @RequestParam(value = "type", required = false) ContentType contentType,
+            @RequestParam(value = "tagIds", required = false) List<Long> tagIds) {
+        return getArchivingContentsUseCase.execute(archivingId, pageable, contentType, tagIds);
     }
 
     @Operation(summary = "아카이빙을 스크랩합니다.", description = "스크랩 취소면 cancel에 true 값 보내주세요")

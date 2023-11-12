@@ -7,6 +7,8 @@ import allchive.server.domain.domains.content.domain.ContentTagGroup;
 import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.repository.ContentTagGroupRepository;
 import java.util.List;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 
 @Adaptor
@@ -48,5 +50,9 @@ public class ContentTagGroupAdaptor {
 
     public void deleteAll(List<ContentTagGroup> contentTagGroups) {
         contentTagGroupRepository.deleteAll(contentTagGroups);
+    }
+
+    public List<ContentTagGroup> queryContentTagGroupByTagIdInWithContent(List<Long> tagIds) {
+        return contentTagGroupRepository.queryContentTagGroupByTagIdInWithContent(tagIds);
     }
 }

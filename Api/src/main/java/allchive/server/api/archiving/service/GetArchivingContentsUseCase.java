@@ -14,15 +14,18 @@ import allchive.server.domain.domains.content.adaptor.ContentAdaptor;
 import allchive.server.domain.domains.content.adaptor.ContentTagGroupAdaptor;
 import allchive.server.domain.domains.content.domain.Content;
 import allchive.server.domain.domains.content.domain.ContentTagGroup;
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.domain.domains.user.adaptor.ScrapAdaptor;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @UseCase
 @RequiredArgsConstructor
 public class GetArchivingContentsUseCase {
@@ -35,13 +38,14 @@ public class GetArchivingContentsUseCase {
     private final ScrapAdaptor scrapAdaptor;
 
     @Transactional(readOnly = true)
-    public ArchivingContentsResponse execute(Long archivingId, Pageable pageable) {
+    public ArchivingContentsResponse execute(
+            Long archivingId, Pageable pageable, ContentType contentType, List<Long> tagIds) {
         Long userId = SecurityUtil.getCurrentUserId();
         validateExecution(archivingId, userId);
         Archiving archiving = archivingAdaptor.findById(archivingId);
         User owner = userAdaptor.findById(archiving.getUserId());
         Slice<ContentResponse> contentResponseSlice =
-                getContentResponseSlice(archivingId, pageable);
+                getContentResponseSlice(archivingId, pageable, contentType, tagIds);
         return ArchivingContentsResponse.of(
                 SliceResponse.of(contentResponseSlice),
                 archiving,
@@ -55,9 +59,19 @@ public class GetArchivingContentsUseCase {
         archivingValidator.validateNotDeleteExceptUser(archivingId, userId);
     }
 
-    private Slice<ContentResponse> getContentResponseSlice(Long archivingId, Pageable pageable) {
+    private Slice<ContentResponse> getContentResponseSlice(
+            Long archivingId, Pageable pageable, ContentType contentType, List<Long> tagIds) {
+        List<Long> contentIds = null;
+        if(tagIds != null){
+            contentIds = contentTagGroupAdaptor.queryContentTagGroupByTagIdInWithContent(tagIds)
+                    .stream().map(
+                            contentTagGroup -> contentTagGroup.getContent().getId()
+                    ).toList();
+        }
+        log.info("contentIds = " + contentIds);
         Slice<Content> contentList =
-                contentAdaptor.querySliceContentByArchivingId(archivingId, pageable);
+                contentAdaptor.querySliceContentByArchivingIdAndContentTypeAndIdIn(
+                        archivingId, pageable, contentType, contentIds);
         List<ContentTagGroup> contentTagGroupList =
                 contentTagGroupAdaptor.queryContentTagGroupByContentIn(contentList.getContent());
         return contentList.map(
