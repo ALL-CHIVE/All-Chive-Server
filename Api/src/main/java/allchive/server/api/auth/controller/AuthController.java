@@ -6,6 +6,7 @@ import allchive.server.api.auth.service.LogOutUserUseCase;
 import allchive.server.api.auth.service.TokenRefreshUseCase;
 import allchive.server.api.auth.service.WithdrawUserUseCase;
 import allchive.server.api.config.security.SecurityUtil;
+import allchive.server.domain.domains.quitReason.domain.enums.Reason;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,10 @@ public class AuthController {
     @DeleteMapping("/withdrawal")
     public void withDrawUser(
             @RequestParam(required = false, name = "appleCode", value = "") String appleCode,
-            @RequestHeader(value = "referer", required = false) String referer) {
+            @RequestHeader(value = "referer", required = false) String referer,
+            @RequestParam("quitReason") Reason reason) {
         Long userId = SecurityUtil.getCurrentUserId();
-        withdrawUserUseCase.execute(appleCode, referer, userId);
+        withdrawUserUseCase.execute(appleCode, referer, userId, reason);
     }
 
     @Operation(summary = "회원탈퇴를 합니다. (개발용)", deprecated = true)
