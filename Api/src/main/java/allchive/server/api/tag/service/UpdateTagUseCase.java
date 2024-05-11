@@ -9,7 +9,6 @@ import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -17,7 +16,6 @@ public class UpdateTagUseCase {
     private final TagValidator tagValidator;
     private final TagDomainService tagDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.TAG,
             identifier = {"tagId"})

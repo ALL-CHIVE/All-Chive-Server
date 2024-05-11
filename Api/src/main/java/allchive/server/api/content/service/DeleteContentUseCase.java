@@ -16,7 +16,6 @@ import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -28,7 +27,6 @@ public class DeleteContentUseCase {
     private final ContentAdaptor contentAdaptor;
     private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.CONTENT,
             identifier = {"contentId"})

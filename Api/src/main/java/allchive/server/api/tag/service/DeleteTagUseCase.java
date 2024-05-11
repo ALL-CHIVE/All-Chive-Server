@@ -11,7 +11,6 @@ import allchive.server.domain.domains.content.service.ContentTagGroupDomainServi
 import allchive.server.domain.domains.content.service.TagDomainService;
 import allchive.server.domain.domains.content.validator.TagValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -21,7 +20,6 @@ public class DeleteTagUseCase {
     private final ContentTagGroupDomainService contentTagGroupDomainService;
     private final TagDomainService tagDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.TAG,
             identifier = {"tagId"})

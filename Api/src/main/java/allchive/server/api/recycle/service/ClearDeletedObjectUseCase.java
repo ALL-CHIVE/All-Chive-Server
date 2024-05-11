@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -44,7 +43,6 @@ public class ClearDeletedObjectUseCase {
     private final S3DeleteObjectService s3DeleteObjectService;
     private final ArchivingAdaptor archivingAdaptor;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.RECYCLE,
             identifier = {"userId"})

@@ -14,7 +14,6 @@ import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
 import allchive.server.domain.domains.user.validator.ScrapValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -25,7 +24,6 @@ public class UpdateArchivingScrapUseCase {
     private final ArchivingDomainService archivingDomainService;
     private final ScrapValidator scrapValidator;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.ARCHIVING_SCRAP,
             identifier = {"archivingId", "userId"})

@@ -15,9 +15,10 @@ import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @UseCase
+@Slf4j
 @RequiredArgsConstructor
 public class UpdateUserInfoUseCase {
     private final UserDomainService userDomainService;
@@ -25,7 +26,6 @@ public class UpdateUserInfoUseCase {
     private final UserAdaptor userAdaptor;
     private final S3DeleteObjectService s3DeleteObjectService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.USER,
             identifier = {"userId"})

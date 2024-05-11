@@ -15,7 +15,6 @@ import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -24,7 +23,6 @@ public class UpdateArchivingUseCase {
     private final ArchivingAdaptor archivingAdaptor;
     private final ArchivingValidator archivingValidator;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.ARCHIVING,
             identifier = {"archivingId"})

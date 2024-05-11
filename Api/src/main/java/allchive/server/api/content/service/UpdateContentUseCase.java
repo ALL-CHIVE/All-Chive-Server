@@ -27,7 +27,6 @@ import allchive.server.domain.domains.content.validator.TagValidator;
 import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -43,7 +42,6 @@ public class UpdateContentUseCase {
     private final ContentTagGroupAdaptor contentTagGroupAdaptor;
     private final ArchivingAsyncDomainService archivingAsyncDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.CONTENT,
             identifier = {"contentId"})

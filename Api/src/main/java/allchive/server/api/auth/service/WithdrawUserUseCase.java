@@ -52,7 +52,6 @@ public class WithdrawUserUseCase {
     private final ArchivingDomainService archivingDomainService;
     private final QuitReasonDomainService quitReasonDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.USER,
             identifier = {"userId"})
