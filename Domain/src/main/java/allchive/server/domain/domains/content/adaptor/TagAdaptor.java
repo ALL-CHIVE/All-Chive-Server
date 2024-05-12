@@ -7,6 +7,8 @@ import allchive.server.domain.domains.content.exception.exceptions.TagNotFoundEx
 import allchive.server.domain.domains.content.repository.TagRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 @Adaptor
 @RequiredArgsConstructor
@@ -51,5 +53,9 @@ public class TagAdaptor {
 
     public List<Tag> findAll() {
         return tagRepository.findAll();
+    }
+
+    public Slice<Tag> querySliceTag(Pageable pageable) {
+        return tagRepository.querySliceTag(pageable);
     }
 }

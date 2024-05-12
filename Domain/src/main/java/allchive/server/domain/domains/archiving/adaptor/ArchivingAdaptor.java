@@ -104,4 +104,9 @@ public class ArchivingAdaptor {
             List<Long> blockList) {
         return archivingRepository.queryArchivingOrderByScrapCntLimit5ExceptBlockList(blockList);
     }
+
+    public Slice<Archiving> querySliceArchivingByPublicStatus(
+            Pageable pageable, Boolean publicStatus) {
+        return archivingRepository.querySliceArchivingByPublicStatus(pageable, publicStatus);
+    }
 }

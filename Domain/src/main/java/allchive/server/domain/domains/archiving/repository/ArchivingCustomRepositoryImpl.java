@@ -160,12 +160,30 @@ public class ArchivingCustomRepositoryImpl implements ArchivingCustomRepository 
                 .fetch();
     }
 
+    @Override
+    public Slice<Archiving> querySliceArchivingByPublicStatus(
+            Pageable pageable, Boolean publicStatus) {
+        List<Archiving> archivings =
+                queryFactory
+                        .select(archiving)
+                        .from(archiving)
+                        .where(publicStatusEq(publicStatus), deleteStatusFalse())
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize() + PLUS_ONE)
+                        .fetch();
+        return SliceUtil.toSlice(archivings, pageable);
+    }
+
     private BooleanExpression userIdNotIn(List<Long> blockList) {
         return archiving.userId.notIn(blockList);
     }
 
     private BooleanExpression publicStatusTrue() {
         return archiving.publicStatus.eq(Boolean.TRUE);
+    }
+
+    private BooleanExpression publicStatusEq(Boolean publicStatus) {
+        return archiving.publicStatus.eq(publicStatus);
     }
 
     private BooleanExpression categoryEq(Category category) {
