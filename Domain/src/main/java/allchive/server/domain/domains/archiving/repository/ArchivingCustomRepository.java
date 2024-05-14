@@ -34,4 +34,6 @@ public interface ArchivingCustomRepository {
             Long userId);
 
     List<Archiving> queryArchivingOrderByScrapCntLimit5ExceptBlockList(List<Long> blockList);
+
+    Slice<Archiving> querySliceArchivingByPublicStatus(Pageable pageable, Boolean publicStatus);
 }

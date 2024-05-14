@@ -15,7 +15,6 @@ import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.recycle.validator.RecycleValidator;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -28,7 +27,6 @@ public class RestoreDeletedObjectUseCase {
     private final RecycleDomainService recycleDomainService;
     private final ContentAdaptor contentAdaptor;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.RECYCLE,
             identifier = {"userId"})

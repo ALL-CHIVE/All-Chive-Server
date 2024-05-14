@@ -7,7 +7,6 @@ import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -15,7 +14,6 @@ public class UpdateArchivingPinUseCase {
     private final ArchivingValidator archivingValidator;
     private final ArchivingDomainService archivingDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.ARCHIVING_PIN,
             identifier = {"archivingId", "userId"})

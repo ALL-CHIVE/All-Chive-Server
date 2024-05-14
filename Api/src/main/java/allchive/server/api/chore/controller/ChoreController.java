@@ -26,5 +26,5 @@ public class ChoreController {
 
     @Operation(hidden = true)
     @GetMapping(value = "health")
-    public void errorExample() {}
+    public void healthCheck() {}
 }

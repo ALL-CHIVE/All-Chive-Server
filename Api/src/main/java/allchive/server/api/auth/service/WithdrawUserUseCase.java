@@ -16,6 +16,9 @@ import allchive.server.domain.domains.content.domain.Tag;
 import allchive.server.domain.domains.content.service.ContentDomainService;
 import allchive.server.domain.domains.content.service.ContentTagGroupDomainService;
 import allchive.server.domain.domains.content.service.TagDomainService;
+import allchive.server.domain.domains.quitReason.domain.QuitReason;
+import allchive.server.domain.domains.quitReason.domain.enums.Reason;
+import allchive.server.domain.domains.quitReason.service.QuitReasonDomainService;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.report.service.ReportDomainService;
 import allchive.server.domain.domains.search.service.LatestSearchDomainService;
@@ -47,13 +50,14 @@ public class WithdrawUserUseCase {
     private final ReportDomainService reportDomainService;
     private final UserDomainService userDomainService;
     private final ArchivingDomainService archivingDomainService;
+    private final QuitReasonDomainService quitReasonDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.USER,
             identifier = {"userId"})
-    public void execute(String appleAccessToken, String referer, Long userId) {
+    public void execute(String appleAccessToken, String referer, Long userId, Reason reason) {
         User user = userAdaptor.findById(userId);
+        quitReasonDomainService.save(QuitReason.of(userId, reason));
         // oauth쪽 탈퇴
         withdrawOauth(user.getOauthInfo().getProvider(), appleAccessToken, user, referer);
         // 우리쪽 탈퇴

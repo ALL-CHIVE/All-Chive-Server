@@ -3,7 +3,6 @@ package allchive.server.api.recycle.service;
 
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
@@ -18,6 +17,7 @@ import allchive.server.domain.domains.recycle.domain.enums.RecycleType;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.report.service.ReportDomainService;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

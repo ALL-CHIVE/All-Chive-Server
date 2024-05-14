@@ -1,8 +1,8 @@
-package allchive.server.core.async;
+package allchive.server.domain.config.async;
 
 
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.slack.SlackAsyncErrorEvent;
+import allchive.server.infrastructure.slack.event.SlackAsyncErrorEvent;
 import java.lang.reflect.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

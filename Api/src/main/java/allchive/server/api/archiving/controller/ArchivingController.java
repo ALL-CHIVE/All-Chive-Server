@@ -11,8 +11,10 @@ import allchive.server.api.archiving.service.*;
 import allchive.server.api.common.slice.SliceResponse;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.domain.domains.archiving.domain.enums.Category;
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
@@ -67,7 +69,9 @@ public class ArchivingController {
 
     @Operation(
             summary = "주제별 아카이빙 리스트를 가져옵니다.",
-            description = "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자")
+            description =
+                    "sort parameter는 입력하지 말아주세요! sorting : 스크랩 여부 -> 스크랩 수 -> 생성일자"
+                            + "\nsort에 popular쓰면 최신순 안쓰면 인기순 입니다!")
     @GetMapping()
     public SliceResponse<ArchivingResponse> getArchiving(
             @RequestParam("category") Category category,
@@ -111,8 +115,10 @@ public class ArchivingController {
     @GetMapping(value = "/{archivingId}/contents")
     public ArchivingContentsResponse getArchivingContents(
             @PathVariable("archivingId") Long archivingId,
-            @ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-        return getArchivingContentsUseCase.execute(archivingId, pageable);
+            @ParameterObject @PageableDefault(size = 10) Pageable pageable,
+            @RequestParam(value = "type", required = false) ContentType contentType,
+            @RequestParam(value = "tagIds", required = false) List<Long> tagIds) {
+        return getArchivingContentsUseCase.execute(archivingId, pageable, contentType, tagIds);
     }
 
     @Operation(summary = "아카이빙을 스크랩합니다.", description = "스크랩 취소면 cancel에 true 값 보내주세요")

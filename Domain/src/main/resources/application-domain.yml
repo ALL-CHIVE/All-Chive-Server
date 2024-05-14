@@ -7,10 +7,10 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&tinyInt1isBit=false
+    url: jdbc:mysql://localhost:3307/test?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&tinyInt1isBit=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: test
+    password: root
     hikari:
       maxLifetime: 580000
       maximum-pool-size: 20
@@ -21,7 +21,7 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     defer-datasource-initialization: true
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -29,8 +29,8 @@ spring:
 
 logging:
   level:
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
+#    com.zaxxer.hikari.HikariConfig: DEBUG
+#    com.zaxxer.hikari: TRACE
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
 #    org.hibernate.SQL: debug
@@ -56,7 +56,7 @@ spring:
         format_sql: ${FORMAT_SQL:true}
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     defer-datasource-initialization: true
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -64,8 +64,8 @@ spring:
 
 logging:
   level:
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
+#    com.zaxxer.hikari.HikariConfig: DEBUG
+#    com.zaxxer.hikari: TRACE
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
     org.hibernate.SQL: debug
@@ -91,7 +91,7 @@ spring:
         format_sql: ${FORMAT_SQL:true}
         default_batch_fetch_size: ${JPA_BATCH_FETCH_SIZE:100}
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     defer-datasource-initialization: true
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

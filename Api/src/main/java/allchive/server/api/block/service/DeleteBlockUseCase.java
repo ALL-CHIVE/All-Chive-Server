@@ -12,7 +12,6 @@ import allchive.server.domain.domains.block.validator.BlockValidator;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -22,7 +21,6 @@ public class DeleteBlockUseCase {
     private final BlockDomainService blockDomainService;
     private final UserAdaptor userAdaptor;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.BLOCK,
             identifier = {"fromUserId", "toUserId"})

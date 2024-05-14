@@ -1,5 +1,7 @@
 package allchive.server.core.consts;
 
+import java.util.List;
+
 public class AllchiveConst {
     public static final String AUTH_HEADER = "Authorization";
     public static final String BEARER = "Bearer ";
@@ -35,11 +37,18 @@ public class AllchiveConst {
             "https://all-chive-bucket.s3.ap-northeast-2.amazonaws.com/";
 
     public static final String[] SwaggerPatterns = {
-        "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
+            "/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs",
     };
 
-    public static final String SEARCH_KEY = "ARCHIVING_TITLE";
+    public static final String SEARCH_KEY = "SEARCH_KEY_";
     public static final String ASTERISK = "*";
+    public static final int BULK_SIZE = 100;
+    public static final char[] KOREAN_ALPHA = {
+            'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ',
+            'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+    };
+    // 한글 유니코드에서 '가'의 코드 포인트
+    public static final int HANGUL_BASE = 0xAC00;
 
     public static final int PLUS_ONE = 1;
     public static final int MINUS_ONE = -1;

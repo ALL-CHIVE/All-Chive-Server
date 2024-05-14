@@ -11,7 +11,6 @@ import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
 import allchive.server.domain.domains.recycle.domain.Recycle;
 import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -21,7 +20,6 @@ public class DeleteArchivingUseCase {
     private final RecycleMapper recycleMapper;
     private final RecycleDomainService recycleDomainService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.ARCHIVING,
             identifier = {"archivingId"})

@@ -4,7 +4,6 @@ package allchive.server.api.recycle.service;
 import allchive.server.api.recycle.model.dto.request.ClearDeletedObjectRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
@@ -21,12 +20,12 @@ import allchive.server.domain.domains.recycle.service.RecycleDomainService;
 import allchive.server.domain.domains.recycle.validator.RecycleValidator;
 import allchive.server.domain.domains.report.service.ReportDomainService;
 import allchive.server.domain.domains.user.service.ScrapDomainService;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -44,7 +43,6 @@ public class ClearDeletedObjectUseCase {
     private final S3DeleteObjectService s3DeleteObjectService;
     private final ArchivingAdaptor archivingAdaptor;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.RECYCLE,
             identifier = {"userId"})

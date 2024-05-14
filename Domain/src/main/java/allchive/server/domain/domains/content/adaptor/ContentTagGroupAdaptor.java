@@ -49,4 +49,8 @@ public class ContentTagGroupAdaptor {
     public void deleteAll(List<ContentTagGroup> contentTagGroups) {
         contentTagGroupRepository.deleteAll(contentTagGroups);
     }
+
+    public List<ContentTagGroup> queryContentTagGroupByTagIdInWithContent(List<Long> tagIds) {
+        return contentTagGroupRepository.queryContentTagGroupByTagIdInWithContent(tagIds);
+    }
 }

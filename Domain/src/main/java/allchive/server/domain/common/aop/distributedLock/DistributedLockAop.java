@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 1)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor
 public class DistributedLockAop {
     private final LockManager lockManager;

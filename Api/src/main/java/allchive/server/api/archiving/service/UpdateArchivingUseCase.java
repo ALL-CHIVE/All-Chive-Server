@@ -6,16 +6,15 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.config.security.SecurityUtil;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.archiving.adaptor.ArchivingAdaptor;
 import allchive.server.domain.domains.archiving.domain.Archiving;
 import allchive.server.domain.domains.archiving.service.ArchivingDomainService;
 import allchive.server.domain.domains.archiving.validator.ArchivingValidator;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -24,7 +23,6 @@ public class UpdateArchivingUseCase {
     private final ArchivingAdaptor archivingAdaptor;
     private final ArchivingValidator archivingValidator;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.ARCHIVING,
             identifier = {"archivingId"})

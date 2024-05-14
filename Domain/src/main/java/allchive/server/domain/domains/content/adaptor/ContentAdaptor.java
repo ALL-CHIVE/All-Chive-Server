@@ -3,6 +3,7 @@ package allchive.server.domain.domains.content.adaptor;
 
 import allchive.server.core.annotation.Adaptor;
 import allchive.server.domain.domains.content.domain.Content;
+import allchive.server.domain.domains.content.domain.enums.ContentType;
 import allchive.server.domain.domains.content.exception.exceptions.ContentNotFoundException;
 import allchive.server.domain.domains.content.repository.ContentRepository;
 import java.util.List;
@@ -15,8 +16,10 @@ import org.springframework.data.domain.Slice;
 public class ContentAdaptor {
     private final ContentRepository contentRepository;
 
-    public Slice<Content> querySliceContentByArchivingId(Long archivingId, Pageable pageable) {
-        return contentRepository.querySliceContentByArchivingId(archivingId, pageable);
+    public Slice<Content> querySliceContentByArchivingIdAndContentTypeAndIdIn(
+            Long archivingId, Pageable pageable, ContentType contentType, List<Long> contentIds) {
+        return contentRepository.querySliceContentByArchivingIdAndContentTypeAndIdIn(
+                archivingId, pageable, contentType, contentIds);
     }
 
     public void save(Content content) {

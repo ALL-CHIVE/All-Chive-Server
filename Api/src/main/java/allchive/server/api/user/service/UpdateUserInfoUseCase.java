@@ -5,19 +5,20 @@ import allchive.server.api.common.util.UrlUtil;
 import allchive.server.api.user.model.dto.request.UpdateUserInfoRequest;
 import allchive.server.core.annotation.UseCase;
 import allchive.server.core.event.Event;
-import allchive.server.core.event.events.s3.S3ImageDeleteEvent;
 import allchive.server.domain.common.aop.distributedLock.DistributedLock;
 import allchive.server.domain.common.enums.DistributedLockType;
 import allchive.server.domain.domains.user.adaptor.UserAdaptor;
 import allchive.server.domain.domains.user.domain.User;
 import allchive.server.domain.domains.user.service.UserDomainService;
 import allchive.server.domain.domains.user.validator.UserValidator;
+import allchive.server.infrastructure.s3.event.S3ImageDeleteEvent;
 import allchive.server.infrastructure.s3.service.S3DeleteObjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 @UseCase
+@Slf4j
 @RequiredArgsConstructor
 public class UpdateUserInfoUseCase {
     private final UserDomainService userDomainService;
@@ -25,7 +26,6 @@ public class UpdateUserInfoUseCase {
     private final UserAdaptor userAdaptor;
     private final S3DeleteObjectService s3DeleteObjectService;
 
-    @Transactional
     @DistributedLock(
             lockType = DistributedLockType.USER,
             identifier = {"userId"})

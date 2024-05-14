@@ -1,12 +1,12 @@
 package allchive.server.api.common.filter;
 
 
-import com.amazonaws.util.IOUtils;
 import java.io.*;
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 public class MultiReadInputStream extends HttpServletRequestWrapper {
     private ByteArrayOutputStream cachedBytes;

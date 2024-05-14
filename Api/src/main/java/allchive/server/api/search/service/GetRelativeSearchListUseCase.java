@@ -1,9 +1,9 @@
 package allchive.server.api.search.service;
 
+import static allchive.server.core.consts.AllchiveConst.ASTERISK;
 import static allchive.server.core.consts.AllchiveConst.SEARCH_KEY;
-import static jodd.util.StringPool.ASTERISK;
 
-import allchive.server.api.common.util.StringParamUtil;
+import allchive.server.api.common.util.StringUtil;
 import allchive.server.api.search.model.dto.response.SearchListResponse;
 import allchive.server.core.annotation.UseCase;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class GetRelativeSearchListUseCase {
     }
 
     private void validateExecution(String word) {
-        StringParamUtil.checkEmptyString(word);
+        StringUtil.checkEmptyString(word);
     }
 
     private List<String> getAutoCompleteList(Set<String> rangeList, String keyword) {

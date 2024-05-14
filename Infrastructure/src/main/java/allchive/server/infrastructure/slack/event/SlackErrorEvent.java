@@ -1,4 +1,4 @@
-package allchive.server.core.event.events.slack;
+package allchive.server.infrastructure.slack.event;
 
 
 import lombok.Builder;

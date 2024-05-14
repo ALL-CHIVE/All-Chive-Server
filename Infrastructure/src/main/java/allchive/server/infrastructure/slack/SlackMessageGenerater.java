@@ -4,8 +4,8 @@ import static com.slack.api.model.block.Blocks.divider;
 import static com.slack.api.model.block.Blocks.section;
 import static com.slack.api.model.block.composition.BlockCompositions.plainText;
 
-import allchive.server.core.event.events.slack.SlackAsyncErrorEvent;
-import allchive.server.core.event.events.slack.SlackErrorEvent;
+import allchive.server.infrastructure.slack.event.SlackAsyncErrorEvent;
+import allchive.server.infrastructure.slack.event.SlackErrorEvent;
 import com.slack.api.model.block.Blocks;
 import com.slack.api.model.block.DividerBlock;
 import com.slack.api.model.block.HeaderBlock;

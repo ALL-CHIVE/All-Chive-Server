@@ -51,6 +51,16 @@ public class ContentTagGroupCustomRepositoryImpl implements ContentTagGroupCusto
                 .fetch();
     }
 
+    @Override
+    public List<ContentTagGroup> queryContentTagGroupByTagIdInWithContent(List<Long> tagIds) {
+        return queryFactory
+                .selectFrom(contentTagGroup)
+                .join(contentTagGroup.content, content)
+                .fetchJoin()
+                .where(tagIdIn(tagIds))
+                .fetch();
+    }
+
     private BooleanExpression contentIdIn(List<Content> contentList) {
         return contentTagGroup.content.in(contentList);
     }
@@ -61,6 +71,11 @@ public class ContentTagGroupCustomRepositoryImpl implements ContentTagGroupCusto
 
     private BooleanExpression tagIn(List<Tag> tagList) {
         return contentTagGroup.tag.in(tagList);
+    }
+
+    private BooleanExpression tagIdIn(List<Long> tagIds) {
+        if (tagIds == null) return null;
+        return contentTagGroup.tag.id.in(tagIds);
     }
 
     private OrderSpecifier<LocalDateTime> createdAtDesc() {

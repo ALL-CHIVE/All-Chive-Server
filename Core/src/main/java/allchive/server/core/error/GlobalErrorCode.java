@@ -22,6 +22,8 @@ public enum GlobalErrorCode implements BaseErrorCode {
     INVALID_LOCK_IDENTIFIER(INTERNAL_SERVER, "GLOBAL_500_4", "잘못된 lock identifier 입니다."),
     ALREADY_REDISSON_UNLOCK(INTERNAL_SERVER, "GLOBAL_500_5", "Redisson Lock Already UnLock"),
     INTERRUPTED_REDISSON(INTERNAL_SERVER, "GLOBAL_500_6", "Redisson interruption"),
+    FAIL_TO_TRANSACTION_TEMPLATE_EXECUTE_ERROR(
+            BAD_REQUEST, "GLOBAL_500_7", "fail to tx-templates execute error"),
 
     /** 토큰 에러 * */
     INVALID_TOKEN(UNAUTHORIZED, "AUTH_401_2", "올바르지 않은 토큰입니다."),
